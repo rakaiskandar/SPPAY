@@ -1,0 +1,199 @@
+$primaryB: rgb(229 231 235);
+$primary: #5A57EC;
+
+.layoutContainer{
+    display: grid;
+    grid-template-columns: minmax(232px, 256px) 1fr;
+}
+
+.berandaContainer{
+    padding: 25px;
+}
+
+.kelasContainer{
+    padding: 25px;
+}
+
+.pembayaranContainer{
+    padding: 25px;
+}
+
+.siswaContainer{
+    padding: 25px;
+}
+
+.penggunaContainer{
+    padding: 25px;
+}
+
+.sidebarContainer{
+    background: white;
+    height: 94vh;
+    padding: 20px;
+    display: flex;
+    position: sticky !important;
+    top: 0 !important;
+    border-right: 1px $primaryB solid;
+    gap: 10px;
+    flex-direction: column;
+
+    button{
+        background: $primary;
+        padding: 8px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        justify-content: center;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    button:hover{
+        background: darken($color: $primary, $amount: 8);
+    }
+
+    .sidebarHead{
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        img{
+            width: 180px;
+        }
+    }
+
+    .sidebarList{
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .sidebarItems{
+            border-radius: 4px;
+            display: flex;
+            font-size: 18px;
+            font-weight: 400;
+            align-items: center;
+            gap: 12px;
+            color: black;
+            padding: 12px 12px 12px 8px;
+            cursor: pointer;
+
+            &:hover{
+                background: $primaryB;
+            }
+        }
+
+        .sidebarItemsActive{
+            background: $primaryB;
+            color: $primary;
+            font-weight: 700;
+            &:hover{
+                background: #9ea3f830;
+                color: $primary;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.navContainer{
+    background: white;
+    padding: 20px;
+    border-bottom: 1px $primaryB solid;
+    top: 0;
+    z-index: 30;
+    position: sticky;
+    padding-bottom: 5px;
+
+    h4{
+        color: $primary;
+        margin-bottom: 10px;
+    }
+
+    .nav-body{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        .nav-text{
+            font-weight: 600;
+            font-size: 26px;
+        }
+    }
+}
+
+.profileContainer{
+    position: relative;
+
+    .profileButton{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        cursor: pointer;
+        transition: all;
+        transition-duration: 0.5ms;
+        outline: none;
+        border: none;
+        background: white;
+        img{
+            width: 60px;
+            border: 1px solid #3D3D3D;
+            border-radius: 50%;
+            height: 60px;
+            transition-duration: 0.2s;
+        }
+
+        img:hover{
+            outline: #FFFFFF;
+            scale: 1.1;
+        }
+    }
+
+    .profileItem{
+        position: absolute;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        z-index: 5;
+        font-size: large;
+        width: 170px;
+
+        button{
+            background: white;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 5px;
+            padding: 10px;
+
+            p{
+                font-size: medium;
+            }
+        }
+
+        .buttonActive{
+            background: $primaryB;
+            color: red;
+        }
+    }
+}
+
+.filterInput{
+    font-size: small;
+    margin-top: 16px;
+    border-radius: 5px;
+    font-weight: 500;
+    outline: none;
+    border: #1a1a1a 1px solid;
+    display: flex;
+
+    input{
+        padding: 8px;
+        flex-grow: 1;
+        font-family: 'Nunito';
+    }
+}
+

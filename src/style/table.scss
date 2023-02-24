@@ -1,0 +1,159 @@
+$primary: #5A57EC;
+$primaryB: rgb(229 231 235);
+$primaryB2: #323232;
+
+.emptyTable{
+    margin: 16px 0;
+
+    table{
+        font-size: medium;
+        width: 100%;
+        background: white;
+        text-align: left;
+        border: 1px solid $primaryB;
+        border-radius: 6px 6px 0 0;
+        padding: 6px;
+    }
+
+    p{
+        font-size: small;
+        text-align: center;
+        opacity: 90%;
+        font-weight: 500;
+        background: #2e37eb30;
+        padding: 8px;
+    }
+}
+
+.fillTable{
+    table {
+        border: 1px solid $primaryB;
+        margin: 12px 0 24px 0;
+        font-size: small;
+        width: 100%;
+        text-align: left;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 6px 6px 0 0;
+        thead {
+          tr {
+            th {
+              font-weight: 600;
+              font-size: 16px;
+              padding: 12px;
+            }
+          }
+        }
+        tbody {
+          background: #2e37eb30;
+          tr {
+            border-bottom: 1px solid $primaryB;
+            font-weight: 500;
+            cursor: pointer;
+            td {
+              padding: 16px;
+            }
+          }
+        }
+      }
+}
+.paginasiNav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    button {
+      display: flex;
+      align-items: center;
+      font-size: small;
+      background: white;
+      color: black;
+    }
+    .disableArrow {
+      opacity: 80%;
+    }
+}
+
+.paidStatus{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  span{
+    font-size: 20px;
+  }
+
+  .lunas{
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0faa26;
+    background: rgba(#12e632, 40%);
+  }
+
+  .belumLunas{
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #f05151;
+    background: rgba(#e94141, 40%);
+  }
+}
+
+.penggunaRole{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  p{
+    font-size: 24px;
+  }
+}
+
+.kelasKompetensi{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  p.rpl{
+    font-size: 20px;
+    background: rgba(#12e632, 40%); 
+    border-radius: 4px;
+  }
+
+  p.tkj{
+    font-size: 20px;
+    background: rgba(#e61212, 40%);
+    border-radius: 4px;
+  }
+
+  p.mm{
+    font-size: 20px;
+    background: rgba(#df12e6, 40%);
+    border-radius: 4px;
+  }
+
+  p.tav{
+    font-size: 20px;
+    background: rgba(#d5d816, 85%);
+    border-radius: 4px;
+  }
+
+  p.titl{
+    font-size: 20px;
+    background: rgba(#2712e6, 40%);
+    border-radius: 4px;
+  }
+
+  p.toi{
+    font-size: 20px;
+    background: rgba(#9bad9e, 40%);
+    border-radius: 4px;
+  }
+}
+
+.kelasT{
+  font-size: 14px;
+  font-weight: 700;
+  color: $primary;
+}

@@ -1,0 +1,119 @@
+$primaryB: #cecccc;
+$primary: #5A57EC;
+
+.kelasHead{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button{
+        background: white;
+        display: flex;
+        color: $primary;
+        font-weight: 600;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        border: $primary solid 1px;
+        gap: 5px;
+        font-size: 16px;
+    }
+
+    button:hover{
+        background: darken($color:whitesmoke, $amount: 2);
+    }
+}
+
+.pembayaranHead{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button{
+        background: white;
+        display: flex;
+        color: $primary;
+        font-weight: 600;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        border: $primary solid 1px;
+        gap: 5px;
+        font-size: 16px;
+    }
+
+    button:hover{
+        background: darken($color:whitesmoke, $amount: 2);
+    }
+}
+
+.penggunaHead{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button{
+        background: white;
+        display: flex;
+        color: $primary;
+        font-weight: 600;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        border: $primary solid 1px;
+        gap: 5px;
+        font-size: 16px;
+    }
+
+    button:hover{
+        background: darken($color:whitesmoke, $amount: 2);
+    }
+}
+
+.siswaHead{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button{
+        background: white;
+        display: flex;
+        color: $primary;
+        font-weight: 600;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        border: $primary solid 1px;
+        gap: 5px;
+        font-size: 16px;
+    }
+
+    button:hover{
+        background: darken($color:whitesmoke, $amount: 2);
+    }
+}
+
+.filterInput{
+    background: #e9e3e3;
+    font-size: small;
+    margin-top: 16px;
+    border: white 1px solid;
+    font-weight: 500;
+    outline: none;
+    display: flex;
+
+    input{
+        background: white;
+        border: $primaryB 1px solid;
+        font-size: 14px;
+        border-radius: 5px;
+        color: black;
+        padding: 10px;
+        flex-grow: 1;
+        font-family: 'Nunito';
+    }
+
+    input:focus{
+        outline: none;
+    }
+}

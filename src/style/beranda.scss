@@ -1,0 +1,117 @@
+$primaryB: rgb(229 231 235);
+$primary: #5A57EC;
+
+.berandaHead{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    h4{
+        padding: 6px;
+        border: 1px solid #3D3D3D;
+        border-radius: 6px;
+    }
+}
+
+.berandaSection1{
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    grid-auto-flow: column;
+
+    .berandaSub1{
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        h5 {
+            font-weight: 500;
+            font-size: 16px;
+            padding-bottom: 10px;
+            opacity: 80%;
+          }
+        h4 {
+            font-size: 32px;
+        }
+    }
+}
+
+.berandaSection2{
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    grid-auto-flow: column;
+
+    .berandaSub2{
+        background: white;
+        border-radius: 5px;
+        padding: 12px;
+    }
+
+    .berandaSub2List{
+        padding: 20px 12px;
+        h4{
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .berandaSub2ListItem{
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+            h4{
+                font-weight: 600;
+                opacity: 90%;
+                font-size: 16px;
+            }
+            .berandaSub2ListItemDetail{
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                h5{
+                    flex-grow: 1;
+                    font-size: 18px;
+                    font-weight: 400;
+                }
+                p{
+                    font-size: 16px;
+                    opacity: 80%;
+                }
+            }
+        }
+
+        h4.tidakAdaData{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 60px;
+            padding-bottom: 60px;
+            opacity: 70%;
+        }
+
+        button{
+            background: white;
+            display: flex;
+            width: 100%;
+            color: $primary;
+            font-weight: 600;
+            margin-top: 15px;
+            border-radius: 4px;
+            justify-content: center;
+            border: $primary solid 1px;
+            font-size: 14px;
+        }
+
+        button:hover{
+            background: darken($color:$primaryB, $amount: 2);
+        }
+    }
+
+    .berandaSub2Stat{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
