@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import { Kelas, KompetensiKeahlian, kompetensiOptions } from "@/dataStructure";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import { connectionSql } from "@/sqlConnect";
@@ -10,6 +10,7 @@ import { Icon } from "@iconify/react";
 
 function DetailKelas() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [kelasD, setKelasD] = useState<Kelas>();
     const [selectedKompetensi, setSelectedKompetensi] = useState(kompetensiOptions[0]);
 
@@ -41,6 +42,18 @@ function DetailKelas() {
             }
         });
     });
+
+    const deleteData = () => {
+        const deleteSt = `DELETE FROM kelas WHERE id_kelas = ${id}`;
+        connectionSql.query(deleteSt, (err, results) => {
+            if(err) console.error(err)
+            else{
+                console.log("hapus berhasil");
+                console.log(results);
+                navigate("/app/a/kelas");
+            }
+        })
+    }
 
     if(loading) {
         return (
@@ -76,6 +89,12 @@ function DetailKelas() {
                             <Icon icon="ic:outline-save-alt"/>
                             Simpan Perubahan
                         </button>
+                    </div>
+                </div>
+                <div className="hapusContainer">
+                    <div className="hapusBtn" onClick={deleteData}>
+                        <Icon icon="ion:trash-outline"/>
+                        Hapus Data
                     </div>
                 </div>
                 <div className="formContainerDetail">

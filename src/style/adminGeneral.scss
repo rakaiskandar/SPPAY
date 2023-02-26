@@ -111,9 +111,15 @@ $primary: #5A57EC;
         padding: 10px;
         flex-grow: 1;
         font-family: 'Nunito';
+        transition-duration: 0.5s;
     }
 
     input:focus{
         outline: none;
+        border: 1px solid $primary;
+    }
+
+    input:hover{
+        border: 1px solid $primary;
     }
 }

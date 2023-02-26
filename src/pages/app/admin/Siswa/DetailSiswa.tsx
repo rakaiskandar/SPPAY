@@ -5,11 +5,12 @@ import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 
 function DetailSiswa() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [siswaD, setSiswaD] = useState<Siswa>();
     const [kelas, setKelas] = useState<KelasTypeList>([]);
     const [spp, setSpp] = useState<SPPOptions[]>([]);
@@ -60,6 +61,18 @@ function DetailSiswa() {
         });
     });
 
+    const deleteData = () => {
+        const deleteSt = `DELETE FROM siswa WHERE nisn = ${id}`;
+        connectionSql.query(deleteSt, (err, results) => {
+            if(err) console.error(err)
+            else{
+                console.log("hapus berhasil");
+                console.log(results);
+                navigate("/app/a/siswa")
+            }
+        })
+    }
+
     if(loading) {
         return (
             <>
@@ -94,6 +107,12 @@ function DetailSiswa() {
                             <Icon icon="ic:outline-save-alt"/>
                             Simpan Perubahan
                         </button>
+                    </div>
+                </div>
+                <div className="hapusContainer">
+                    <div className="hapusBtn" onClick={deleteData}>
+                        <Icon icon="ion:trash-outline"/>
+                        Hapus Data
                     </div>
                 </div>
                 <div className="formContainerDetail">
@@ -136,7 +155,7 @@ function DetailSiswa() {
                     <div className="formSub">
                         <label htmlFor="">Kelas</label>
                         <Select
-                        maxMenuHeight={150}
+                        maxMenuHeight={100}
                         options={kelas}
                         value={selectedKelas}
                         className="selectInput"
@@ -163,14 +182,6 @@ function DetailSiswa() {
                         onChange={setSelectedSpp}
                         isDisabled={true}
                         />
-                    </div>
-                    <div className="formSub">
-                        <label htmlFor="nama">Status Bayar</label>
-                        <input
-                        type="text"
-                        placeholder="Masukkan alamat siswa" 
-                        defaultValue={siswaD?.sudah_bayar}
-                        readOnly/>
                     </div>
                 </div>
             </form>

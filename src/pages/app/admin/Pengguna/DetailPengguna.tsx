@@ -5,11 +5,12 @@ import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 
 function DetailPengguna() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [penggunaD, setPenggunaD] = useState<Pengguna>();
     const [selectedLevel, setSelectedLevel] = useState(levelOptions[0]);
 
@@ -42,6 +43,18 @@ function DetailPengguna() {
             }
         })
     })
+
+    const deleteData = () => {
+        const deleteSt = `DELETE FROM pengguna WHERE id_user = ${id}`;
+        connectionSql.query(deleteSt, (err, results) => {
+            if(err) console.error(err)
+            else{
+                console.log("hapus berhasil");
+                console.log(results);
+                navigate("/app/a/pengguna");
+            }
+        })
+    }
 
     if(loading) {
         return (
@@ -79,6 +92,12 @@ function DetailPengguna() {
                             <Icon icon="ic:outline-save-alt"/>
                             Simpan Perubahan
                         </button>
+                    </div>
+                </div>
+                <div className="hapusContainer">
+                    <div className="hapusBtn" onClick={deleteData}>
+                        <Icon icon="ion:trash-outline"/>
+                        Hapus Data
                     </div>
                 </div>
                 <div className="formContainerDetail">

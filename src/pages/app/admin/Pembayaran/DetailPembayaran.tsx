@@ -56,11 +56,27 @@ function DetailPembayaran() {
                 else{
                     console.log("update berhasil");
                     console.log(results);
-                    navigate("/app/a/pembayaran");
+                    // navigate("/app/a/pembayaran");
                 }
             })
         }
     })
+
+    const deleteData = () => {
+        const deleteSt = `DELETE FROM pembayaran WHERE id_pembayaran = ${id}`;
+        //Set status bayar in siswa
+        const siswaUpd = `UPDATE siswa SET sudah_bayar = 'Belum' WHERE nisn = ${siswaD?.nisn}`;
+        //Set status bayar in spp
+        const sppUpd = `UPDATE spp SET status_bayar = 'Belum' WHERE id_spp = ${pembayaran?.id_spp}`;
+        const allSql = `${deleteSt}; ${siswaUpd}; ${sppUpd}`;
+        connectionSql.query(allSql, (err, results) => {
+            if(err) console.error(err)
+            else{
+                console.log(results);
+                navigate("/app/a/pembayaran");
+            }
+        })
+    }
 
     if(loading) {
         return (
@@ -100,7 +116,12 @@ function DetailPembayaran() {
                         </Link>
                     </div>
                 </div>
-
+                <div className="hapusContainer">
+                    <div className="hapusBtnPmb" onClick={deleteData}>
+                        <Icon icon="ion:trash-outline"/>
+                        Hapus Data
+                    </div>
+                </div>
                 <div className="detailHead">
                     <div>
                         <h3>#{pembayaran?.id_pembayaran}</h3>

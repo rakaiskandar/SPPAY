@@ -20,7 +20,7 @@ function NewSiswa() {
 
     useEffect(() => {
         const kelasSt = "SELECT nama_kelas AS label, id_kelas, id_kelas AS value FROM kelas";
-        const sppSt = "SELECT id_spp AS label, id_spp AS value FROM spp";
+        const sppSt = "SELECT id_spp AS label, id_spp AS value FROM spp WHERE status_bayar = 'Belum'";
         connectionSql.query(`${kelasSt}; ${sppSt}`, (err, results, fields) => {
             if(err) console.error(err)
             else{
