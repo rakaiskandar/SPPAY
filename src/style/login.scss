@@ -81,6 +81,11 @@
 
     .inputStyle:focus{
       outline: none;
+      border: 1px solid #413EEB;
+    }
+
+    .inputStyle:hover{
+      border: 1px solid #413EEB;
     }
 
   }
