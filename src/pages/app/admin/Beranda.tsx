@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useNavigate } from "react-router-dom";
-import "../../../style/beranda.scss";
+import "@/style/beranda.scss";
 
 export interface SiswaDashboard{
   nama: string,
