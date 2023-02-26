@@ -5,7 +5,7 @@ import NavbarProfile from "./NavbarProfile";
 
 function Navbar() {
   let dateNow = new Date().toLocaleDateString("en-US").toString();
-  const formatDate = dayjs(dateNow).format("D MMMM YYYY");
+  const formatDate = dayjs(dateNow).format("dddd, D MMMM YYYY");
   
   const [greeting, setGreeting] = useState<any>("");
 
