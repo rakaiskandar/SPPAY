@@ -30,7 +30,7 @@ function NewKelas() {
 
     const submitHandler = handleSubmit((data) => {
         const addSt = `INSERT INTO kelas (id_kelas, nama_kelas, kompetensi_keahlian, jumlah_siswa) VALUES ('${lastId + 1}', '${data.nama_kelas}', '${selectedKompetensi.value}', 0)`;
-        connectionSql.query(addSt, (err, results, fields) => {
+        connectionSql.query(addSt, (err, results) => {
             if (err) console.error(err)
             else{
                 console.log(results);

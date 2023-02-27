@@ -26,7 +26,7 @@ function NewPembayaran() {
     const [lastId, setLastId] = useState<number>(0);
 
     const getAllData = () => {
-        const sisSql = "SELECT *, nama AS label, nisn AS value, nama_kelas FROM siswa, kelas WHERE siswa.id_kelas = kelas.id_kelas AND siswa.sudah_bayar = 'Belum' ";
+        const sisSql = "SELECT *, nama AS label, nisn AS value, nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' ";
         const pngSql = "SELECT *, nama_pengguna AS label, id_user AS value FROM pengguna WHERE level IN ('admin','petugas')";
         const sppSql = "SELECT *, id_spp AS label, id_spp AS value FROM spp WHERE spp.status_bayar = 'Belum'";
         const lastId = "SELECT id_pembayaran FROM pembayaran ORDER BY id_pembayaran DESC LIMIT 1";
@@ -110,7 +110,7 @@ function NewPembayaran() {
                 if(err) console.error(err)
                 else{
                     console.log(results);
-                    navigate("/app/a/pembayaran");
+                    navigate(-1);
                 }
             })
         }else{
@@ -120,7 +120,7 @@ function NewPembayaran() {
                 if(err) console.error(err)
                 else{
                     console.log(results);
-                    navigate("/app/a/pembayaran");
+                    navigate(-1);
                 }
             })
         }

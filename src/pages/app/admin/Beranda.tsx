@@ -33,12 +33,12 @@ function Beranda() {
 
     var totalPembayaran = "SELECT SUM(jumlah_bayar) AS total FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(now())";
     var totalTransaksi = "SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(now())";
-    var siswaBelumBayar = "SELECT siswa.nama, kelas.nama_kelas FROM siswa, kelas WHERE siswa.id_kelas = kelas.id_kelas AND siswa.sudah_bayar = 'Belum' LIMIT 5";
+    var siswaBelumBayar = "SELECT siswa.nama, kelas.nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' LIMIT 5";
     var pembayaranTerbaru = "SELECT siswa.nama, pembayaran.tgl_bayar FROM siswa, pembayaran WHERE MONTH(pembayaran.tgl_bayar) = MONTH(now()) AND pembayaran.nisn = siswa.nisn ORDER BY pembayaran.tgl_bayar DESC LIMIT 4";
 
     connectionSql.query(
       `${totalPembayaran}; ${totalTransaksi}; ${siswaBelumBayar}; ${pembayaranTerbaru}`,
-      (err, results, fields) => {
+      (err, results) => {
         if(err) console.error(err);
         else{
           setTotalPembayaran(results[0][0].total);

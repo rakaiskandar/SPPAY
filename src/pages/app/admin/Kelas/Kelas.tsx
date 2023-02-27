@@ -21,7 +21,7 @@ function Kelas() {
     useEffect(() => {
         connectionSql.connect();
         var stateSql = "SELECT *, id_kelas AS id FROM `kelas`";
-        connectionSql.query(stateSql, (err, results, fields) => {
+        connectionSql.query(stateSql, (err, results) => {
             if (err) console.error(err);
             else{
                 setKelas(results);

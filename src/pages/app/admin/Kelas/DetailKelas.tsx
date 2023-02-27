@@ -19,7 +19,7 @@ function DetailKelas() {
 
     useEffect(() => {
         const sqlSt = `SELECT *, id_kelas AS id FROM kelas WHERE id_kelas = ${id}`;
-        connectionSql.query(`${sqlSt}`, (err, results, fields) => {
+        connectionSql.query(`${sqlSt}`, (err, results) => {
             if (err) console.error(err);
             else{
                 const dataReturn: Kelas = results[0];
@@ -35,9 +35,10 @@ function DetailKelas() {
 
     const submitHandler = handleSubmit((data) => {
         const updateSt = `UPDATE kelas SET nama_kelas = '${data.nama_kelas}', kompetensi_keahlian = '${selectedKompetensi.value}' WHERE id_kelas = ${id}`;
-        connectionSql.query(updateSt, (err, results, fields) => {
+        connectionSql.query(updateSt, (err, results) => {
             if (err) console.error(err)
             else{
+                console.log("update berhasil");
                 console.log(results);
             }
         });

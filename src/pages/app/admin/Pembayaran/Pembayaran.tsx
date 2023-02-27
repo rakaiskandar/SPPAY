@@ -24,7 +24,7 @@ function Pembayaran() {
     connectionSql.connect();
     var stateSql =
       "SELECT `pembayaran`.id_pembayaran AS id, `pembayaran`.tgl_bayar, `pengguna`.nama_pengguna, `siswa`.nama AS nama_siswa,`pembayaran`.status_bayar, `pembayaran`.jumlah_bayar FROM `pembayaran`, `siswa`, `pengguna` WHERE `pembayaran`.id_user = `pengguna`.id_user AND `pembayaran`.nisn = `siswa`.nisn";
-    connectionSql.query(stateSql, (err, results, fields) => {
+    connectionSql.query(stateSql, (err, results) => {
         if (err) console.error(err);
         else{
             setPembayaran(results)
