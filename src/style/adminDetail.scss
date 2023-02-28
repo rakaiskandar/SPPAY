@@ -340,3 +340,55 @@ $primary: #5A57EC;
         }
     }
 }
+
+.modalContainer{
+    position: relative;
+    z-index: 10;
+
+    .modalSub{
+        position: fixed;
+        inset: 0;
+        overflow-y: auto;
+
+        .modal{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+
+            .modalPanel{
+                width: 100%;
+                overflow: hidden;
+                vertical-align: middle;
+                max-width: 28rem;
+                background: white;
+                padding: 16px;
+                border-radius: 5px;
+                filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+
+                p{
+                    margin-top: 10px;
+                    margin-bottom: 20px;
+                }
+
+                div{
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 6px;
+
+                    .btnHapus{
+                        background: $primary;
+                        border: $primaryB 1px solid;
+                        outline: none;
+                    }
+
+                    .btnBatal{
+                        background: white;
+                        border: 1px solid $primary;
+                        color: $primary;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,3 +1,4 @@
+import Modal from "@/components/Modal";
 import Navbar from "@/components/Navbar";
 import { Level, levelOptions, Pengguna } from "@/dataStructure";
 import { connectionSql } from "@/sqlConnect";
@@ -16,6 +17,7 @@ function DetailPengguna() {
 
     const { register, handleSubmit } = useForm();
     const [loading, setLoading] = useState<boolean>(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const sqlSt = `SELECT *, id_user AS id FROM pengguna WHERE id_user = ${id}`;
@@ -36,9 +38,10 @@ function DetailPengguna() {
     const submitHandler = handleSubmit((data) => {
         const updateSt = `UPDATE pengguna SET username = '${data.username}', nama_pengguna = '${data.nama_pengguna}', level = '${selectedLevel.value}' WHERE id_user = ${id}`;
         //console.log(updateSt);
-        connectionSql.query(updateSt, (err, results, fields) => {
+        connectionSql.query(updateSt, (err, results) => {
             if(err) console.error(err)
             else{
+                console.log("update berhasil");
                 console.log(results);
             }
         })
@@ -79,6 +82,16 @@ function DetailPengguna() {
             <Navbar/>
 
             <form className="penggunaContainer" onSubmit={submitHandler}>
+
+                { /*Modal for Delete*/}
+                <Modal
+                open={isOpen} 
+                close={setIsOpen} 
+                event={deleteData} 
+                title={`Hapus Data`}
+                desc={`Tindakan ini akan menghapus data secara permanen.
+                Apakah kamu yakin akan menghapus data ini?`}/>
+
                 <div className="formTitle">
                     <h2>Ubah Pengguna</h2>
                     <div>
@@ -95,7 +108,7 @@ function DetailPengguna() {
                     </div>
                 </div>
                 <div className="hapusContainer">
-                    <div className="hapusBtn" onClick={deleteData}>
+                    <div className="hapusBtn" onClick={() => setIsOpen(true)}>
                         <Icon icon="ion:trash-outline"/>
                         Hapus Data
                     </div>

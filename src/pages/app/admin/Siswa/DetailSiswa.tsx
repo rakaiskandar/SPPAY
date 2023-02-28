@@ -1,3 +1,4 @@
+import Modal from "@/components/Modal";
 import Navbar from "@/components/Navbar";
 import { Kelas, KelasTypeList, Siswa, SPPOptions } from "@/dataStructure";
 import { connectionSql } from "@/sqlConnect";
@@ -19,6 +20,7 @@ function DetailSiswa() {
 
     const { register, handleSubmit } = useForm<Siswa>();
     const [loading, setLoading] = useState<boolean>(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const sqlSt = `SELECT *, nisn AS id FROM siswa WHERE nisn = ${id}`;
@@ -96,6 +98,15 @@ function DetailSiswa() {
             <Navbar/>
 
             <form className="siswaContainer" onSubmit={submitHandler}>
+                { /*Modal for Delete*/}
+                <Modal 
+                open={isOpen} 
+                close={setIsOpen} 
+                event={deleteData} 
+                title={`Hapus Data`}
+                desc={`Tindakan ini akan menghapus data secara permanen.
+                Apakah kamu yakin akan menghapus data ini?`}/>
+
                 <div className="formTitle">
                     <h2>Ubah Siswa</h2>
                     <div>
@@ -110,7 +121,7 @@ function DetailSiswa() {
                     </div>
                 </div>
                 <div className="hapusContainer">
-                    <div className="hapusBtn" onClick={deleteData}>
+                    <div className="hapusBtn" onClick={() => setIsOpen(true)}>
                         <Icon icon="ion:trash-outline"/>
                         Hapus Data
                     </div>

@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import Select from "react-select";
 import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
+import Modal from "@/components/Modal";
 
 function DetailKelas() {
     const { id } = useParams();
@@ -16,6 +17,7 @@ function DetailKelas() {
 
     const { register, handleSubmit } = useForm<Kelas>();
     const [loading, setLoading] = useState<boolean>(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const sqlSt = `SELECT *, id_kelas AS id FROM kelas WHERE id_kelas = ${id}`;
@@ -79,6 +81,16 @@ function DetailKelas() {
             <Navbar/> 
 
             <form className="kelasContainer" onSubmit={submitHandler}>
+
+                { /*Modal for Delete*/}
+                <Modal
+                open={isOpen} 
+                close={setIsOpen} 
+                event={deleteData} 
+                title={`Hapus Data`}
+                desc={`Tindakan ini akan menghapus data secara permanen.
+                Apakah kamu yakin akan menghapus data ini?`}/>
+
                 <div className="formTitle">
                     <h2>Ubah Kelas</h2>
                     <div>
@@ -92,8 +104,9 @@ function DetailKelas() {
                         </button>
                     </div>
                 </div>
+
                 <div className="hapusContainer">
-                    <div className="hapusBtn" onClick={deleteData}>
+                    <div className="hapusBtn" onClick={() => setIsOpen(true)}>
                         <Icon icon="ion:trash-outline"/>
                         Hapus Data
                     </div>

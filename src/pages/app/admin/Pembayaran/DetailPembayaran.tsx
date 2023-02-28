@@ -1,3 +1,4 @@
+import Modal from "@/components/Modal";
 import Navbar from "@/components/Navbar";
 import { Pembayaran, Pengguna, Siswa } from "@/dataStructure";
 import { inputRupiahFormatted } from "@/helpers/inputRupiahFormatted";
@@ -19,14 +20,15 @@ function DetailPembayaran() {
 
     const { register, handleSubmit } = useForm<Pembayaran>();
     const [loading, setLoading] = useState<boolean>(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const sqlSt = `SELECT * FROM pembayaran WHERE id_pembayaran = ${id}`;
         var pembayaranSt = `SELECT pmb.id_pembayaran, pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.id_spp, p.nama_pengguna, s.nama AS nama_siswa, pmb.status_bayar, pmb.jumlah_bayar FROM pembayaran pmb, siswa s, pengguna p WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND pmb.id_pembayaran = ${id}`;
         const siswaSt = `SELECT p.id_pembayaran, s.nisn, s.nisn AS id, s.nis, s.nama, s.id_spp, k.nama_kelas , s.alamat, s.no_telp FROM siswa s, kelas k, pembayaran p WHERE s.id_kelas = k.id_kelas AND p.nisn = s.nisn AND p.id_pembayaran = ${id}`;
         const penggunaSt = `SELECT png.nama_pengguna FROM pengguna png, pembayaran pmb WHERE png.id_user = pmb.id_user AND pmb.id_pembayaran = ${id}`;
-        
-        connectionSql.query(`${sqlSt}; ${pembayaranSt}; ${siswaSt}; ${penggunaSt}`, (err, results, fields) => {
+        const lastId = "SELECT id_pembayaran FROM pembayaran ORDER BY id_pembayaran DESC LIMIT 1";
+        connectionSql.query(`${sqlSt}; ${pembayaranSt}; ${siswaSt}; ${penggunaSt}`, (err, results) => {
             if(err) console.error(err)
             else{
                 setPembayaran(results[1][0]);
@@ -99,6 +101,15 @@ function DetailPembayaran() {
             <Navbar/>
 
             <form className="pembayaranContainer" onSubmit={submitHandler}>
+                { /*Modal for Delete*/}
+                <Modal
+                open={isOpen} 
+                close={setIsOpen} 
+                event={deleteData} 
+                title={`Hapus Data`}
+                desc={`Tindakan ini akan menghapus data secara permanen.
+                Apakah kamu yakin akan menghapus data ini?`}/>
+
                 <div className="formTitle">
                     <h2>Detail Pembayaran</h2>
                     <div>
@@ -115,7 +126,7 @@ function DetailPembayaran() {
                     </div>
                 </div>
                 <div className="hapusContainer">
-                    <div className="hapusBtnPmb" onClick={deleteData}>
+                    <div className="hapusBtnPmb" onClick={() => setIsOpen(true)}>
                         <Icon icon="ion:trash-outline"/>
                         Hapus Data
                     </div>
