@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
-import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";

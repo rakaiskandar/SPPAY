@@ -33,9 +33,9 @@ function NewSiswa() {
     }, [])
 
     const submitHandler = handleSubmit((data) => {
-        const addSt = `INSERT INTO siswa (nisn, nis, nama, id_kelas, alamat, no_telp, id_spp, sudah_bayar) VALUES ('${data.nisn}', '${data.nis}', '${data.nama}', '${selectedKelas?.id_kelas}', '${data.alamat}', '${data.no_telp}', '${selectedSpp?.value}', 'Belum')`;
+        const addSt = `INSERT INTO siswa (nisn, nis, nama, id_kelas, alamat, no_telp, id_spp) VALUES ('${data.nisn}', '${data.nis}', '${data.nama}', '${selectedKelas?.id_kelas}', '${data.alamat}', '${data.no_telp}', '${selectedSpp?.value}')`;
         // console.log(addSt);
-        connectionSql.query(addSt, (err, results, fields) => {
+        connectionSql.query(addSt, (err, results) => {
             if(err) console.error(err)
             else{
                 console.log(results);

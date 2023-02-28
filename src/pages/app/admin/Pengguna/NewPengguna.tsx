@@ -33,7 +33,7 @@ function NewPengguna() {
     const submitHandler = handleSubmit((data) => {
         const addSt = `INSERT INTO pengguna (id_user, username, password, nama_pengguna, level) VALUES ('${lastId + 1}', '${data.username}', '${sha1(data.password)}', '${data.nama_pengguna}', '${selectedLevel.value}')`;
         // console.log(addSt);
-        connectionSql.query(addSt, (err, results, fields) => {
+        connectionSql.query(addSt, (err, results) => {
             if(err) console.error(err)
             else{
                 console.log(results);
