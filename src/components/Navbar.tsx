@@ -42,7 +42,7 @@ function Navbar({ user } : { user: any}) {
         <h2 className="nav-text">
           <span>{greeting.emoji}</span>
           {greeting.greet}
-          <span>{user.nama_pengguna}</span>
+          <span>{user.nama_pengguna}!</span>
         </h2>
         <div>
           <NavbarProfile img={image}/>
