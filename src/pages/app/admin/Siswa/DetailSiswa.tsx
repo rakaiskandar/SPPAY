@@ -1,3 +1,5 @@
+import { userState } from "@/atoms/userAtom";
+import { useRecoilValue } from "recoil";
 import Modal from "@/components/Modal";
 import Navbar from "@/components/Navbar";
 import { Kelas, KelasTypeList, Siswa, SPPOptions } from "@/dataStructure";
@@ -11,6 +13,7 @@ import Select from "react-select";
 
 function DetailSiswa() {
     const { id } = useParams();
+    const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [siswaD, setSiswaD] = useState<Siswa>();
     const [kelas, setKelas] = useState<KelasTypeList>([]);
@@ -78,7 +81,7 @@ function DetailSiswa() {
     if(loading) {
         return (
             <>
-                <Navbar/>
+                <Navbar user={user}/>
 
                 <div className="kelasContainer">
                     <div className="kelasHead">
@@ -95,7 +98,7 @@ function DetailSiswa() {
                 <title>SPPAY - Detail Siswa</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
 
             <form className="siswaContainer" onSubmit={submitHandler}>
                 { /*Modal for Delete*/}

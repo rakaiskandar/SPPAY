@@ -1,3 +1,5 @@
+import { userState } from "@/atoms/userAtom";
+import { useRecoilValue } from "recoil";
 import Modal from "@/components/Modal";
 import Navbar from "@/components/Navbar";
 import { Pembayaran, Pengguna, Siswa } from "@/dataStructure";
@@ -13,6 +15,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 function DetailPembayaran() {
     const { id } = useParams();
+    const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [siswaD, setSiswaD] = useState<Siswa>();
     const [penggunaD, setPenggunaD] = useState<Pengguna>();
@@ -81,7 +84,7 @@ function DetailPembayaran() {
     if(loading) {
         return (
             <>
-                <Navbar/>
+                <Navbar user={user}/>
 
                 <div className="penggunaContainer">
                     <div className="penggunaHead">
@@ -98,7 +101,7 @@ function DetailPembayaran() {
                 <title>SPPAY - Detail Pembayaran</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
 
             <form className="pembayaranContainer" onSubmit={submitHandler}>
                 { /*Modal for Delete*/}

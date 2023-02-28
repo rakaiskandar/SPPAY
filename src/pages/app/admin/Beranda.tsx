@@ -5,7 +5,9 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import "@/style/beranda.scss";
+import { userState } from "@/atoms/userAtom";
 
 export interface SiswaDashboard{
   nama: string,
@@ -18,6 +20,7 @@ export interface TransaksiDashboard{
 }
 
 function Beranda() {
+  const user = useRecoilValue(userState);
   const location = useLocation();
   const navigate = useNavigate();
   const [totalPembayaran, setTotalPembayaran] = useState<number>(0);
@@ -26,6 +29,7 @@ function Beranda() {
   const [bayarTerbaru, setBayarTerbaru] = useState<TransaksiDashboard[]>([]);
 
   useEffect(() => {
+    console.log(user);
     const currentPath = location.pathname.split("/");
     if (currentPath.length < 4){
       navigate("beranda");
@@ -56,7 +60,7 @@ function Beranda() {
         <title>SPPAY - Beranda</title>
       </Helmet>
 
-      <Navbar />
+      <Navbar user={user}/>
 
       <main className="berandaContainer">
         <div className="berandaHead">

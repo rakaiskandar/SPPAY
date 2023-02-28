@@ -10,8 +10,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import "@/style/adminGeneral.scss";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/atoms/userAtom";
 
 function Pembayaran() {
+  const user = useRecoilValue(userState);
   const [pembayaran, setPembayaran] = useState<PembayaranTypeList>([]);
   const [filterInput, setFilterInput] = useState<string>("");
 
@@ -23,7 +26,7 @@ function Pembayaran() {
   useEffect(() => {
     connectionSql.connect();
     var stateSql =
-      "SELECT `pembayaran`.id_pembayaran AS id, `pembayaran`.tgl_bayar, `pengguna`.nama_pengguna, `siswa`.nama AS nama_siswa,`pembayaran`.status_bayar, `pembayaran`.jumlah_bayar FROM `pembayaran`, `siswa`, `pengguna` WHERE `pembayaran`.id_user = `pengguna`.id_user AND `pembayaran`.nisn = `siswa`.nisn";
+      "SELECT `pembayaran`.id_pembayaran AS id, `pembayaran`.tgl_bayar, `pengguna`.nama_pengguna, `siswa`.nama AS nama_siswa, `kelas`.nama_kelas AS nama_kelas, `pembayaran`.status_bayar, `pembayaran`.jumlah_bayar FROM `pembayaran`, `siswa`, `pengguna`, `kelas` WHERE `pembayaran`.id_user = `pengguna`.id_user AND `pembayaran`.nisn = `siswa`.nisn AND `siswa`.id_kelas = `kelas`.id_kelas";
     connectionSql.query(stateSql, (err, results) => {
         if (err) console.error(err);
         else{
@@ -59,6 +62,13 @@ function Pembayaran() {
       {
         Header: "Nama Siswa",
         accessor: "nama_siswa",
+        Cell: ({ cell: { value } }: { cell: { value: string } }) => (
+            <span>{value}</span>
+        ),
+      },
+      {
+        Header: "Kelas",
+        accessor: "nama_kelas",
         Cell: ({ cell: { value } }: { cell: { value: string } }) => (
             <span>{value}</span>
         ),
@@ -101,7 +111,7 @@ function Pembayaran() {
         <title>SPPAY - Pembayaran</title>
       </Helmet>
 
-      <Navbar />
+      <Navbar user={user}/>
 
       <main className="pembayaranContainer">
         <div className="pembayaranHead">

@@ -8,8 +8,11 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
+import { userState } from "@/atoms/userAtom";
+import { useRecoilValue } from "recoil";
 
 function NewKelas() {
+    const user = useRecoilValue(userState);
     const { register, handleSubmit } = useForm<Kelas>();
     const navigate = useNavigate();
 
@@ -45,7 +48,7 @@ function NewKelas() {
                 <title>SPPAY - Tambah Kelas Baru</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
 
             <form className="kelasContainer" onSubmit={submitHandler}>
                 <div className="formTitle">

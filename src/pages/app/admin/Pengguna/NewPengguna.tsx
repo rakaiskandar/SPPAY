@@ -9,8 +9,11 @@ import Select from "react-select";
 import { connectionSql } from "@/sqlConnect";
 import sha1 from "sha1";
 import { Icon } from "@iconify/react";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/atoms/userAtom";
 
 function NewPengguna() {
+    const user = useRecoilValue(userState);
     const { register, handleSubmit } = useForm<Pengguna>();
     const navigate = useNavigate();
 
@@ -48,7 +51,7 @@ function NewPengguna() {
                 <title>SPPAY - Tambah Pengguna Baru</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
 
             <form className="penggunaContainer" onSubmit={submitHandler}>
                 <div className="formTitle">

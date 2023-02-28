@@ -1,3 +1,5 @@
+import { userState } from "@/atoms/userAtom";
+import { useRecoilValue } from "recoil";
 import Navbar from "@/components/Navbar";
 import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
@@ -7,6 +9,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import sha1 from "sha1";
 
 function UbahPassword() {
+    const user = useRecoilValue(userState);
     let { id } = useParams();
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
@@ -35,7 +38,7 @@ function UbahPassword() {
                 <title>SPPAY - Ubah Password Pengguna</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
 
             <form className="penggunaContainer" onSubmit={submitHandler}>
                 <div className="formTitle">

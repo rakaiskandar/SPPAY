@@ -8,8 +8,11 @@ import { useEffect, useState } from "react";
 import { connectionSql } from "@/sqlConnect";
 import Select from "react-select";
 import { Icon } from "@iconify/react";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/atoms/userAtom";
 
 function NewSiswa() {
+    const user = useRecoilValue(userState);
     const { register, handleSubmit } = useForm<Siswa>();
     const navigate = useNavigate();
 
@@ -50,7 +53,7 @@ function NewSiswa() {
                 <title>SPPAY - Tambah Siswa Baru</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
 
             <form className="siswaContainer" onSubmit={submitHandler}>
                 <div className="formTitle">

@@ -1,5 +1,6 @@
 import { HelmetProvider } from "react-helmet-async";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 import AdminLayout from "./pages/app/admin/AdminLayout";
 import Beranda from "./pages/app/admin/Beranda";
 import DetailKelas from "./pages/app/admin/Kelas/DetailKelas";
@@ -21,30 +22,32 @@ import Login from "./pages/Login";
 function App() {
   return (
     <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/app" element={<Layout />}>
-            <Route path="a" element={<AdminLayout />}>
-              <Route index element={<Beranda />} />
-              <Route path="beranda" element={<Beranda />} />
-              <Route path="pengguna" element={<Pengguna />} />
-              <Route path="pengguna/new" element={<NewPengguna/>}/>
-              <Route path="pengguna/:id" element={<DetailPengguna/>}/>
-              <Route path="pengguna/:id/ubah-pass" element={<UbahPassword/>}/>
-              <Route path="kelas" element={<Kelas />} />
-              <Route path="kelas/new" element={<NewKelas/>}/>
-              <Route path="kelas/:id" element={<DetailKelas/>}/>
-              <Route path="siswa" element={<Siswa/>}/>
-              <Route path="siswa/new" element={<NewSiswa/>}/>
-              <Route path="siswa/:id" element={<DetailSiswa/>}/>
-              <Route path="pembayaran" element={<Pembayaran />} />
-              <Route path="pembayaran/new" element={<NewPembayaran/>}/>
-              <Route path="pembayaran/:id" element={<DetailPembayaran/>}/>
+      <RecoilRoot>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/app" element={<Layout />}>
+              <Route path="a" element={<AdminLayout />}>
+                <Route index element={<Beranda />} />
+                <Route path="beranda" element={<Beranda />} />
+                <Route path="pengguna" element={<Pengguna />} />
+                <Route path="pengguna/new" element={<NewPengguna/>}/>
+                <Route path="pengguna/:id" element={<DetailPengguna/>}/>
+                <Route path="pengguna/:id/ubah-pass" element={<UbahPassword/>}/>
+                <Route path="kelas" element={<Kelas />} />
+                <Route path="kelas/new" element={<NewKelas/>}/>
+                <Route path="kelas/:id" element={<DetailKelas/>}/>
+                <Route path="siswa" element={<Siswa/>}/>
+                <Route path="siswa/new" element={<NewSiswa/>}/>
+                <Route path="siswa/:id" element={<DetailSiswa/>}/>
+                <Route path="pembayaran" element={<Pembayaran />} />
+                <Route path="pembayaran/new" element={<NewPembayaran/>}/>
+                <Route path="pembayaran/:id" element={<DetailPembayaran/>}/>
+              </Route>
             </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </RecoilRoot>
     </HelmetProvider>
   );
 }

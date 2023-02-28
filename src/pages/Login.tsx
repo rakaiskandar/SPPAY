@@ -3,13 +3,16 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import logo from "@/assets/sppayLogo2.svg";
 import ilustration from "@/assets/ilustration-sppay.svg";
-import "../style/login.scss";
+import "@/style/login.scss";
 import sha1 from "sha1";
 import { connectionSql } from "@/sqlConnect";
+import { useSetRecoilState } from "recoil";
+import { userState } from "@/atoms/userAtom";
 
 function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const setUser = useSetRecoilState(userState);
   const nav = useNavigate();
 
   const submitHandler = (ev : any) => {
@@ -26,9 +29,16 @@ function Login() {
     connectionSql.query(stateSql, function (err, results) {
       if (err) console.error(err);
       else {
-        if (results.length) {
-          nav("/app/a/beranda");
-          console.log("ada user");
+        setUser(results[0])
+        if (results.length && results[0].level === "admin") {
+          nav("/app/a");
+          console.log("ada admin");
+        }else if(results.length && results[0].level === "petugas"){
+          console.log("ada petugas");
+        }else if (results.length && results[0].level === "siswa") {
+          console.log("ada siswa");
+        }else{
+          console.log("password atau username salah")
         }
       }
     });

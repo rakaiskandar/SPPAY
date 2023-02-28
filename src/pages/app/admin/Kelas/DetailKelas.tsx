@@ -8,9 +8,12 @@ import Select from "react-select";
 import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
 import Modal from "@/components/Modal";
+import { userState } from "@/atoms/userAtom";
+import { useRecoilValue } from "recoil";
 
 function DetailKelas() {
     const { id } = useParams();
+    const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [kelasD, setKelasD] = useState<Kelas>();
     const [selectedKompetensi, setSelectedKompetensi] = useState(kompetensiOptions[0]);
@@ -61,7 +64,7 @@ function DetailKelas() {
     if(loading) {
         return (
             <>
-                <Navbar/>
+                <Navbar user={user}/>
 
                 <div className="kelasContainer">
                     <div className="kelasHead">
@@ -78,7 +81,7 @@ function DetailKelas() {
                 <title>SPPAY - Detail Kelas</title>
             </Helmet>
 
-            <Navbar/> 
+            <Navbar user={user}/> 
 
             <form className="kelasContainer" onSubmit={submitHandler}>
 

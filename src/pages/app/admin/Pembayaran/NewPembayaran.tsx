@@ -8,12 +8,14 @@ import { useForm } from "react-hook-form";
 import { connectionSql } from "@/sqlConnect";
 import Select from "react-select";
 import dayjs from "dayjs";
-import { inputRupiahFormatted } from "@/helpers/inputRupiahFormatted";
 import { Icon } from "@iconify/react";
+import { userState } from "@/atoms/userAtom";
+import { useRecoilValue } from "recoil";
 
 interface PembayaranNewProps extends Siswa, Pembayaran, Pengguna, SPP {}
 
 function NewPembayaran() {
+    const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const { register, handleSubmit, setValue } = useForm<PembayaranNewProps>();
 
@@ -132,7 +134,7 @@ function NewPembayaran() {
                 <title>SPPAY - Tambah Pembayaran Baru</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
 
             <div className="pembayaranContainer">
                 <div className="formTitle">
@@ -289,8 +291,7 @@ function NewPembayaran() {
                                     <h5>Jumlah Bayar</h5>
                                     <input 
                                     type="number"
-                                    {...register("jumlah_bayar")}
-                                    onKeyUp={(ev) => inputRupiahFormatted(ev.target)} 
+                                    {...register("jumlah_bayar")} 
                                     required
                                     />
                                 </div>

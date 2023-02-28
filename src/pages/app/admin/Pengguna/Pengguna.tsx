@@ -7,9 +7,12 @@ import { Icon } from "@iconify/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import "../../../../style/adminGeneral.scss";
+import "@/style/adminGeneral.scss";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/atoms/userAtom";
 
 function Pengguna() {
+    const user = useRecoilValue(userState)
     const [pengguna, setPengguna] = useState<PenggunaTypeList>([]);
     const [filterInput, setFilterInput] = useState<string>("");
 
@@ -20,7 +23,7 @@ function Pengguna() {
 
     useEffect(() => {
         connectionSql.connect();
-        var stateSql = "SELECT *, `pengguna`.id_user AS id FROM `pengguna`";
+        var stateSql = "SELECT *, `pengguna`.id_user AS id FROM `pengguna` WHERE `pengguna`.level != 'admin'";
         connectionSql.query(stateSql, (err, results) => {
             if (err) console.error(err);
             else{
@@ -84,7 +87,7 @@ function Pengguna() {
                 <title>SPPAY - Pengguna</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
             
             <main className="penggunaContainer">
                 <div className="penggunaHead">

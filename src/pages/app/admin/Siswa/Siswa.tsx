@@ -7,9 +7,12 @@ import { Icon } from "@iconify/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import "../../../../style/adminGeneral.scss";
+import "@/style/adminGeneral.scss";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/atoms/userAtom";
 
 function Siswa() {
+    const user = useRecoilValue(userState);
     const [siswa, setSiswa] = useState<SiswaTypeList>([]);
     const [filterInput, setFilterInput] = useState<string>("");
 
@@ -92,7 +95,7 @@ function Siswa() {
                 <title>SPPAY - Siswa</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
 
             <main className="siswaContainer">
                 <div className="siswaHead">

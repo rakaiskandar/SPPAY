@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import image from "../assets/astronaut.png";
 import NavbarProfile from "./NavbarProfile";
 
-function Navbar() {
+function Navbar({ user } : { user: any}) {
   let dateNow = new Date().toLocaleDateString("en-US").toString();
   const formatDate = dayjs(dateNow).format("dddd, D MMMM YYYY");
   
@@ -42,7 +42,7 @@ function Navbar() {
         <h2 className="nav-text">
           <span>{greeting.emoji}</span>
           {greeting.greet}
-          <span>Admin!</span>
+          <span>{user.nama_pengguna}</span>
         </h2>
         <div>
           <NavbarProfile img={image}/>

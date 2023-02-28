@@ -7,9 +7,12 @@ import { Icon } from "@iconify/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import "../../../../style/adminGeneral.scss";
+import "@/style/adminGeneral.scss";
+import { useRecoilValue } from "recoil";
+import { userState } from "@/atoms/userAtom";
 
 function Kelas() {
+    const user = useRecoilValue(userState)
     const [kelas, setKelas] = useState<KelasTypeList>([]);
     const [filterInput, setFilterInput] = useState<string>("");
 
@@ -98,7 +101,7 @@ function Kelas() {
                 <title>SPPAY - Kelas</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
             
             <main className="kelasContainer">
                 <div className="kelasHead">

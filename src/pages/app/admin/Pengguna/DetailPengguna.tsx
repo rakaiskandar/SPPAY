@@ -1,3 +1,5 @@
+import { userState } from "@/atoms/userAtom";
+import { useRecoilValue } from "recoil";
 import Modal from "@/components/Modal";
 import Navbar from "@/components/Navbar";
 import { Level, levelOptions, Pengguna } from "@/dataStructure";
@@ -11,6 +13,7 @@ import Select from "react-select";
 
 function DetailPengguna() {
     const { id } = useParams();
+    const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [penggunaD, setPenggunaD] = useState<Pengguna>();
     const [selectedLevel, setSelectedLevel] = useState(levelOptions[0]);
@@ -62,7 +65,7 @@ function DetailPengguna() {
     if(loading) {
         return (
             <>
-                <Navbar/>
+                <Navbar user={user}/>
 
                 <div className="penggunaContainer">
                     <div className="penggunaHead">
@@ -79,7 +82,7 @@ function DetailPengguna() {
                 <title>SPPAY - Detail Pengguna</title>
             </Helmet>
 
-            <Navbar/>
+            <Navbar user={user}/>
 
             <form className="penggunaContainer" onSubmit={submitHandler}>
 
