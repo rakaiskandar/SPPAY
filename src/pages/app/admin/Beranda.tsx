@@ -29,7 +29,6 @@ function Beranda() {
   const [bayarTerbaru, setBayarTerbaru] = useState<TransaksiDashboard[]>([]);
 
   useEffect(() => {
-    console.log(user);
     const currentPath = location.pathname.split("/");
     if (currentPath.length < 4){
       navigate("beranda");
@@ -57,7 +56,7 @@ function Beranda() {
   return (
     <>
       <Helmet>
-        <title>SPPAY - Beranda</title>
+        <title>SPPAY - Beranda Admin</title>
       </Helmet>
 
       <Navbar user={user}/>
