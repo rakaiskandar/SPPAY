@@ -31,9 +31,9 @@ function Beranda() {
       navigate("beranda");
     }
 
-    var totalPembayaran = "SELECT SUM(jumlah_bayar) AS total FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(now())";
-    var totalTransaksi = "SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(now())";
-    var siswaBelumBayar = "SELECT siswa.nama, kelas.nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' LIMIT 5";
+    var totalPembayaran = "SELECT SUM(jumlah_bayar) AS total FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(NOW())";
+    var totalTransaksi = "SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(NOW())";
+    var siswaBelumBayar = "SELECT siswa.nama, kelas.nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' LIMIT 4";
     var pembayaranTerbaru = "SELECT siswa.nama, pembayaran.tgl_bayar FROM siswa, pembayaran WHERE MONTH(pembayaran.tgl_bayar) = MONTH(now()) AND pembayaran.nisn = siswa.nisn ORDER BY pembayaran.tgl_bayar DESC LIMIT 4";
 
     connectionSql.query(
@@ -45,7 +45,6 @@ function Beranda() {
           setTotalTransaksi(results[1][0].jumlah);
           setSiswaBelumBayar(results[2]);
           setBayarTerbaru(results[3]);
-          // console.log(results[3]);
         }
       }
     )
@@ -62,7 +61,6 @@ function Beranda() {
       <main className="berandaContainer">
         <div className="berandaHead">
           <h2>Beranda</h2>
-          <h4>Bulan ini</h4>
         </div>
 
         <div className="berandaSection1">
@@ -91,7 +89,7 @@ function Beranda() {
             ))
             ) : (
               <div className="beranda2Stat">
-                <h4 className="tidakAdaData">Tidak ada pembayaran terbaru</h4>
+                <h4 className="tidakAdaData">Tidak ada pembayaran terbaru di bulan ini</h4>
               </div>
             )}
             </div>
@@ -112,7 +110,7 @@ function Beranda() {
             ))
             ):(
                 <div className="beranda2Stat">
-                  <h4 className="tidakAdaData">Tidak ada siswa yang belum bayar</h4>
+                  <h4 className="tidakAdaData">Tidak ada siswa yang belum bayar di bulan ini</h4>
                 </div>
             )}
             </div>
