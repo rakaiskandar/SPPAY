@@ -45,12 +45,11 @@ export interface Pengguna{
 }
 
 export interface Level{
-    label: "admin" | "siswa" | "petugas"
-    value: "admin" | "siswa" | "petugas"
+    label:  "siswa" | "petugas"
+    value:  "siswa" | "petugas"
 }
 
 export const levelOptions: Level[] = [
-    { label: "admin", value:"admin" },
     { label: "petugas", value:"petugas" },
     { label: "siswa", value: "siswa"}
 ];
