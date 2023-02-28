@@ -33,6 +33,20 @@ $primary: #5A57EC;
         h4 {
             font-size: 32px;
         }
+        div {
+        padding: 0px 100px 0px 100px;
+        .stat1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4px 6px; 
+            margin: 5px 5px;
+            border-radius: 50px;
+            font-weight: 700;
+            color: #0faa26;
+            background: rgba(#12e632, 40%);
+        }
+        }
     }
 }
 

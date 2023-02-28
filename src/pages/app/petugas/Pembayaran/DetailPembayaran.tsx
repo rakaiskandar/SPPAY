@@ -119,12 +119,6 @@ function DetailPembayaran() {
                             <Icon icon="material-symbols:edit-document-outline-sharp"/>
                             Edit
                         </button>
-                        <Link to="/app/a/pembayaran">
-                            <button className="btn1Title">
-                                <Icon icon="material-symbols:print-outline-rounded"/>
-                                Cetak Laporan
-                            </button>
-                        </Link>
                     </div>
                 </div>
                 <div className="hapusContainer">

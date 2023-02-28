@@ -29,6 +29,42 @@ $primary: #5A57EC;
     align-items: center;
     justify-content: space-between;
 
+    div{
+    display: flex;
+    justify-content: flex-start;
+    gap: 6px;
+
+        button{
+            background: white;
+            display: flex;
+            color: $primary;
+            font-weight: 600;
+            border-radius: 4px;
+            align-items: center;
+            justify-content: center;
+            border: $primary solid 1px;
+            gap: 5px;
+            font-size: 16px;
+        }
+
+        .btnLaporan{
+            background: $primary;
+            display: flex;
+            color: white;
+            font-weight: 600;
+            border-radius: 4px;
+            align-items: center;
+            justify-content: center;
+            border: $primaryB solid 1px;
+            gap: 5px;
+            font-size: 16px;
+        }
+
+        .btnLaporan:hover{
+            background: darken($color: $primary, $amount: 2);   
+        }
+    }
+
     button{
         background: white;
         display: flex;

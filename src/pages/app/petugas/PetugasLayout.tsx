@@ -1,10 +1,10 @@
-import Sidebar from "@/components/Sidebar";
-import { Outlet } from "react-router-dom";
-import "@/style/layout.scss";
-import { useRecoilValue } from "recoil";
-import { userState } from "@/atoms/userAtom";
+import { userState } from '@/atoms/userAtom';
+import Sidebar from '@/components/Sidebar';
+import '@/style/layout.scss';
+import { Outlet } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
-function AdminLayout() {
+function PetugasLayout() {
     const user =  useRecoilValue(userState);
 
     return ( 
@@ -21,4 +21,4 @@ function AdminLayout() {
      );
 }
 
-export default AdminLayout;
+export default PetugasLayout;

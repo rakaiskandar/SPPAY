@@ -116,18 +116,12 @@ function Pembayaran() {
       <main className="pembayaranContainer">
         <div className="pembayaranHead">
           <h2>Pembayaran</h2>
-          <div>
-            <Link to="new">
-              <button>
-                <Icon icon="akar-icons:plus" />
-                Tambah Pembayaran
-              </button>
-            </Link>
-            <button className="btnLaporan">
-              <Icon icon="material-symbols:print-outline-rounded"/>
-              Generate Laporan
+          <Link to="new">
+            <button>
+              <Icon icon="akar-icons:plus" />
+              Tambah Pembayaran
             </button>
-          </div>
+          </Link>
         </div>
 
         <div className="filterInput">

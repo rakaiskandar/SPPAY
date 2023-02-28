@@ -1,11 +1,10 @@
+import { userState } from "@/atoms/userAtom";
 import Sidebar from "@/components/Sidebar";
 import { Outlet } from "react-router-dom";
-import "@/style/layout.scss";
 import { useRecoilValue } from "recoil";
-import { userState } from "@/atoms/userAtom";
 
-function AdminLayout() {
-    const user =  useRecoilValue(userState);
+function SiswaLayout() {
+    const user = useRecoilValue(userState);
 
     return ( 
         <div className="layoutContainer">
@@ -13,12 +12,10 @@ function AdminLayout() {
                 <Sidebar user={user}/>
             </nav>
             <main>
-                <div>
-                    <Outlet/>
-                </div>
+                <Outlet/>
             </main>
         </div>
      );
 }
 
-export default AdminLayout;
+export default SiswaLayout;
