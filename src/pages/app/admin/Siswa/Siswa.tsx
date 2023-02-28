@@ -21,7 +21,7 @@ function Siswa() {
     useEffect(() => {
         connectionSql.connect();
         var stateSql = 
-        "SELECT siswa.nisn, siswa.nisn AS id,siswa.nis, siswa.nama, kelas.nama_kelas, siswa.alamat, siswa.no_telp, siswa.sudah_bayar FROM siswa, kelas WHERE siswa.id_kelas = kelas.id_kelas";
+        "SELECT siswa.nisn, siswa.nisn AS id,siswa.nis, siswa.nama, kelas.nama_kelas, siswa.alamat, siswa.no_telp, spp.status_bayar FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp";
         connectionSql.query(stateSql, (err, results) => {
             if (err) console.error(err);
             else{
@@ -63,7 +63,7 @@ function Siswa() {
             },
             {
                 Header: "Status Bayar",
-                accessor: "sudah_bayar",
+                accessor: "status_bayar",
                 Cell: ({ cell: { value }} : {cell: { value: string}}) => (
                     <span className="paidStatus">
                         {value === "Sudah" ? (
