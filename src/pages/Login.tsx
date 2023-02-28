@@ -34,8 +34,10 @@ function Login() {
           nav("/app/a");
           console.log("ada admin");
         }else if(results.length && results[0].level === "petugas"){
+          nav("/app/p")
           console.log("ada petugas");
         }else if (results.length && results[0].level === "siswa") {
+          nav("/app/s")
           console.log("ada siswa");
         }else{
           console.log("password atau username salah")
