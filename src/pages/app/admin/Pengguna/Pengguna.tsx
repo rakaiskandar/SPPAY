@@ -21,7 +21,7 @@ function Pengguna() {
     useEffect(() => {
         connectionSql.connect();
         var stateSql = "SELECT *, `pengguna`.id_user AS id FROM `pengguna`";
-        connectionSql.query(stateSql, (err, results, fields) => {
+        connectionSql.query(stateSql, (err, results) => {
             if (err) console.error(err);
             else{
                 setPengguna(results);
