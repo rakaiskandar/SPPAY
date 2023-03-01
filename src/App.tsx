@@ -16,6 +16,9 @@ import UbahPassword from "./pages/app/admin/Pengguna/UbahPassword";
 import DetailSiswa from "./pages/app/admin/Siswa/DetailSiswa";
 import NewSiswa from "./pages/app/admin/Siswa/NewSiswa";
 import Siswa from "./pages/app/admin/Siswa/Siswa";
+import DetailSPP from "./pages/app/admin/SPP/DetailSPP";
+import NewSPP from "./pages/app/admin/SPP/NewSPP";
+import SPP from "./pages/app/admin/SPP/SPP";
 import Layout from "./pages/app/Layout";
 import BerandaPetugas from "./pages/app/petugas/Beranda";
 import DetailPembayaranPetugas from "./pages/app/petugas/Pembayaran/DetailPembayaran";
@@ -50,6 +53,10 @@ function App() {
                 <Route path="pembayaran" element={<PembayaranAdmin />} />
                 <Route path="pembayaran/new" element={<NewPembayaranAdmin/>}/>
                 <Route path="pembayaran/:id" element={<DetailPembayaranAdmin/>}/>
+                <Route path="spp" element={<SPP/>}/>
+                <Route path="spp/new" element={<NewSPP/>}/>
+                <Route path="spp/:id" element={<DetailSPP/>}/>
+                <Route/>
               </Route>
               <Route path="p" element={<PetugasLayout/>}>
                 <Route index element={<BerandaPetugas/>}/>

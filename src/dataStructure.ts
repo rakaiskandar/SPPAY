@@ -37,11 +37,18 @@ export interface Siswa{
 export type SiswaTypeList = Siswa[];
 
 export interface Pengguna{
-    id_user: string,
-    username: string,
-    password: string,
-    nama_pengguna: string,
-    level: string
+    // id_user: any,
+    // username: string,
+    // password: string,
+    // nama_pengguna: string,
+    // level: string
+    id_user: number;
+    username: string;
+    password: string;
+    nama_pengguna: string;
+    level: "admin" | "petugas" | "siswa";
+    label: string;
+    value: number;
 }
 
 export interface Level{
@@ -58,7 +65,7 @@ export type PenggunaTypeList = Pengguna[];
 
 export interface Pembayaran{
     id_pembayaran: number,
-    id_user: string,
+    id_user: number,
     nama_pengguna: string,
     nama_siswa: string,
     nama_petugas: string,
@@ -76,7 +83,8 @@ export type PembayaranTypeList = Pembayaran[];
 export interface SPP{
     id_spp: number,
     tahun: string,
-    nominal: string 
+    nominal: string,
+    status_bayar: string, 
 }
 
 export type SPPTypeList = SPP[];
