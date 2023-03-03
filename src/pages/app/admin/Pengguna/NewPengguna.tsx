@@ -53,7 +53,7 @@ function NewPengguna() {
 
             <Navbar user={user}/>
 
-            <form className="penggunaContainer" onSubmit={submitHandler}>
+            <form className="container" onSubmit={submitHandler}>
                 <div className="formTitle">
                     <h2>Tambah Pengguna</h2>
                     <div>

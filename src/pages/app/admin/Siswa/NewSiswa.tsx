@@ -55,7 +55,7 @@ function NewSiswa() {
 
             <Navbar user={user}/>
 
-            <form className="siswaContainer" onSubmit={submitHandler}>
+            <form className="container" onSubmit={submitHandler}>
                 <div className="formTitle">
                     <h2>Tambah Siswa</h2>
                     <div>

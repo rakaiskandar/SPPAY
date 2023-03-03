@@ -50,7 +50,7 @@ function NewKelas() {
 
             <Navbar user={user}/>
 
-            <form className="kelasContainer" onSubmit={submitHandler}>
+            <form className="container" onSubmit={submitHandler}>
                 <div className="formTitle">
                     <h2>Tambah Kelas</h2>
                     <div>

@@ -28,7 +28,7 @@ function NewSPP() {
 
     const submitHandler = handleSubmit((data) => {
         const convertedNominal = parseInt(data.nominal.length < 4 ? data.nominal : data.nominal.split(".").join(""))
-        const addSt = `INSERT INTO spp (id_spp, tahun, nominal, status_bayar) VALUES('${lastId + 1}', YEAR(current_timestamp()), '${convertedNominal}', 'Belum')`;
+        const addSt = `INSERT INTO spp (id_spp, tahun, nominal, sudah_bayar) VALUES('${lastId + 1}', YEAR(current_timestamp()), '${convertedNominal}', 'Belum')`;
         connectionSql.query(addSt, (err, results) => {
             if(err) console.error(err)
             else{

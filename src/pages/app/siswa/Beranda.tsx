@@ -26,7 +26,7 @@ function Beranda() {
 
             <Navbar user={user}/>
 
-            <main className="berandaContainer">
+            <main className="container">
                 <div className="berandaHead">
                     <h2>Beranda</h2>
                 </div>

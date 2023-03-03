@@ -45,6 +45,7 @@ function DetailKelas() {
             else{
                 console.log("update berhasil");
                 console.log(results);
+                navigate("/app/a/kelas")
             }
         });
     });
@@ -66,7 +67,7 @@ function DetailKelas() {
             <>
                 <Navbar user={user}/>
 
-                <div className="kelasContainer">
+                <div className="container">
                     <div className="kelasHead">
                         <h4>Loading...</h4>
                     </div>
@@ -83,7 +84,7 @@ function DetailKelas() {
 
             <Navbar user={user}/> 
 
-            <form className="kelasContainer" onSubmit={submitHandler}>
+            <form className="container" onSubmit={submitHandler}>
 
                 { /*Modal for Delete*/}
                 <Modal

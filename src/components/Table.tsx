@@ -28,7 +28,7 @@ export default function Table({
     canPreviousPage,
     canNextPage,
     pageOptions,
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
   } = useTable({ columns, data }, useFilters, useSortBy, usePagination);
 
   useEffect(() => {

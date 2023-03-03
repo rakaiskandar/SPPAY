@@ -103,7 +103,7 @@ function Kelas() {
 
             <Navbar user={user}/>
             
-            <main className="kelasContainer">
+            <main className="container">
                 <div className="kelasHead">
                     <h2>Kelas</h2>
                     <Link to="new">

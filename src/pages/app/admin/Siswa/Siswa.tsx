@@ -97,7 +97,7 @@ function Siswa() {
 
             <Navbar user={user}/>
 
-            <main className="siswaContainer">
+            <main className="container">
                 <div className="siswaHead">
                     <h2>Siswa</h2>
                     <Link to="new">

@@ -29,7 +29,7 @@ function Beranda() {
     }
 
     var totalPembayaran =
-      "SELECT SUM(jumlah_bayar) AS total FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(NOW())";
+      "SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE detail_pembayaran.id_pembayaran = pembayaran.id_pembayaran AND MONTH(tgl_bayar) = MONTH(NOW())";
     var totalTransaksi =
       "SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(NOW())";
     var pembayaranTerbaru =
@@ -55,7 +55,7 @@ function Beranda() {
 
       <Navbar user={user} />
 
-      <main className="berandaContainer">
+      <main className="container">
         <div className="berandaHead">
           <h2>Beranda</h2>
         </div>
@@ -63,7 +63,12 @@ function Beranda() {
         <div className="berandaSection1">
           <div className="berandaSub1">
             <h5>Total Pembayaran:</h5>
-            <h4>{rupiahConverter(totalPembayaran)}</h4>
+            <>{totalPembayaran !== null ? (
+              <h4>{rupiahConverter(totalPembayaran)}</h4>
+            ) : (
+              <h4>{rupiahConverter(0)}</h4>
+            )}
+            </>
           </div>
           <div className="berandaSub1">
             <h5>Jumlah Transaksi:</h5>

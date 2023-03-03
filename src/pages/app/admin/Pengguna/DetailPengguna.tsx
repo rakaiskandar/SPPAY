@@ -46,6 +46,7 @@ function DetailPengguna() {
             else{
                 console.log("update berhasil");
                 console.log(results);
+                navigate("/app/a/pengguna");
             }
         })
     })
@@ -67,7 +68,7 @@ function DetailPengguna() {
             <>
                 <Navbar user={user}/>
 
-                <div className="penggunaContainer">
+                <div className="container">
                     <div className="penggunaHead">
                         <h4>Loading...</h4>
                     </div>
@@ -84,7 +85,7 @@ function DetailPengguna() {
 
             <Navbar user={user}/>
 
-            <form className="penggunaContainer" onSubmit={submitHandler}>
+            <form className="container" onSubmit={submitHandler}>
 
                 { /*Modal for Delete*/}
                 <Modal

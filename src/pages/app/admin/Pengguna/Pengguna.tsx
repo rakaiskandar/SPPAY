@@ -60,17 +60,17 @@ function Pengguna() {
                             <p>🧑🏻‍💻</p>
                             <h5 className="aType">{value}</h5>
                         </> 
-                        : value === "siswa"
-                        ? 
-                        <>
-                            <p>🧑🏻‍💼</p>
-                            <h5 className="sType">{value}</h5>
-                        </>
                         : value === "petugas"
                         ? 
                         <>
-                            <p>🧑🏻‍🎓</p>
+                            <p>🧑🏻‍💼</p>
                             <h5 className="pType">{value}</h5>
+                        </>
+                        : value === "siswa"
+                        ? 
+                        <>
+                            <p>🧑🏻‍🎓</p>
+                            <h5 className="sType">{value}</h5>
                         </>
                         : ""
                     }
@@ -89,7 +89,7 @@ function Pengguna() {
 
             <Navbar user={user}/>
             
-            <main className="penggunaContainer">
+            <main className="container">
                 <div className="penggunaHead">
                     <h2>Pengguna</h2>
                     <Link to="new">
@@ -112,7 +112,7 @@ function Pengguna() {
                     <Table
                     columns={columns}
                     data={dataMemo}
-                    filterColumn="username"
+                    filterColumn="level"
                     filterInput={filterInput}
                     />
                 ) : (

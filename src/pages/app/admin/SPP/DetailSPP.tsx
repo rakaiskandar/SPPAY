@@ -41,6 +41,7 @@ function DetailSPP() {
             else{
                 console.log("update berhasil");
                 console.log(results);
+                navigate("/app/a/spp")
             }
         })
     })

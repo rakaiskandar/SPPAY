@@ -62,6 +62,7 @@ function DetailSiswa() {
             else{
                 console.log("update berhasil");
                 console.log(results);
+                navigate("/app/a/siswa")
             }
         });
     });
@@ -83,7 +84,7 @@ function DetailSiswa() {
             <>
                 <Navbar user={user}/>
 
-                <div className="kelasContainer">
+                <div className="container">
                     <div className="kelasHead">
                         <h4>Loading...</h4>
                     </div>
@@ -100,7 +101,7 @@ function DetailSiswa() {
 
             <Navbar user={user}/>
 
-            <form className="siswaContainer" onSubmit={submitHandler}>
+            <form className="container" onSubmit={submitHandler}>
                 { /*Modal for Delete*/}
                 <Modal 
                 open={isOpen} 

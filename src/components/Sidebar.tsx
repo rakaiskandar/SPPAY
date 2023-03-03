@@ -1,13 +1,8 @@
 import logo from "../assets/sppayLogo2.svg";
 import { Icon } from "@iconify/react";
 import { Link, useLocation } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { userState } from "@/atoms/userAtom";
-import { useEffect, useState } from "react";
-import { Pengguna } from "@/dataStructure";
-import { connectionSql } from "@/sqlConnect";
 
-const sidebarItemsAdmin = [
+const sidebarItems = [
   {
     path: "/app/a/beranda",
     name: "Beranda",
@@ -24,10 +19,17 @@ const sidebarItemsAdmin = [
     path: "/app/a/siswa",
     name: "Siswa",
   },
+];
+
+const sidebarItemsAdmin = [
   {
     path: "/app/a/pembayaran",
     name: "Pembayaran",
   },
+  {
+    path: "/app/a/spp",
+    name: "SPP"
+  }
 ];
 
 const sidebarItemsPetugas = [
@@ -51,12 +53,11 @@ const sidebarItemsSiswa = [
 
 const getSidebarIcon = (name: string) => {
   if (name == "Beranda") return <Icon icon="ant-design:home-outlined" />;
-  else if (name == "Pengguna")
-    return <Icon icon="ic:baseline-people-outline" />;
+  else if (name == "Pengguna") return <Icon icon="ic:baseline-people-outline" />;
   else if (name == "Kelas") return <Icon icon="ic:outline-class" />;
   else if (name == "Siswa") return <Icon icon="ph:student-duotone"/>
-  else if (name == "Pembayaran")
-    return <Icon icon="icon-park-outline:transaction" />;
+  else if (name == "Pembayaran") return <Icon icon="icon-park-outline:transaction" />;
+  else if(name == "SPP") return <Icon icon="material-symbols:payments-sharp"/>
 };
 
 function Sidebar({ user } : { user : any}) {
@@ -69,6 +70,7 @@ function Sidebar({ user } : { user : any}) {
     else if (ar[3] === "kelas") return "Kelas";
     else if (ar[3] === "siswa") return "Siswa"; 
     else if (ar[3] === "pembayaran") return "Pembayaran";
+    else if (ar[3] === "spp") return "SPP";
   };
 
   return (
@@ -79,7 +81,7 @@ function Sidebar({ user } : { user : any}) {
       {user?.level === "admin" ? 
       <>
         <div className="sidebarList">
-          {sidebarItemsAdmin.map((item, i) => (
+          {sidebarItems.map((item, i) => (
             <Link
               to={item.path}
               className={`sidebarItems ${
@@ -91,10 +93,19 @@ function Sidebar({ user } : { user : any}) {
               <p>{item.name}</p>
             </Link>
           ))}
-          <button>
-            <Icon icon="akar-icons:plus"/>
-            Tambah SPP
-          </button>
+          <div className="divide"></div>
+          {sidebarItemsAdmin.map((item, i) => (
+            <Link
+            to={item.path}
+            className={`sidebarItems ${
+              extractLocation() === item.name ? "sidebarItemsActive" : ""
+            }`}
+            key={i}
+            >
+            {getSidebarIcon(item.name)}
+            <p>{item.name}</p>
+            </Link>
+          ))}
         </div>
       </>
       : user?.level === "petugas" ?
