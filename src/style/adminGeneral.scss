@@ -22,6 +22,10 @@ $primary: #5A57EC;
     button:hover{
         background: darken($color:whitesmoke, $amount: 2);
     }
+
+    button:focus{
+        outline: none;
+    }
 }
 
 .pembayaranHead{
@@ -45,6 +49,7 @@ $primary: #5A57EC;
             border: $primary solid 1px;
             gap: 5px;
             font-size: 16px;
+            outline: none;
         }
 
         .btnLaporan{
@@ -63,6 +68,10 @@ $primary: #5A57EC;
         .btnLaporan:hover{
             background: darken($color: $primary, $amount: 2);   
         }
+
+        button:focus{
+            outline: none;
+        }
     }
 
     button{
@@ -76,10 +85,15 @@ $primary: #5A57EC;
         border: $primary solid 1px;
         gap: 5px;
         font-size: 16px;
+        outline: none;
     }
 
     button:hover{
         background: darken($color:whitesmoke, $amount: 2);
+    }
+
+    button:focus{
+        outline: none;
     }
 }
 
@@ -104,6 +118,10 @@ $primary: #5A57EC;
     button:hover{
         background: darken($color:whitesmoke, $amount: 2);
     }
+    
+    button:focus{
+        outline: none;
+    }
 }
 
 .siswaHead{
@@ -126,6 +144,37 @@ $primary: #5A57EC;
 
     button:hover{
         background: darken($color:whitesmoke, $amount: 2);
+    }
+
+    button:focus{
+        outline: none;
+    }
+}
+
+.sppHead{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button{
+        background: white;
+        display: flex;
+        color: $primary;
+        font-weight: 600;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        border: $primary solid 1px;
+        gap: 5px;
+        font-size: 16px;
+    }
+
+    button:hover{
+        background: darken($color:whitesmoke, $amount: 2);
+    }
+
+    button:focus{
+        outline: none;
     }
 }
 

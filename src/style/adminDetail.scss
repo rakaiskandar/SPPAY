@@ -28,6 +28,7 @@ $primary: #5A57EC;
             font-weight: 600;
             padding: 6px 16px;
             border-radius: 5px;
+            outline: none;
         }
 
         .btn2Title{
@@ -213,6 +214,16 @@ $primary: #5A57EC;
         color: black;
         padding: 5px;
         font-family: 'Nunito';
+        transition: 0.5s;
+    }
+
+    input:focus{
+        outline: none;
+        border: $primary 1px solid;
+    }
+
+    input:hover{
+        border: $primary 1px solid;
     }
 }
 
@@ -386,6 +397,7 @@ $primary: #5A57EC;
                         background: white;
                         border: 1px solid $primary;
                         color: $primary;
+                        outline: none;
                     }
                 }
             }

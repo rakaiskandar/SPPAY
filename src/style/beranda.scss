@@ -5,12 +5,6 @@ $primary: #5A57EC;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
-    h4{
-        padding: 6px;
-        border: 1px solid #3D3D3D;
-        border-radius: 6px;
-    }
 }
 
 .berandaSection1{
@@ -120,6 +114,10 @@ $primary: #5A57EC;
 
         button:hover{
             background: darken($color:$primaryB, $amount: 2);
+        }
+
+        button:focus{
+            outline: none;
         }
     }
 

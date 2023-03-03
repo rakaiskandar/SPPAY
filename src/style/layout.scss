@@ -6,23 +6,7 @@ $primary: #5A57EC;
     grid-template-columns: minmax(232px, 256px) 1fr;
 }
 
-.berandaContainer{
-    padding: 25px;
-}
-
-.kelasContainer{
-    padding: 25px;
-}
-
-.pembayaranContainer{
-    padding: 25px;
-}
-
-.siswaContainer{
-    padding: 25px;
-}
-
-.penggunaContainer{
+.container{
     padding: 25px;
 }
 
@@ -94,6 +78,10 @@ $primary: #5A57EC;
                 font-weight: 600;
             }
         }
+
+        .divide{
+            border-bottom: 2px solid $primaryB;
+        }
     }
 }
 
@@ -117,6 +105,7 @@ $primary: #5A57EC;
         justify-content: space-between;
         
         .nav-text{
+            margin-top: 15px;
             font-weight: 600;
             font-size: 26px;
         }
@@ -125,6 +114,22 @@ $primary: #5A57EC;
 
 .profileContainer{
     position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+
+    div{
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        text-align: right;
+
+        h4{
+            font-weight: 600;
+            font-size: large;
+        }
+    }
 
     .profileButton{
         display: flex;
@@ -152,11 +157,11 @@ $primary: #5A57EC;
 
     .profileItem{
         position: absolute;
+        bottom: -50px;
         right: 0;
         display: flex;
         flex-direction: column;
         padding: 5px;
-        z-index: 5;
         font-size: large;
         width: 170px;
 
@@ -165,7 +170,6 @@ $primary: #5A57EC;
             color: black;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
             gap: 5px;
             padding: 10px;
 
@@ -174,9 +178,13 @@ $primary: #5A57EC;
             }
         }
 
+        button:focus{
+            outline: none;
+        }
+
         .buttonActive{
-            background: $primaryB;
             color: red;
+            border: 1px solid $primaryB;
         }
     }
 }

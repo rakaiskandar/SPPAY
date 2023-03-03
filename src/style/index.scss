@@ -111,6 +111,18 @@ code {
   background: rgba($primary, 40%);
 }
 
+h4.aTypeT{
+  color: rgba($primary, 70%);
+}
+
+h4.pTypeT{
+  color: rgba(#f11717, 70%);
+}
+
+h4.sTypeT{
+  color: rgba(#0faa26, 70%);
+}
+
 .pType{
   @include typeBase;
   color: #f11717;
