@@ -45,7 +45,7 @@ function Navbar({ user } : { user: any}) {
           <span>{user.nama_pengguna}!</span>
         </h2>
         <div>
-          <NavbarProfile img={image}/>
+          <NavbarProfile img={image} user={user}/>
         </div>
       </div>
     </nav>
