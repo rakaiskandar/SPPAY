@@ -27,19 +27,34 @@ $primary: #5A57EC;
         h4 {
             font-size: 32px;
         }
+        span{
+            font-size: 42px;
+            font-weight: 700;
+        }
         div {
         padding: 0px 100px 0px 100px;
-        .stat1{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 4px 6px; 
-            margin: 5px 5px;
-            border-radius: 50px;
-            font-weight: 700;
-            color: #0faa26;
-            background: rgba(#12e632, 40%);
-        }
+            .stat1{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 4px 6px; 
+                margin: 5px 5px;
+                border-radius: 50px;
+                font-weight: 700;
+                color: #0faa26;
+                background: rgba(#12e632, 40%);
+            }
+            .stat2{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 4px 6px; 
+                margin: 5px 5px;
+                border-radius: 50px;
+                font-weight: 700;
+                color: #f05151;
+                background: rgba(#e94141, 40%);
+            }
         }
     }
 }
@@ -61,6 +76,11 @@ $primary: #5A57EC;
         padding: 20px 12px;
         h4{
             font-size: 20px;
+            font-weight: 700;
+        }
+
+        h5{
+            font-size: 16px;
             font-weight: 700;
         }
 
@@ -86,6 +106,21 @@ $primary: #5A57EC;
                 p{
                     font-size: 16px;
                     opacity: 80%;
+                }
+            }
+            .berandaSub2ListItemDetailSiswa{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+                h4{
+                    font-size: 16px;
+                    font-weight: 400;
+                    opacity: 80%;
+                }
+                p{
+                    font-size: 16px;
+                    font-weight: 600;
                 }
             }
         }

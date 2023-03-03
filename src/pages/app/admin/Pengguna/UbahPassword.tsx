@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import sha1 from "sha1";
+import { toast } from "react-toastify";
 
 function UbahPassword() {
     const user = useRecoilValue(userState);
@@ -20,15 +21,15 @@ function UbahPassword() {
 
         if (pass == confirmPass) {
             const updateSt = `UPDATE pengguna SET password = '${sha1(data.password)}' WHERE id_user = ${id}`;
-            connectionSql.query(updateSt, (err, results) => {
+            connectionSql.query(updateSt, (err) => {
                 if(err) console.error(err)
                 else{
-                    console.log(results);
+                    toast.success("Ubah kata sandi pengguna berhasil!", { autoClose: 1000})
                     navigate("/app/a/pengguna")
                 }
             })
         }else{
-            console.log("password salah")
+            toast.error("Kata sandi tidak sama", { autoClose: 1000})
         }
     })
 

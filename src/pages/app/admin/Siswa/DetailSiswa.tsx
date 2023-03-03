@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
 
 function DetailSiswa() {
     const { id } = useParams();
@@ -57,11 +58,10 @@ function DetailSiswa() {
         id_kelas = '${selectedKelas?.id_kelas}', 
         alamat = '${data.alamat}', no_telp = '${data.no_telp}' WHERE nisn = '${id}'`;
         // console.log(updateSt);
-        connectionSql.query(updateSt, (err, results) => {
+        connectionSql.query(updateSt, (err) => {
             if (err) console.error(err)
             else{
-                console.log("update berhasil");
-                console.log(results);
+                toast.success("Ubah siswa berhasil!", { autoClose: 1000})
                 navigate("/app/a/siswa")
             }
         });
@@ -69,11 +69,10 @@ function DetailSiswa() {
 
     const deleteData = () => {
         const deleteSt = `DELETE FROM siswa WHERE nisn = ${id}`;
-        connectionSql.query(deleteSt, (err, results) => {
+        connectionSql.query(deleteSt, (err) => {
             if(err) console.error(err)
             else{
-                console.log("hapus berhasil");
-                console.log(results);
+                toast.success("Hapus siswa berhasil!", { autoClose: 1000})
                 navigate("/app/a/siswa")
             }
         })

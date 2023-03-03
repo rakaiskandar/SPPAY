@@ -130,6 +130,10 @@ $primary: #5A57EC;
             font-family: 'Nunito';
         }
 
+        input:focus{
+            outline: $primary 1px solid;
+        }
+
         .selectInput{
             color: black !important;
             background-color: $primaryB !important;
@@ -281,6 +285,10 @@ $primary: #5A57EC;
                         color: black;
                         padding: 4px;
                         font-family: 'Nunito';
+                    }
+
+                    input:focus{
+                        outline: $primary 1px solid;
                     }
                 }
             }

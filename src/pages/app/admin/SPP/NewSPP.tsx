@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 
 function NewSPP() {
@@ -29,10 +30,10 @@ function NewSPP() {
     const submitHandler = handleSubmit((data) => {
         const convertedNominal = parseInt(data.nominal.length < 4 ? data.nominal : data.nominal.split(".").join(""))
         const addSt = `INSERT INTO spp (id_spp, tahun, nominal, sudah_bayar) VALUES('${lastId + 1}', YEAR(current_timestamp()), '${convertedNominal}', 'Belum')`;
-        connectionSql.query(addSt, (err, results) => {
+        connectionSql.query(addSt, (err) => {
             if(err) console.error(err)
             else{
-                console.log(results);
+                toast.success("Tambah spp berhasil!", { autoClose: 1000})
                 navigate(-1);
             }
         })

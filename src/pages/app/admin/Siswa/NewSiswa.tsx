@@ -10,6 +10,7 @@ import Select from "react-select";
 import { Icon } from "@iconify/react";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/atoms/userAtom";
+import { toast } from "react-toastify";
 
 function NewSiswa() {
     const user = useRecoilValue(userState);
@@ -38,10 +39,10 @@ function NewSiswa() {
     const submitHandler = handleSubmit((data) => {
         const addSt = `INSERT INTO siswa (nisn, nis, nama, id_kelas, alamat, no_telp, id_spp) VALUES ('${data.nisn}', '${data.nis}', '${data.nama}', '${selectedKelas?.id_kelas}', '${data.alamat}', '${data.no_telp}', '${selectedSpp?.value}')`;
         // console.log(addSt);
-        connectionSql.query(addSt, (err, results) => {
+        connectionSql.query(addSt, (err) => {
             if(err) console.error(err)
             else{
-                console.log(results);
+                toast.success("Tambah siswa berhasil!", { autoClose: 1000})
                 navigate(-1);
             }
         })

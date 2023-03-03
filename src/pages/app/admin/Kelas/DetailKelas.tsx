@@ -10,6 +10,7 @@ import { Icon } from "@iconify/react";
 import Modal from "@/components/Modal";
 import { userState } from "@/atoms/userAtom";
 import { useRecoilValue } from "recoil";
+import { toast } from "react-toastify";
 
 function DetailKelas() {
     const { id } = useParams();
@@ -40,11 +41,10 @@ function DetailKelas() {
 
     const submitHandler = handleSubmit((data) => {
         const updateSt = `UPDATE kelas SET nama_kelas = '${data.nama_kelas}', kompetensi_keahlian = '${selectedKompetensi.value}' WHERE id_kelas = ${id}`;
-        connectionSql.query(updateSt, (err, results) => {
+        connectionSql.query(updateSt, (err) => {
             if (err) console.error(err)
             else{
-                console.log("update berhasil");
-                console.log(results);
+                toast.success("Ubah kelas berhasil!", { autoClose: 1000})
                 navigate("/app/a/kelas")
             }
         });
@@ -52,11 +52,10 @@ function DetailKelas() {
 
     const deleteData = () => {
         const deleteSt = `DELETE FROM kelas WHERE id_kelas = ${id}`;
-        connectionSql.query(deleteSt, (err, results) => {
+        connectionSql.query(deleteSt, (err) => {
             if(err) console.error(err)
             else{
-                console.log("hapus berhasil");
-                console.log(results);
+                toast.success("Hapus kelas berhasil!", { autoClose: 1000})
                 navigate("/app/a/kelas");
             }
         })

@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
 
 function DetailPengguna() {
     const { id } = useParams();
@@ -41,11 +42,10 @@ function DetailPengguna() {
     const submitHandler = handleSubmit((data) => {
         const updateSt = `UPDATE pengguna SET username = '${data.username}', nama_pengguna = '${data.nama_pengguna}', level = '${selectedLevel.value}' WHERE id_user = ${id}`;
         //console.log(updateSt);
-        connectionSql.query(updateSt, (err, results) => {
+        connectionSql.query(updateSt, (err) => {
             if(err) console.error(err)
             else{
-                console.log("update berhasil");
-                console.log(results);
+                toast.success("Ubah pengguna berhasil!", { autoClose: 1000})
                 navigate("/app/a/pengguna");
             }
         })
@@ -53,11 +53,10 @@ function DetailPengguna() {
 
     const deleteData = () => {
         const deleteSt = `DELETE FROM pengguna WHERE id_user = ${id}`;
-        connectionSql.query(deleteSt, (err, results) => {
+        connectionSql.query(deleteSt, (err) => {
             if(err) console.error(err)
             else{
-                console.log("hapus berhasil");
-                console.log(results);
+                toast.success("Hapus pengguna berhasil!", { autoClose: 1000})
                 navigate("/app/a/pengguna");
             }
         })

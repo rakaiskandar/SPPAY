@@ -31,17 +31,11 @@ export interface Siswa{
     alamat: string,
     no_telp: string,
     id_spp: number,
-    sudah_bayar: "Belum" | "Sudah"
 }
 
 export type SiswaTypeList = Siswa[];
 
 export interface Pengguna{
-    // id_user: any,
-    // username: string,
-    // password: string,
-    // nama_pengguna: string,
-    // level: string
     id_user: number;
     username: string;
     password: string;
@@ -74,8 +68,9 @@ export interface Pembayaran{
     bulan_bayar: string,
     tahun_bayar: string,
     id_spp: number,
-    jumlah_bayar: string,
-    status_bayar: "Belum Lunas" | "Lunas"
+    jumlah_bayar: number,
+    status_bayar: string,
+    bayar: number
 }
 
 export type PembayaranTypeList = Pembayaran[];

@@ -2,6 +2,7 @@ import { Menu } from "@headlessui/react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Modal from "./Modal";
 
 function NavbarProfile({ img, user } : { img : any, user: any}) {
@@ -9,6 +10,7 @@ function NavbarProfile({ img, user } : { img : any, user: any}) {
     const nav = useNavigate();
 
     const logoutHandler = () => {
+        toast.success("Keluar berhasil!", { autoClose: 1000})
         nav("/")
     }
 

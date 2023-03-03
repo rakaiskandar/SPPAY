@@ -8,6 +8,7 @@ import sha1 from "sha1";
 import { connectionSql } from "@/sqlConnect";
 import { useSetRecoilState } from "recoil";
 import { userState } from "@/atoms/userAtom";
+import { toast } from "react-toastify";
 
 function Login() {
   const [username, setUsername] = useState<string>("");
@@ -25,22 +26,22 @@ function Login() {
     "' AND password='" +
     sha1Pass +
     "'";
-  
+    
     connectionSql.query(stateSql, function (err, results) {
       if (err) console.error(err);
       else {
         setUser(results[0])
         if (results.length && results[0].level === "admin") {
+          toast.success("Login sukses!", { autoClose: 1000})
           nav("/app/a");
-          console.log("ada admin");
         }else if(results.length && results[0].level === "petugas"){
+          toast.success("Login sukses", { autoClose: 1000})
           nav("/app/p")
-          console.log("ada petugas");
         }else if (results.length && results[0].level === "siswa") {
+          toast.success("Login sukses", { autoClose: 1000})
           nav("/app/s")
-          console.log("ada siswa");
         }else{
-          console.log("password atau username salah")
+          toast.error("Kata Sandi atau Username salah!", { autoClose: 1000})
         }
       }
     });

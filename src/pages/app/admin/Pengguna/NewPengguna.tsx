@@ -11,6 +11,7 @@ import sha1 from "sha1";
 import { Icon } from "@iconify/react";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/atoms/userAtom";
+import { toast } from "react-toastify";
 
 function NewPengguna() {
     const user = useRecoilValue(userState);
@@ -28,7 +29,6 @@ function NewPengguna() {
             if (err) console.error(err)
             else{
                 setLastId(results[0].id_user);
-                // console.log(results[0]);
             }
         })
     }, [])
@@ -36,10 +36,10 @@ function NewPengguna() {
     const submitHandler = handleSubmit((data) => {
         const addSt = `INSERT INTO pengguna (id_user, username, password, nama_pengguna, level) VALUES ('${lastId + 1}', '${data.username}', '${sha1(data.password)}', '${data.nama_pengguna}', '${selectedLevel.value}')`;
         // console.log(addSt);
-        connectionSql.query(addSt, (err, results) => {
+        connectionSql.query(addSt, (err) => {
             if(err) console.error(err)
             else{
-                console.log(results);
+                toast.success("Tambah pengguna berhasil!", { autoClose: 1000})
                 navigate(-1);
             }
         })

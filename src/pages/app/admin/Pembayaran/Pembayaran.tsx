@@ -26,7 +26,7 @@ function Pembayaran() {
   useEffect(() => {
     connectionSql.connect();
     var stateSql =
-      "SELECT `pembayaran`.id_pembayaran AS id, `pembayaran`.tgl_bayar, `pengguna`.nama_pengguna, `siswa`.nama AS nama_siswa, `kelas`.nama_kelas AS nama_kelas, `pembayaran`.status_bayar, `pembayaran`.jumlah_bayar FROM `pembayaran`, `siswa`, `pengguna`, `kelas` WHERE `pembayaran`.id_user = `pengguna`.id_user AND `pembayaran`.nisn = `siswa`.nisn AND `siswa`.id_kelas = `kelas`.id_kelas";
+      "SELECT pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.nama_petugas, s.nama AS nama_siswa, k.nama_kelas AS nama_kelas, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar FROM pembayaran pmb, siswa s, pengguna p, kelas k, detail_pembayaran detP WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND s.id_kelas = k.id_kelas AND detP.id_pembayaran = pmb.id_pembayaran";
     connectionSql.query(stateSql, (err, results) => {
         if (err) console.error(err);
         else{
@@ -54,7 +54,7 @@ function Pembayaran() {
       },
       {
         Header: "Petugas",
-        accessor: "nama_pengguna",
+        accessor: "nama_petugas",
         Cell: ({ cell: { value } }: { cell: { value: string } }) => (
             <span>{value}</span>
         ),
@@ -77,11 +77,18 @@ function Pembayaran() {
         Header: "Jumlah Bayar",
         accessor: "jumlah_bayar",
         Cell: ({ cell: { value } }: { cell: { value: number } }) => (
-            <>{rupiahConverter(value)}</>
+            <>{value}</>
         ),
       },
       {
         Header: "Bayar",
+        accessor: "bayar",
+        Cell: ({ cell: { value } }: { cell: { value: number } }) => (
+            <>{rupiahConverter(value)}</>
+        ),
+      },
+      {
+        Header: "Status Bayar",
         accessor: "status_bayar",
         Cell: ({ cell: { value } }: { cell: { value: string } }) => (
             <span className="paidStatus">
@@ -113,7 +120,7 @@ function Pembayaran() {
 
       <Navbar user={user}/>
 
-      <main className="pembayaranContainer">
+      <main className="container">
         <div className="pembayaranHead">
           <h2>Pembayaran</h2>
           <div>

@@ -2,7 +2,7 @@ import { userState } from "@/atoms/userAtom";
 import { useRecoilValue } from "recoil";
 import Modal from "@/components/Modal";
 import Navbar from "@/components/Navbar";
-import { Pembayaran, Pengguna, Siswa } from "@/dataStructure";
+import { Pembayaran, Pengguna, Siswa, SPP } from "@/dataStructure";
 import rupiahConverter from "@/helpers/rupiahConverter";
 import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
@@ -11,12 +11,14 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function DetailPembayaran() {
     const { id } = useParams();
     const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [siswaD, setSiswaD] = useState<Siswa>();
+    const [sppD, setSppD] = useState<SPP>();
     const [penggunaD, setPenggunaD] = useState<Pengguna>();
     const [pembayaran, setPembayaran] = useState<Pembayaran>();
 
@@ -26,41 +28,43 @@ function DetailPembayaran() {
 
     useEffect(() => {
         const sqlSt = `SELECT * FROM pembayaran WHERE id_pembayaran = ${id}`;
-        var pembayaranSt = `SELECT pmb.id_pembayaran, pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.id_spp, p.nama_pengguna, s.nama AS nama_siswa, pmb.status_bayar, pmb.jumlah_bayar FROM pembayaran pmb, siswa s, pengguna p WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND pmb.id_pembayaran = ${id}`;
+        var pembayaranSt = `SELECT pmb.id_pembayaran, pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.id_spp, pmb.nama_petugas, p.nama_pengguna, s.nama AS nama_siswa, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar FROM pembayaran pmb, siswa s, pengguna p, detail_pembayaran detP WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND detP.id_pembayaran = pmb.id_pembayaran AND pmb.id_pembayaran = ${id}`;
         const siswaSt = `SELECT p.id_pembayaran, s.nisn, s.nisn AS id, s.nis, s.nama, s.id_spp, k.nama_kelas , s.alamat, s.no_telp FROM siswa s, kelas k, pembayaran p WHERE s.id_kelas = k.id_kelas AND p.nisn = s.nisn AND p.id_pembayaran = ${id}`;
         const penggunaSt = `SELECT png.nama_pengguna FROM pengguna png, pembayaran pmb WHERE png.id_user = pmb.id_user AND pmb.id_pembayaran = ${id}`;
-        const lastId = "SELECT id_pembayaran FROM pembayaran ORDER BY id_pembayaran DESC LIMIT 1";
-        connectionSql.query(`${sqlSt}; ${pembayaranSt}; ${siswaSt}; ${penggunaSt}`, (err, results) => {
+        const sppSt = `SELECT *, spp.nominal FROM spp WHERE id_spp = ${id}`;
+        connectionSql.query(`${sqlSt}; ${pembayaranSt}; ${siswaSt}; ${penggunaSt}; ${sppSt}`, (err, results) => {
             if(err) console.error(err)
             else{
                 setPembayaran(results[1][0]);
                 setSiswaD(results[2][0]);
                 setPenggunaD(results[3][0]);
+                setSppD(results[4][0]);
                 setLoading(false);
             }
         })
     }, [])
 
     const submitHandler = handleSubmit((data) => {
-        const convertedPrice = parseInt(data.jumlah_bayar.length < 4 ? data.jumlah_bayar: data.jumlah_bayar.split(".").join(""))
-        if (convertedPrice >= 700000) {
-            const updateSt = `UPDATE pembayaran SET tgl_bayar = current_timestamp(), status_bayar = 'Lunas', jumlah_bayar = '${convertedPrice}' WHERE id_pembayaran = ${id}`;
-            connectionSql.query(updateSt, (err, results) => {
+        const jumlah_bayar = data.jumlah_bayar
+        const intNominal = parseInt(sppD?.nominal as string);     
+        if (jumlah_bayar >= 6) {
+            const updateSt = `UPDATE pembayaran SET status_bayar = 'Lunas', jumlah_bayar = '${jumlah_bayar}' WHERE id_pembayaran = ${id}`;
+            const detPembayaran = `UPDATE detail_pembayaran SET bayar = ${jumlah_bayar * intNominal} WHERE id_pembayaran = ${id}`;
+            connectionSql.query(`${updateSt}; ${detPembayaran}`, (err) => {
                 if (err) console.error(err)
                 else{
-                    console.log("update berhasil");
-                    console.log(results);
+                    toast.success("Ubah pembayaran berhasil!", { autoClose: 1000})
                     navigate("/app/a/pembayaran");
                 }
             })
         }else{
-            const updateSt = `UPDATE pembayaran SET tgl_bayar = current_timestamp(), status_bayar = 'Belum Lunas', jumlah_bayar = '${convertedPrice}' WHERE id_pembayaran = ${id}`;
-            connectionSql.query(updateSt, (err, results) => {
+            const updateSt = `UPDATE pembayaran SET status_bayar = 'Belum Lunas', jumlah_bayar = '${jumlah_bayar}' WHERE id_pembayaran = ${id}`;
+            const detPembayaran = `UPDATE detail_pembayaran SET bayar = ${jumlah_bayar * intNominal} WHERE id_pembayaran = ${id}`;
+            connectionSql.query(`${updateSt}; ${detPembayaran}`, (err) => {
                 if (err) console.error(err)
                 else{
-                    console.log("update berhasil");
-                    console.log(results);
-                    // navigate("/app/a/pembayaran");
+                    toast.success("Ubah pembayaran berhasil!", { autoClose: 1000})
+                    navigate("/app/a/pembayaran");
                 }
             })
         }
@@ -71,10 +75,10 @@ function DetailPembayaran() {
         //Set status bayar in spp
         const sppUpd = `UPDATE spp SET status_bayar = 'Belum' WHERE id_spp = ${pembayaran?.id_spp}`;
         const allSql = `${deleteSt}; ${sppUpd}`;
-        connectionSql.query(allSql, (err, results) => {
+        connectionSql.query(allSql, (err) => {
             if(err) console.error(err)
             else{
-                console.log(results);
+                toast.success("Hapus pembayaran berhasil!", { autoClose: 1000})
                 navigate("/app/a/pembayaran");
             }
         })
@@ -85,7 +89,7 @@ function DetailPembayaran() {
             <>
                 <Navbar user={user}/>
 
-                <div className="penggunaContainer">
+                <div className="container">
                     <div className="penggunaHead">
                         <h4>Loading...</h4>
                     </div>
@@ -102,7 +106,7 @@ function DetailPembayaran() {
 
             <Navbar user={user}/>
 
-            <form className="pembayaranContainer" onSubmit={submitHandler}>
+            <form className="container" onSubmit={submitHandler}>
                 { /*Modal for Delete*/}
                 <Modal
                 open={isOpen} 
@@ -139,7 +143,7 @@ function DetailPembayaran() {
                         <p>{dayjs(pembayaran?.tgl_bayar).format("D MMMM YYYY")}</p>
                     </div>
                     <div className="detailHeadSub">
-                        <p className="primaryC">{rupiahConverter(pembayaran?.jumlah_bayar)}</p>
+                        <p className="primaryC">{rupiahConverter(pembayaran?.bayar)}</p>
                         <p className={`stat ${
                             pembayaran?.status_bayar === "Lunas"
                             ? "sType"
@@ -168,7 +172,7 @@ function DetailPembayaran() {
                         </div>
                         <div className="detailSubB">
                             <p>Nama Petugas</p>
-                            <h5>{penggunaD?.nama_pengguna}</h5>
+                            <h5>{pembayaran?.nama_petugas}</h5>
                         </div>
                         <div className="detailSubB">
                             <p>Nama Siswa</p>
@@ -183,13 +187,11 @@ function DetailPembayaran() {
                             <h5 className="paidStatus">
                             {pembayaran?.status_bayar === "Lunas" ? (
                                     <>
-                                        {/* <Icon icon="material-symbols:check-circle-outline-rounded" color="green" width="20"/> */}
                                         <span>🥳</span>
                                         <p className="lunas">Lunas</p>
                                     </>
                                 ) : (
                                     <>
-                                        {/* <Icon icon="radix-icons:cross-circled" color="red" width="20"/> */}
                                         <span>😢</span>
                                         <p className="belumLunas">Belum Lunas</p>
                                     </>
@@ -248,7 +250,7 @@ function DetailPembayaran() {
                         </div>
                         <div className="detailSubB">
                             <p>Nama Petugas</p>
-                            <h5>{penggunaD?.nama_pengguna}</h5>
+                            <h5>{pembayaran?.nama_petugas}</h5>
                         </div>
                     </div>
                 </div>

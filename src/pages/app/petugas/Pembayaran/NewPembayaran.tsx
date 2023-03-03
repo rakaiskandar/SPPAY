@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { Helmet } from "react-helmet-async";
 import "@/style/adminDetail.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Pembayaran, Pengguna, PenggunaTypeList, Siswa, SiswaTypeList, SPP, SPPTypeList } from "@/dataStructure";
 import { useForm } from "react-hook-form";
@@ -11,17 +11,20 @@ import dayjs from "dayjs";
 import { Icon } from "@iconify/react";
 import { userState } from "@/atoms/userAtom";
 import { useRecoilValue } from "recoil";
+import { toast } from "react-toastify";
 
 interface PembayaranNewProps extends Siswa, Pembayaran, Pengguna, SPP {}
 
 function NewPembayaran() {
     const user = useRecoilValue(userState);
     const navigate = useNavigate();
+    const location = useLocation();
     const { register, handleSubmit, setValue } = useForm<PembayaranNewProps>();
 
     const [siswa, setSiswa] = useState<SiswaTypeList>();
     const [selectedSiswa, setSelectedSiswa] = useState<Siswa | null>(null);
-    const [pengguna, setPengguna] = useState<PenggunaTypeList>();
+    const [pengguna, setPengguna] = useState<Pengguna>();
+    const [penggunaD, setPenggunaD] = useState<PenggunaTypeList>();
     const [selectedPengguna, setSelectedPengguna] = useState<Pengguna | null>(null);
     const [spp, setSpp] = useState<SPPTypeList>();
     const [selectedSpp, setSelectedSpp] = useState<SPP | null>(null);
@@ -29,17 +32,20 @@ function NewPembayaran() {
 
     const getAllData = () => {
         const sisSql = "SELECT *, nama AS label, nisn AS value, nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' ";
-        const pngSql = "SELECT *, nama_pengguna AS label, id_user AS value FROM pengguna WHERE level IN ('admin','petugas')";
+        const userSql = `SELECT *, nama_pengguna AS label, id_user AS value FROM pengguna WHERE level IN ('admin','petugas') AND id_user = ${user.id_user}`;
         const sppSql = "SELECT *, id_spp AS label, id_spp AS value FROM spp WHERE spp.status_bayar = 'Belum'";
+        const selectedPenggunaSt = "SELECT *, nama_pengguna AS label, id_user AS value FROM pengguna WHERE level IN ('siswa')";
         const lastId = "SELECT id_pembayaran FROM pembayaran ORDER BY id_pembayaran DESC LIMIT 1";
-        const allSql = `${sisSql}; ${pngSql}; ${sppSql}; ${lastId}`;
+        const allSql = `${sisSql}; ${userSql}; ${sppSql}; ${selectedPenggunaSt}; ${lastId}`;
         connectionSql.query(allSql, (err, results) => {
             if(err) console.error(err)
             else{
                 setSiswa(results[0]);
-                setPengguna(results[1]);
+                setPengguna(results[1][0]);
                 setSpp(results[2]);
-                setLastId(results[3][0].id_pembayaran);
+                setPenggunaD(results[3])
+                setSelectedPengguna(results[3][0])
+                setLastId(results[4][0].id_pembayaran);
             }
         })
     }
@@ -78,17 +84,6 @@ function NewPembayaran() {
         }
     }
 
-    const changePenggunaHandler = (data: Pengguna) => {
-        if (data == null) {
-            console.log("ini hapus");
-            setValue("nama_pengguna", "");
-            setSelectedPengguna(null);
-        }else{
-            setValue("nama_pengguna", data.nama_pengguna);
-            setSelectedPengguna(data);
-        }
-    }
-
     const changeSppHandler = (data: SPP) => {
         if (data == null) {
             console.log("ini hapus");
@@ -104,24 +99,30 @@ function NewPembayaran() {
 
     const submitHandler = handleSubmit(async (data) => {
         //Get status 
-        const convertedPrice = parseInt(data.jumlah_bayar.length < 4 ? data.jumlah_bayar: data.jumlah_bayar.split(".").join(""))
-        if (convertedPrice >= 700000) {
-            const addTxnSql = `INSERT INTO pembayaran (id_pembayaran, id_user, nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, status_bayar)
-            VALUES ('${lastId + 1}', '${selectedPengguna?.id_user}', '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${convertedPrice}', 'Lunas')`;
-            connectionSql.query(addTxnSql, (err, results) => {
+        const jumlah_bayar = data.jumlah_bayar
+        const intNominal = parseInt(selectedSpp?.nominal as string);     
+        console.log(lastId);   
+        if (jumlah_bayar < 6) {
+            const addTxnSql = `INSERT INTO pembayaran (id_pembayaran, id_user, nama_petugas, nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, status_bayar)
+            VALUES ('${lastId + 1}', '${selectedPengguna?.value}', ${pengguna?.nama_pengguna}, '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${jumlah_bayar}', 'Belum Lunas')`;
+            const addTxnDet = `INSERT INTO detail_pembayaran (id_detail, id_pembayaran, bayar) VALUES('${lastId + 1}', '${lastId + 1}', '${jumlah_bayar * intNominal}')`;
+            console.log(addTxnSql);
+            connectionSql.query(`${addTxnSql}; ${addTxnDet}`, (err) => {
                 if(err) console.error(err)
                 else{
-                    console.log(results);
+                    toast.success("Tambah pembayaran berhasil!", { autoClose: 1000})
                     navigate(-1);
                 }
             })
         }else{
-            const addTxnSql = `INSERT INTO pembayaran (id_pembayaran, id_user, nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, status_bayar)
-            VALUES ('${lastId + 1}', '${selectedPengguna?.id_user}', '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${convertedPrice}', 'Belum Lunas')`;
-            connectionSql.query(addTxnSql, (err, results) => {
+            const addTxnSql = `INSERT INTO pembayaran (id_pembayaran, id_user, nama_petugas ,nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, status_bayar)
+            VALUES ('${lastId + 1}', '${selectedPengguna?.value}', '${pengguna?.nama_pengguna}', '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${jumlah_bayar}', 'Lunas')`;
+            const addTxnDet = `INSERT INTO detail_pembayaran (id_detail, id_pembayaran, bayar) VALUES('${lastId + 1}', '${lastId + 1}', '${jumlah_bayar * intNominal}')`;
+            console.log(addTxnDet);
+            connectionSql.query(`${addTxnSql}; ${addTxnDet}`, (err) => {
                 if(err) console.error(err)
                 else{
-                    console.log(results);
+                    toast.success("Tambah pembayaran berhasil!", { autoClose: 1000})
                     navigate(-1);
                 }
             })
@@ -136,7 +137,7 @@ function NewPembayaran() {
 
             <Navbar user={user}/>
 
-            <div className="pembayaranContainer">
+            <div className="container">
                 <div className="formTitle">
                     <h2>Tambah Pembayaran</h2>
                     <div>
@@ -265,11 +266,12 @@ function NewPembayaran() {
                             <div className="sisSecTitle">
                                 <h4 className="primaryC">Rincian Pembayaran</h4>
                                 <Select
-                                options={pengguna}
+                                maxMenuHeight={140}
+                                options={penggunaD}
                                 value={selectedPengguna}
                                 isClearable={true}
-                                placeholder="Pilih petugas"
-                                onChange={changePenggunaHandler}
+                                placeholder="Pilih id spp"
+                                onChange={setSelectedPengguna}
                                 className="selectInput"
                                 />
                             </div>
@@ -277,15 +279,6 @@ function NewPembayaran() {
                                 <div className="formSub">
                                     <h5>Tanggal Dibuat</h5>
                                     <p>{formatDate}</p>
-                                </div>
-                                <div className="formSub">
-                                    <h5>Nama Petugas</h5>
-                                    <input 
-                                    type="text"
-                                    {...register("nama_pengguna")}
-                                    required
-                                    disabled={selectedPengguna !== null} 
-                                    />
                                 </div>
                                 <div className="formSub">
                                     <h5>Jumlah Bayar</h5>

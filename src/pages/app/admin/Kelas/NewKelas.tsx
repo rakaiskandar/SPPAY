@@ -10,6 +10,7 @@ import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
 import { userState } from "@/atoms/userAtom";
 import { useRecoilValue } from "recoil";
+import { toast } from "react-toastify";
 
 function NewKelas() {
     const user = useRecoilValue(userState);
@@ -33,10 +34,10 @@ function NewKelas() {
 
     const submitHandler = handleSubmit((data) => {
         const addSt = `INSERT INTO kelas (id_kelas, nama_kelas, kompetensi_keahlian, jumlah_siswa) VALUES ('${lastId + 1}', '${data.nama_kelas}', '${selectedKompetensi.value}', 0)`;
-        connectionSql.query(addSt, (err, results) => {
+        connectionSql.query(addSt, (err) => {
             if (err) console.error(err)
             else{
-                console.log(results);
+                toast.success("Tambah kelas berhasil!", { autoClose: 1000})
                 navigate(-1);
             }
         })

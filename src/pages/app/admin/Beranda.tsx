@@ -23,8 +23,8 @@ function Beranda() {
   const user = useRecoilValue(userState);
   const location = useLocation();
   const navigate = useNavigate();
-  const [totalPembayaran, setTotalPembayaran] = useState<number>(0);
-  const [totalTransaksi, setTotalTransaksi] = useState<number>(0);
+  const [totalPembayaran, setTotalPembayaran] = useState<string>("");
+  const [totalTransaksi, setTotalTransaksi] = useState<string>("");
   const [siswaBelumBayar, setSiswaBelumBayar] = useState<SiswaDashboard[]>([]);
   const [bayarTerbaru, setBayarTerbaru] = useState<TransaksiDashboard[]>([]);
 
@@ -34,7 +34,7 @@ function Beranda() {
       navigate("beranda");
     }
 
-    var totalPembayaran = "SELECT SUM(jumlah_bayar) AS total FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(NOW())";
+    var totalPembayaran = "SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE pembayaran.id_pembayaran = detail_pembayaran.id_pembayaran AND MONTH(tgl_bayar) = MONTH(NOW())";
     var totalTransaksi = "SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(NOW())";
     var siswaBelumBayar = "SELECT siswa.nama, kelas.nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' LIMIT 4";
     var pembayaranTerbaru = "SELECT siswa.nama, pembayaran.tgl_bayar FROM siswa, pembayaran WHERE MONTH(pembayaran.tgl_bayar) = MONTH(now()) AND pembayaran.nisn = siswa.nisn ORDER BY pembayaran.tgl_bayar DESC LIMIT 4";
@@ -61,7 +61,7 @@ function Beranda() {
 
       <Navbar user={user}/>
 
-      <main className="berandaContainer">
+      <main className="container">
         <div className="berandaHead">
           <h2>Beranda</h2>
         </div>
@@ -69,7 +69,12 @@ function Beranda() {
         <div className="berandaSection1">
           <div className="berandaSub1">
             <h5>Total Pembayaran:</h5>
-            <h4>{rupiahConverter(totalPembayaran)}</h4>
+            <>{totalPembayaran !== null ? (
+              <h4>{rupiahConverter(totalPembayaran)}</h4>
+            ) : (
+              <h4>{rupiahConverter(0)}</h4>
+            )}
+            </>
           </div>
           <div className="berandaSub1">
             <h5>Jumlah Transaksi:</h5>

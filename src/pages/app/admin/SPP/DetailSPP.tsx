@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 
 function DetailSPP() {
@@ -36,11 +37,10 @@ function DetailSPP() {
     const submitHandler = handleSubmit((data) => {
         const convertedNominal = parseInt(data.nominal.length < 4 ? data.nominal : data.nominal.split(".").join(""));
         const updateSt = `UPDATE spp SET nominal = '${convertedNominal}' WHERE id_spp = ${id}`;
-        connectionSql.query(updateSt, (err, results) => {
+        connectionSql.query(updateSt, (err) => {
             if(err) console.error(err)
             else{
-                console.log("update berhasil");
-                console.log(results);
+                toast.success("Tambah spp berhasil!", { autoClose: 1000})
                 navigate("/app/a/spp")
             }
         })
@@ -48,11 +48,10 @@ function DetailSPP() {
 
     const deleteData = () => {
         const deleteSt = `DELETE FROM spp WHERE id_spp = ${id}`;
-        connectionSql.query(deleteSt, (err, results) => {
+        connectionSql.query(deleteSt, (err) => {
             if(err) console.error(err)
             else{
-                console.log("hapus berhasil");
-                console.log(results);
+                toast.success("Hapus spp berhasil!", { autoClose: 1000})
                 navigate("/app/a/spp")
             }
         })
@@ -117,7 +116,7 @@ function DetailSPP() {
                         <input 
                         type="text"
                         placeholder="Masukkan nominal spp siswa" 
-                        readOnly
+                        disabled
                         defaultValue={sppD?.id_spp}
                         />
                     </div>
@@ -136,7 +135,7 @@ function DetailSPP() {
                         <input 
                         type="text"
                         placeholder="Masukkan nominal spp siswa" 
-                        readOnly
+                        disabled
                         defaultValue={sppD?.status_bayar}
                         />
                     </div>
