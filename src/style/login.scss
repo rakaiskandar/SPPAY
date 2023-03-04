@@ -1,3 +1,5 @@
+$primary: #413EEB;
+
 .loginContainer {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 2fr));
@@ -10,6 +12,25 @@
 
     img{
       width: 600px;
+      animation: bounce 1s;
+      animation-direction: alternate;
+      animation-timing-function: cubic-bezier(.5, 0.05, 1, .5);
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes bounce {
+      from {
+          transform: translate3d(0, 0, 0);
+      }
+      to {
+          transform: translate3d(15px, 50px, 0);
+      }
+    }
+
+    .shadowfilter {
+       filter: drop-shadow(12px 5px 7px $primary)
+       drop-shadow(12px 5px 7px white)
+       drop-shadow(12px 5px 7px white);
     }
   }
 
@@ -81,17 +102,17 @@
 
     .inputStyle:focus{
       outline: none;
-      border: 1px solid #413EEB;
+      border: 1px solid $primary;
     }
 
     .inputStyle:hover{
-      border: 1px solid #413EEB;
+      border: 1px solid $primary;
     }
 
   }
 
   .btnMasuk{
-    background-color: #413EEB;
+    background-color: $primary;
     font-weight: 600;
     border-radius: 10px;
     margin-top: 2.5em;

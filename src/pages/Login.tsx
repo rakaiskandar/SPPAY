@@ -41,7 +41,7 @@ function Login() {
           toast.success("Login sukses", { autoClose: 1000})
           nav("/app/s")
         }else{
-          toast.error("Kata Sandi atau Username salah!", { autoClose: 1000})
+          toast.error("Kata sandi atau username salah!", { autoClose: 1000})
         }
       }
     });
@@ -55,7 +55,7 @@ function Login() {
 
       <div className="loginContainer">
         <main className="main1">
-          <img src={ilustration} alt="ilustration image" />
+          <img src={ilustration} alt="ilustration image" className="shadowfilter"/>
         </main>
         <main className="main2">
           <div className="mainSub">
