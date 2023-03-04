@@ -71,11 +71,11 @@ $primary: #5A57EC;
         .sidebarItemsActive{
             background: $primaryB;
             color: $primary;
-            font-weight: 700;
+            font-weight: 600;
             &:hover{
                 background: #9ea3f830;
                 color: $primary;
-                font-weight: 600;
+                font-weight: 700;
             }
         }
 
@@ -157,8 +157,8 @@ $primary: #5A57EC;
 
     .profileItem{
         position: absolute;
-        bottom: -50px;
-        right: 0;
+        bottom: -55px;
+        right: 15px;
         display: flex;
         flex-direction: column;
         padding: 5px;
@@ -184,7 +184,7 @@ $primary: #5A57EC;
 
         .buttonActive{
             color: red;
-            border: 1px solid $primaryB;
+            border: 1px solid white;
         }
     }
 }

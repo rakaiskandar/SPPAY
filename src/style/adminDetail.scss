@@ -210,9 +210,9 @@ $primary: #5A57EC;
     }
 
     input{
-        background: white;
+        background: $primaryB;
         text-align: right;
-        border: $primaryB 1px solid;
+        border: $primary 1px solid;
         border-radius: 5px;
         font-size: 16px;
         color: black;
@@ -226,9 +226,6 @@ $primary: #5A57EC;
         border: $primary 1px solid;
     }
 
-    input:hover{
-        border: $primary 1px solid;
-    }
 }
 
 .detailSubH{
