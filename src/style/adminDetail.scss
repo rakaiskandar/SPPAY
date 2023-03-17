@@ -13,6 +13,31 @@ $primary: #5A57EC;
     justify-content: space-between;
     margin: 0 0 16px 0;
 
+    .btn2Title{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;  
+        background: white;
+        color: $primary;
+        border: $primary solid 1px;
+        font-weight: 600;
+        padding: 6px 16px;
+        border-radius: 5px;
+        transition: 0.2s;
+
+        span{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;  
+        }
+    }
+
+    .btn2Title:hover{
+        background: darken($color:whitesmoke, $amount: 2);
+    }
+    
     div{
         display: flex;
         align-items: center;
@@ -29,6 +54,7 @@ $primary: #5A57EC;
             padding: 6px 16px;
             border-radius: 5px;
             outline: none;
+            transition: 0.2s;
         }
 
         .btn2Title{
@@ -42,6 +68,7 @@ $primary: #5A57EC;
             font-weight: 600;
             padding: 6px 16px;
             border-radius: 5px;
+            transition: 0.2s;
 
             span{
                 display: flex;
@@ -50,54 +77,13 @@ $primary: #5A57EC;
                 gap: 5px;  
             }
         }
-    
+        .btn1Title:hover{
+            background: darken($color: $primary, $amount: 8);
+        }
+
         .btn2Title:hover{
             background: darken($color:whitesmoke, $amount: 2);
         }
-    }
-}
-
-.hapusContainer{
-    display: flex;
-    justify-content: start;
-    position: relative;
-
-    div.hapusBtn{
-        display: flex;
-        justify-content: center;
-        gap: 4px;
-        color: white;
-        align-items: center;
-        background: rgba(#e61212, 95%);
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all;
-        transition-duration: 0.5ms;
-        outline: none;
-        border: $primaryB 1px solid;
-        margin-top: 10px;
-        padding: 6px 25px;
-    }
-
-    div.hapusBtnPmb{
-        display: flex;
-        justify-content: center;
-        gap: 4px;
-        align-items: center;
-        background: rgba(#e61212, 95%);
-        border-radius: 5px;
-        color: white;
-        cursor: pointer;
-        transition: all;
-        transition-duration: 0.5ms;
-        outline: none;
-        border: $primaryB 1px solid;
-        padding: 6px 25px;
-        margin-bottom: 16px;
-    }
-
-    .hapusBtn:hover{
-        background: #e61212;
     }
 }
 
@@ -144,30 +130,91 @@ $primary: #5A57EC;
         }
     }
 }
-
 .detailHead{
     background: white;
     border-radius: 6px;
     padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 
-    div{
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
+    .lainnya{
+        position: relative;
 
-        h3{
-            font-size: 24px;
+        .iconLainnya{
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
+            padding: 0;
+            padding-bottom: 10px;
+            cursor: pointer;
+            transition: all;
+            transition-duration: 0.5ms;
+            outline: none;
+            border: none;
+            background-color: white;
         }
 
-        .stat{
-            width: max-content;
-            font-weight: 600;
-            font-size: 14px;
-            border-radius: 50px;
-            padding: 4px 16px;
+        .lainnyaItem{
+            position: absolute;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            font-size: large;
+            width: 170px;
+
+            button{
+                background: white;
+                color: black;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                padding: 10px;
+                border-radius: 0;
+                transition: 0.2s;
+                outline: none;
+
+                p{
+                    font-size: medium;
+                }
+            }
+
+            .buttonActiveHapus{
+                color: red;
+                border: 1px solid red;
+                border-radius: 5px;
+                outline: none;
+            }
+
+            .buttonActiveLaporan{
+                color: $primary;
+                border: 1px solid $primary;
+                border-radius: 5px;
+                outline: none;
+            }
+        }
+
+    }
+
+    .detailHeadSub{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        div{
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+    
+            h2{
+                font-size: 32px;
+            }
+    
+            .stat{
+                width: max-content;
+                font-weight: 600;
+                font-size: 14px;
+                border-radius: 50px;
+                padding: 4px 16px;
+            }
         }
     }
 }
@@ -350,7 +397,14 @@ $primary: #5A57EC;
             }
             button{
                 background: $primary;
-                font-weight: 700;
+                font-weight: 600;
+                margin-top: 10px;
+                transition: 0.2s;
+            }
+
+            button:hover{
+                background: darken($color: $primary, $amount: 5);
+                font-weight: 600;
                 margin-top: 10px;
             }
         }
@@ -396,10 +450,25 @@ $primary: #5A57EC;
                         background: $primary;
                         border: $primaryB 1px solid;
                         outline: none;
+                        transition: 0.2s;
+                    }
+
+                    .btnHapus:hover{
+                        background: darken($color: $primary, $amount: 5);
+                        border: $primaryB 1px solid;
+                        outline: none;
                     }
 
                     .btnBatal{
                         background: white;
+                        border: 1px solid $primary;
+                        color: $primary;
+                        outline: none;
+                        transition: 0.2s;
+                    }
+
+                    .btnBatal:hover{
+                        background: darken($color: white, $amount: 10);
                         border: 1px solid $primary;
                         color: $primary;
                         outline: none;

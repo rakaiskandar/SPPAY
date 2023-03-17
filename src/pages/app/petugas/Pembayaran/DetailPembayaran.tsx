@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Menu } from "@headlessui/react";
 
 function DetailPembayaran() {
     const { id } = useParams();
@@ -53,7 +54,7 @@ function DetailPembayaran() {
             connectionSql.query(`${updateSt}; ${detPembayaran}`, (err) => {
                 if (err) console.error(err)
                 else{
-                    toast.success("Tambah pembayaran berhasil!", { autoClose: 1000})
+                    toast.success("Ubah pembayaran berhasil!", { autoClose: 1000})
                     navigate("/app/p/pembayaran");
                 }
             })
@@ -63,7 +64,7 @@ function DetailPembayaran() {
             connectionSql.query(`${updateSt}; ${detPembayaran}`, (err) => {
                 if (err) console.error(err)
                 else{
-                    toast.success("Tambah pembayaran berhasil!", { autoClose: 1000})
+                    toast.success("Ubah pembayaran berhasil!", { autoClose: 1000})
                     navigate("/app/p/pembayaran");
                 }
             })
@@ -118,36 +119,56 @@ function DetailPembayaran() {
 
                 <div className="formTitle">
                     <h2>Detail Pembayaran</h2>
+                    
                     <div>
-                        <button className="btn2Title">
+                        <Link to="/app/p/pembayaran" className="btn2Title">
+                            <Icon icon="material-symbols:arrow-back-rounded"/>
+                            Kembali
+                        </Link>
+                        <button className="btn1Title">
                             <Icon icon="material-symbols:edit-document-outline-sharp"/>
                             Edit
                         </button>
                     </div>
                 </div>
-                <div className="hapusContainer">
-                    <div className="hapusBtnPmb" onClick={() => setIsOpen(true)}>
-                        <Icon icon="ion:trash-outline"/>
-                        Hapus Data
-                    </div>
-                </div>
                 <div className="detailHead">
-                    <div>
-                        <h3>#{pembayaran?.id_pembayaran}</h3>
-                        <p>{dayjs(pembayaran?.tgl_bayar).format("D MMMM YYYY")}</p>
-                    </div>
+                    <Menu className="lainnya" as="div">
+                        <Menu.Button className="iconLainnya">
+                                <Icon icon="material-symbols:more-vert" width="30" height="30" color="black"/>
+                        </Menu.Button>
+                        <Menu.Items className="lainnyaItem">
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <button
+                                        className={`${active && "buttonActiveHapus"
+                                        }`}
+                                        onClick={() => setIsOpen(true)}
+                                    >
+                                        <Icon icon="mdi:trash-can-outline" width="18" />
+                                        <p>Hapus Data</p>
+                                    </button>
+                                    )}
+                            </Menu.Item>
+                        </Menu.Items>
+                    </Menu>
                     <div className="detailHeadSub">
-                        <p className="primaryC">{rupiahConverter(pembayaran?.bayar)}</p>
-                        <p className={`stat ${
-                            pembayaran?.status_bayar === "Lunas"
-                            ? "sType"
-                            : pembayaran?.status_bayar === "Belum Lunas"
-                            ? "tkjType"
-                            : ""
-                        }
-                        `}>
-                            {pembayaran?.status_bayar}
-                        </p>
+                        <div>
+                            <h2>#{pembayaran?.id_pembayaran}</h2>
+                            <p>{dayjs(pembayaran?.tgl_bayar).format("D MMMM YYYY")}</p>
+                        </div>
+                        <div className="detailHeadSub">
+                            <p className="primaryC">{rupiahConverter(pembayaran?.bayar)}</p>
+                            <p className={`stat ${
+                                pembayaran?.status_bayar === "Lunas"
+                                ? "sType"
+                                : pembayaran?.status_bayar === "Belum Lunas"
+                                ? "tkjType"
+                                : ""
+                            }
+                            `}>
+                                {pembayaran?.status_bayar}
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -155,10 +176,6 @@ function DetailPembayaran() {
                     <div className="detailSub">
                         <div className="detailSubH">
                             <h5>Detail Pembayaran</h5>
-                        </div>
-                        <div className="detailSubB">
-                            <p>Id Pembayaran</p>
-                            <h5>#{pembayaran?.id_pembayaran}</h5>
                         </div>
                         <div className="detailSubB">
                             <p>Tanggal Pembayaran</p>

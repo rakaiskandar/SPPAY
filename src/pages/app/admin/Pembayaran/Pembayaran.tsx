@@ -12,6 +12,8 @@ import "@/style/adminGeneral.scss";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "@/atoms/userAtom";
+import { CSVLink } from "react-csv";
+import getHeaderCsv from "@/helpers/getHeaderCsv";
 
 function Pembayaran() {
   const user = useRecoilValue(userState);
@@ -130,10 +132,10 @@ function Pembayaran() {
                 Tambah Pembayaran
               </button>
             </Link>
-            <button className="btnLaporan">
+            <CSVLink className="btnLaporan" data={dataMemo} filename="Laporan Pembayaran SPP" headers={getHeaderCsv(columns)}>
               <Icon icon="material-symbols:print-outline-rounded"/>
-              Generate Laporan
-            </button>
+              Unduh Laporan
+            </CSVLink>
           </div>
         </div>
 
@@ -150,7 +152,7 @@ function Pembayaran() {
             <Table
             columns={columns}
             data={dataMemo}
-            filterColumn="nama_siswa"
+            filterColumn="tgl_bayar"
             filterInput={filterInput}
             />
         ) : (
