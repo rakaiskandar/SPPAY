@@ -9,6 +9,7 @@ import { connectionSql } from "@/sqlConnect";
 import rupiahConverter from "@/helpers/rupiahConverter";
 import { Pembayaran, Siswa } from "@/dataStructure";
 import dayjs from "dayjs";
+import { Icon } from "@iconify/react";
 
 function Beranda() {
     const user = useRecoilValue(userState);
@@ -59,6 +60,10 @@ function Beranda() {
             <main className="container">
                 <div className="berandaHead">
                     <h2>Beranda</h2>
+                    <button className="btnDownload">
+                        <Icon icon="ic:outline-save-alt"/>
+                        Unduh Bukti Transaksi
+                    </button>
                 </div>
 
                 <div className="berandaSection1">

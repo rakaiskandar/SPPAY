@@ -5,6 +5,19 @@ $primary: #5A57EC;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .btnDownload{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        background: $primary;
+        transition: 0.2s;
+    }
+
+    .btnDownload:hover{
+        background: darken($color: $primary, $amount: 8);
+    }
 }
 
 .berandaSection1{
@@ -145,6 +158,7 @@ $primary: #5A57EC;
             justify-content: center;
             border: $primary solid 1px;
             font-size: 14px;
+            transition: 0.2s;
         }
 
         button:hover{
