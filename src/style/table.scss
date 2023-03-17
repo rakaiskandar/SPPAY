@@ -72,6 +72,9 @@ $primaryB2: #323232;
     .disableArrow {
       opacity: 80%;
     }
+    button:hover{
+      color: $primary;
+    }
 }
 
 .paidStatus{

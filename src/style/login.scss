@@ -121,7 +121,7 @@ $primary: #413EEB;
   }
 
   .btnMasuk:hover{
-    background-color: #5A57EC;
+    background-color: darken($color: $primary, $amount: 5);
   }
 
 }

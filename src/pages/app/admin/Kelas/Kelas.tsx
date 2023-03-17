@@ -36,7 +36,7 @@ function Kelas() {
     const columns = useMemo(
         () => [
             {
-                Header: "ID Kelas",
+                Header: "Id Kelas",
                 accessor: "id",
                 Cell: ({ cell: { value }} : { cell: { value: number}}) => (
                     <span>#{value}</span>

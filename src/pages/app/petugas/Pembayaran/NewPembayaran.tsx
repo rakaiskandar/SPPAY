@@ -141,7 +141,7 @@ function NewPembayaran() {
                 <div className="formTitle">
                     <h2>Tambah Pembayaran</h2>
                     <div>
-                        <Link to="/app/a/pembayaran" className="btn2Title">
+                        <Link to="/app/p/pembayaran" className="btn2Title">
                             <Icon icon="material-symbols:arrow-back-rounded"/>
                             Kembali
                         </Link>

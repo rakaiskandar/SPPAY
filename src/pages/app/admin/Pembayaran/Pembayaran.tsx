@@ -134,7 +134,7 @@ function Pembayaran() {
             </Link>
             <CSVLink className="btnLaporan" data={dataMemo} filename="Laporan Pembayaran SPP" headers={getHeaderCsv(columns)}>
               <Icon icon="material-symbols:print-outline-rounded"/>
-              Unduh Laporan
+              Unduh Laporan Pembayaran
             </CSVLink>
           </div>
         </div>

@@ -36,7 +36,7 @@ function Pengguna() {
     const columns = useMemo(
         () => [
             {
-                Header: "ID User",
+                Header: "Id User",
                 accessor: "id",
                 Cell: ({ cell: { value }} : { cell: { value: number}}) => (
                     <span>#{value}</span>
