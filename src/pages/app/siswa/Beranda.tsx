@@ -10,6 +10,8 @@ import rupiahConverter from "@/helpers/rupiahConverter";
 import { Pembayaran, Siswa } from "@/dataStructure";
 import dayjs from "dayjs";
 import { Icon } from "@iconify/react";
+import PdfBukti from "@/components/BuktiPembayaran";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 
 function Beranda() {
     const user = useRecoilValue(userState);
@@ -22,6 +24,8 @@ function Beranda() {
     const [siswa, setSiswa] = useState<Siswa>();
     const [pembayaran, setPembayaran] = useState<Pembayaran>();
 
+    const [loading, setLoading] = useState<boolean>(true);
+
     useEffect(() => {
         const currentPath = location.pathname.split('/');
         if (currentPath.length < 4) {
@@ -32,7 +36,7 @@ function Beranda() {
         var statusBayar = `SELECT pembayaran.status_bayar FROM pembayaran, pengguna WHERE pembayaran.id_user = pengguna.id_user AND pengguna.id_user = ${user.id_user}`;
         var tagihan = "SELECT spp.nominal FROM spp";
         const siswaSt = `SELECT s.nisn, s.nis, s.nama, s.id_spp, k.nama_kelas , s.alamat, s.no_telp, s.id_spp FROM siswa s, kelas k, pengguna p, pembayaran pmb WHERE s.id_kelas = k.id_kelas AND pmb.nisn = s.nisn AND pmb.id_user = p.id_user AND p.id_user = ${user.id_user}`;
-        const pembayaranSt = `SELECT pmb.id_pembayaran, pmb.tgl_bayar, pmb.nama_petugas, s.nama AS nama_siswa, k.nama_kelas AS nama_kelas, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar FROM pembayaran pmb, siswa s, pengguna p, kelas k, detail_pembayaran detP WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND s.id_kelas = k.id_kelas AND detP.id_pembayaran = pmb.id_pembayaran AND p.id_user = ${user.id_user}`;
+        const pembayaranSt = `SELECT pmb.id_pembayaran, pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.id_spp, pmb.nama_petugas, p.nama_pengguna, s.nama AS nama_siswa, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar FROM pembayaran pmb, siswa s, pengguna p, detail_pembayaran detP WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND detP.id_pembayaran = pmb.id_pembayaran AND p.id_user = ${user.id_user}`;
         connectionSql.query(`${totalPembayaran}; ${statusBayar}; ${tagihan}; ${siswaSt}; ${pembayaranSt}`, (err, results) => {
             if(err) console.error(err)
             else{
@@ -41,6 +45,7 @@ function Beranda() {
                 setTagihan(results[2][0].nominal);
                 setSiswa(results[3][0]);
                 setPembayaran(results[4][0]);
+                setLoading(false)
             }
         })
     },[])
@@ -48,6 +53,20 @@ function Beranda() {
     //Get Tagihan
     const tempTagihan = 6 * tagihan
     const total = tempTagihan - totalPembayaran;
+
+    if(loading) {
+        return (
+            <>
+                <Navbar user={user}/>
+
+                <div className="container">
+                    <div className="berandaHead">
+                        <h4>Loading...</h4>
+                    </div>
+                </div>
+            </>
+        )
+    }
 
     return ( 
         <>
@@ -60,10 +79,13 @@ function Beranda() {
             <main className="container">
                 <div className="berandaHead">
                     <h2>Beranda</h2>
-                    <button className="btnDownload">
-                        <Icon icon="ic:outline-save-alt"/>
-                        Unduh Bukti Transaksi
-                    </button>
+                    <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswa!}/>} fileName={`Laporan Bukti Pembayaran${dayjs(pembayaran?.tgl_bayar).format("DMYYYY")}`}>
+                        {({loading}) => (loading ? 'Loading...' : 
+                            <button className="btnDownload">
+                                <Icon icon="ic:round-save-alt"/>
+                                Unduh Bukti Transaksi
+                            </button>) }
+                    </PDFDownloadLink>
                 </div>
 
                 <div className="berandaSection1">
@@ -164,6 +186,11 @@ function Beranda() {
                                 <p>{rupiahConverter(pembayaran?.bayar)}</p>
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        {/* <PDFViewer width="800" height="800">
+                            <PdfBukti pembayaran={pembayaran!} siswa={siswa!}/>
+                        </PDFViewer> */}
                     </div>
                 </div>
             </main>

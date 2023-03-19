@@ -90,8 +90,8 @@ function DetailPembayaran() {
             <>
                 <Navbar user={user}/>
 
-                <div className="penggunaContainer">
-                    <div className="penggunaHead">
+                <div className="container">
+                    <div className="pembayaranHead">
                         <h4>Loading...</h4>
                     </div>
                 </div>

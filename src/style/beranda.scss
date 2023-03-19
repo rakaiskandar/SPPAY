@@ -15,6 +15,10 @@ $primary: #5A57EC;
         transition: 0.2s;
     }
 
+    .btnDownload:focus{
+        outline: none;
+    }
+
     .btnDownload:hover{
         background: darken($color: $primary, $amount: 8);
     }

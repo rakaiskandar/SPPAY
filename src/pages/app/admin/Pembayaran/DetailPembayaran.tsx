@@ -10,9 +10,11 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Menu } from "@headlessui/react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PdfBukti from "@/components/BuktiPembayaran";
 
 function DetailPembayaran() {
     const { id } = useParams();
@@ -120,6 +122,13 @@ function DetailPembayaran() {
                 <div className="formTitle">
                     <h2>Detail Pembayaran</h2>
                     <div>
+                        <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswaD!}/>} fileName="Laporan Bukti Pembayaran">
+                            {({loading}) => (loading ? 'Loading...' : 
+                            <a className="btn2Title">
+                                <Icon icon="material-symbols:print-outline-rounded"/>
+                                Cetak Laporan
+                            </a>) }
+                        </PDFDownloadLink>
                         <button className="btn1Title">
                             <Icon icon="material-symbols:edit-document-outline-sharp"/>
                             Edit Data
@@ -141,17 +150,6 @@ function DetailPembayaran() {
                                     >
                                         <Icon icon="mdi:trash-can-outline" width="18" />
                                         <p>Hapus Data</p>
-                                    </button>
-                                    )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        className={`${active && "buttonActiveLaporan"
-                                        }`}
-                                    >
-                                        <Icon icon="material-symbols:print-outline-rounded"/>
-                                        <p>Cetak Laporan</p>
                                     </button>
                                     )}
                             </Menu.Item>
