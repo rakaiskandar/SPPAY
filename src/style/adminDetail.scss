@@ -407,6 +407,10 @@ $primary: #5A57EC;
                 transition: 0.2s;
             }
 
+            button:focus{
+                outline: none;
+            }
+
             button:hover{
                 background: darken($color: $primary, $amount: 5);
                 font-weight: 600;
