@@ -12,19 +12,16 @@ $primary: #413EEB;
 
     img{
       width: 600px;
-      animation: bounce 1.2s;
+      animation: bounce 1.5s;
       animation-direction: alternate;
-      animation-timing-function: cubic-bezier(.5, 0.05, 1, .5);
+      animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
     }
 
     @keyframes bounce {
-      from {
-          transform: translate3d(0, 0, 0);
-      }
-      to {
-          transform: translate3d(0, 70px, 0);
-      }
+      0% { transform: translate(0,  10px); }
+      50%  { transform: translate(0, 30px); }
+      100%   { transform: translate(0, -10px); }  
     }
 
     .shadowfilter {
