@@ -90,11 +90,19 @@ function DetailPembayaran() {
             <>
                 <Navbar user={user}/>
 
-                <div className="container">
-                    <div className="pembayaranHead">
-                        <h4>Loading...</h4>
+                <form className="container">
+                    <div className="formTitle">
+                        <h2 className="loading">Detail Pembayaran</h2>
+                        <div>
+                            <button className="btn1Title loading">
+                                <Icon icon="material-symbols:edit-document-outline-sharp"/>
+                                Edit Data
+                            </button>
+                        </div>
                     </div>
-                </div>
+                    <div className="detailHead loading"></div>
+                    <div className="detailBody loading"></div>
+                </form>
             </>
         )
     }

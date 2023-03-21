@@ -23,8 +23,8 @@ function Beranda() {
   const user = useRecoilValue(userState);
   const location = useLocation();
   const navigate = useNavigate();
-  const [totalPembayaran, setTotalPembayaran] = useState<string>("");
-  const [totalTransaksi, setTotalTransaksi] = useState<string>("");
+  const [totalPembayaran, setTotalPembayaran] = useState<number>(0);
+  const [totalTransaksi, setTotalTransaksi] = useState<number>(0);
   const [siswaBelumBayar, setSiswaBelumBayar] = useState<SiswaDashboard[]>([]);
   const [bayarTerbaru, setBayarTerbaru] = useState<TransaksiDashboard[]>([]);
 

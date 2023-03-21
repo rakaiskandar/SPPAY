@@ -49,6 +49,11 @@ function Beranda() {
             }
         })
     },[])
+    
+    //Get today date
+    let dateNow = new Date().toLocaleDateString("en-US").toString();
+    //Date now
+    const formatDate = dayjs(dateNow).format("DMYYYY");
 
     //Get Tagihan
     const tempTagihan = 6 * tagihan
@@ -59,11 +64,45 @@ function Beranda() {
             <>
                 <Navbar user={user}/>
 
-                <div className="container">
+                <main className="container">
                     <div className="berandaHead">
-                        <h4>Loading...</h4>
+                        <h4 className="loading">Loading...</h4>
                     </div>
-                </div>
+
+                    <div className="berandaSection1">
+                        <div className="berandaSub1 loading">
+                            <h5>Total Tagihan:</h5>  
+                            <span className="loading">{rupiahConverter(total)}</span>
+                        </div>
+                        <div className="berandaSub1 loading">
+                            <h5>Status Transaksi:</h5>
+                            <div>
+                                <>
+                                    {statusBayar === "Lunas" ? 
+                                    <h4 className="stat1 loading">{statusBayar}</h4>
+                                    : 
+                                    <h4 className="stat2 loading">Belum Lunas</h4>
+                                    }
+                                </>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="berandaSection2">
+                        <div className="berandaSub2 berandaSub2List loading">
+                            <h4>🧑‍🎓Detail Siswa:</h4>
+                            <div className="berandaSub2ListItem loading"></div>
+                        </div>
+
+                        <div className="berandaSub2 berandaSub2List loading">
+                            <h4>💸Detail Pembayaran:</h4>
+                            <div className="berandaSub2ListItem loading"></div>
+                        </div>
+                        <div>
+                            
+                        </div>
+                    </div>
+                </main>
             </>
         )
     }
@@ -79,8 +118,12 @@ function Beranda() {
             <main className="container">
                 <div className="berandaHead">
                     <h2>Beranda</h2>
-                    <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswa!}/>} fileName={`Laporan Bukti Pembayaran${dayjs(pembayaran?.tgl_bayar).format("DMYYYY")}`}>
-                        {({loading}) => (loading ? 'Loading...' : 
+                    <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswa!}/>} fileName={`Laporan Bukti Pembayaran${formatDate}`}>
+                        {({loading}) => (loading ? 
+                            <button className="btnDownload loading">
+                                <Icon icon="ic:round-save-alt"/>
+                                Unduh Bukti Transaksi
+                            </button> : 
                             <button className="btnDownload">
                                 <Icon icon="ic:round-save-alt"/>
                                 Unduh Bukti Transaksi

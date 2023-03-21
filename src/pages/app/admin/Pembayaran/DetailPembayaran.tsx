@@ -87,16 +87,29 @@ function DetailPembayaran() {
         })
     }
 
+    //Get today date
+    let dateNow = new Date().toLocaleDateString("en-US").toString();
+    //Date now
+    const formatDate = dayjs(dateNow).format("DMYYYY");
+
     if(loading) {
         return (
             <>
                 <Navbar user={user}/>
 
-                <div className="container">
-                    <div className="penggunaHead">
-                        <h4>Loading...</h4>
+                <form className="container">
+                    <div className="formTitle">
+                        <h2 className="loading">Detail Pembayaran</h2>
+                        <div>
+                            <button className="btn1Title loading">
+                                <Icon icon="material-symbols:edit-document-outline-sharp"/>
+                                Edit Data
+                            </button>
+                        </div>
                     </div>
-                </div>
+                    <div className="detailHead loading"></div>
+                    <div className="detailBody loading"></div>
+                </form>
             </>
         )
     }
@@ -122,8 +135,9 @@ function DetailPembayaran() {
                 <div className="formTitle">
                     <h2>Detail Pembayaran</h2>
                     <div>
-                        <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswaD!}/>} fileName="Laporan Bukti Pembayaran">
-                            {({loading}) => (loading ? 'Loading...' : 
+                        <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswaD!}/>} fileName={`Laporan Bukti Pembayaran${formatDate}`}>
+                            {({loading}) => (loading ? 
+                            <div className="loading"></div> : 
                             <a className="btn2Title">
                                 <Icon icon="material-symbols:print-outline-rounded"/>
                                 Cetak Laporan
