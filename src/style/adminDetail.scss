@@ -87,6 +87,31 @@ $primary: #5A57EC;
     }
 }
 
+.hapusContainer{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+    .hapusBtn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        background: red;
+        color: white;
+        border: white solid 1px;
+        font-weight: 600;
+        padding: 6px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .hapusBtn:hover{
+        background: darken($color: red, $amount: 8);
+    }
+}
+
 .formContainerDetail{
     display: grid;
     grid-template-columns: 1fr 1fr;
