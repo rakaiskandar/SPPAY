@@ -19,7 +19,7 @@ function NewPengguna() {
     const navigate = useNavigate();
 
     const [lastId, setLastId] = useState<number>(0);
-    const [selectedLevel, setSelectedLevel] = useState<Level>(
+    const [selectedLevel, setSelectedLevel] = useState<Level | null>(
         levelOptions[0]
     );
     
@@ -34,7 +34,7 @@ function NewPengguna() {
     }, [])
 
     const submitHandler = handleSubmit((data) => {
-        const addSt = `INSERT INTO pengguna (id_user, username, password, nama_pengguna, level) VALUES ('${lastId + 1}', '${data.username}', '${sha1(data.password)}', '${data.nama_pengguna}', '${selectedLevel.value}')`;
+        const addSt = `INSERT INTO pengguna (id_user, username, password, nama_pengguna, level) VALUES ('${lastId + 1}', '${data.username}', '${sha1(data.password)}', '${data.nama_pengguna}', '${selectedLevel!.value}')`;
         // console.log(addSt);
         connectionSql.query(addSt, (err) => {
             if(err) console.error(err)

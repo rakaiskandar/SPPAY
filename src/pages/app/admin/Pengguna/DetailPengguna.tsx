@@ -17,7 +17,7 @@ function DetailPengguna() {
     const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [penggunaD, setPenggunaD] = useState<Pengguna>();
-    const [selectedLevel, setSelectedLevel] = useState(levelOptions[0]);
+    const [selectedLevel, setSelectedLevel] = useState<Level | null>(levelOptions[0]);
 
     const { register, handleSubmit } = useForm();
     const [loading, setLoading] = useState<boolean>(true);
@@ -25,7 +25,7 @@ function DetailPengguna() {
 
     useEffect(() => {
         const sqlSt = `SELECT *, id_user AS id FROM pengguna WHERE id_user = ${id}`;
-        connectionSql.query(`${sqlSt}`, (err, results, fields) => {
+        connectionSql.query(`${sqlSt}`, (err, results) => {
             if(err) console.error(err)
             else{
                 const dataReturn: Pengguna = results[0];
@@ -40,7 +40,7 @@ function DetailPengguna() {
     }, [])
 
     const submitHandler = handleSubmit((data) => {
-        const updateSt = `UPDATE pengguna SET username = '${data.username}', nama_pengguna = '${data.nama_pengguna}', level = '${selectedLevel.value}' WHERE id_user = ${id}`;
+        const updateSt = `UPDATE pengguna SET username = '${data.username}', nama_pengguna = '${data.nama_pengguna}', level = '${selectedLevel!.value}' WHERE id_user = ${id}`;
         //console.log(updateSt);
         connectionSql.query(updateSt, (err) => {
             if(err) console.error(err)

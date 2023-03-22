@@ -18,7 +18,7 @@ function NewKelas() {
     const navigate = useNavigate();
 
     const [lastId, setLastId] = useState<number>(0);
-    const [selectedKompetensi, setSelectedKompetensi] = useState<KompetensiKeahlian>(
+    const [selectedKompetensi, setSelectedKompetensi] = useState<KompetensiKeahlian | null>(
         kompetensiOptions[0]
     );
 
@@ -33,7 +33,7 @@ function NewKelas() {
     })
 
     const submitHandler = handleSubmit((data) => {
-        const addSt = `INSERT INTO kelas (id_kelas, nama_kelas, kompetensi_keahlian, jumlah_siswa) VALUES ('${lastId + 1}', '${data.nama_kelas}', '${selectedKompetensi.value}', 0)`;
+        const addSt = `INSERT INTO kelas (id_kelas, nama_kelas, kompetensi_keahlian, jumlah_siswa) VALUES ('${lastId + 1}', '${data.nama_kelas}', '${selectedKompetensi!.value}', 0)`;
         connectionSql.query(addSt, (err) => {
             if (err) console.error(err)
             else{

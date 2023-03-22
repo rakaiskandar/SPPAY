@@ -61,7 +61,7 @@ function NewPembayaran() {
     //Month now
     const monthDate = dayjs(dateNow).format("MMMM");
 
-    const changeSiswaHandler = (data: Siswa) => {
+    const changeSiswaHandler = (data: Siswa | null) => {
         if(data == null){
             console.log("ini hapus");
             setValue("nisn", "");
@@ -84,7 +84,7 @@ function NewPembayaran() {
         }
     }
 
-    const changeSppHandler = (data: SPP) => {
+    const changeSppHandler = (data: SPP | null) => {
         if (data == null) {
             console.log("ini hapus");
             setValue("id_spp", 0);
@@ -104,7 +104,7 @@ function NewPembayaran() {
         console.log(lastId);   
         if (jumlah_bayar < 6) {
             const addTxnSql = `INSERT INTO pembayaran (id_pembayaran, id_user, nama_petugas, nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, status_bayar)
-            VALUES ('${lastId + 1}', '${selectedPengguna?.value}', ${pengguna?.nama_pengguna}, '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${jumlah_bayar}', 'Belum Lunas')`;
+            VALUES ('${lastId + 1}', '${selectedPengguna?.value}', '${pengguna?.nama_pengguna}', '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${jumlah_bayar}', 'Belum Lunas')`;
             const addTxnDet = `INSERT INTO detail_pembayaran (id_detail, id_pembayaran, bayar) VALUES('${lastId + 1}', '${lastId + 1}', '${jumlah_bayar * intNominal}')`;
             console.log(addTxnSql);
             connectionSql.query(`${addTxnSql}; ${addTxnDet}`, (err) => {

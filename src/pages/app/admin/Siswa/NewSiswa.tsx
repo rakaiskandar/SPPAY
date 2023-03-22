@@ -19,8 +19,8 @@ function NewSiswa() {
 
     const [kelas, setKelas] = useState<Kelas[]>([]);
     const [spp, setSpp] = useState<SPPOptions[]>([]);
-    const [selectedKelas, setSelectedKelas] = useState<Kelas>();
-    const [selectedSpp, setSelectedSpp] = useState<SPPOptions>();
+    const [selectedKelas, setSelectedKelas] = useState<Kelas | null>();
+    const [selectedSpp, setSelectedSpp] = useState<SPPOptions | null>();
 
     useEffect(() => {
         const kelasSt = "SELECT nama_kelas AS label, id_kelas, id_kelas AS value FROM kelas";

@@ -17,7 +17,9 @@ function DetailKelas() {
     const user = useRecoilValue(userState);
     const navigate = useNavigate();
     const [kelasD, setKelasD] = useState<Kelas>();
-    const [selectedKompetensi, setSelectedKompetensi] = useState(kompetensiOptions[0]);
+    const [selectedKompetensi, setSelectedKompetensi] = useState<KompetensiKeahlian | null>(
+        kompetensiOptions[0]
+    );
 
     const { register, handleSubmit } = useForm<Kelas>();
     const [loading, setLoading] = useState<boolean>(true);
@@ -40,7 +42,7 @@ function DetailKelas() {
     }, [])
 
     const submitHandler = handleSubmit((data) => {
-        const updateSt = `UPDATE kelas SET nama_kelas = '${data.nama_kelas}', kompetensi_keahlian = '${selectedKompetensi.value}' WHERE id_kelas = ${id}`;
+        const updateSt = `UPDATE kelas SET nama_kelas = '${data.nama_kelas}', kompetensi_keahlian = '${selectedKompetensi!.value}' WHERE id_kelas = ${id}`;
         connectionSql.query(updateSt, (err) => {
             if (err) console.error(err)
             else{

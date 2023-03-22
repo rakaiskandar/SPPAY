@@ -19,8 +19,8 @@ function DetailSiswa() {
     const [siswaD, setSiswaD] = useState<Siswa>();
     const [kelas, setKelas] = useState<KelasTypeList>([]);
     const [spp, setSpp] = useState<SPPOptions[]>([]);
-    const [selectedKelas, setSelectedKelas] = useState<Kelas>();
-    const [selectedSpp, setSelectedSpp] = useState<SPPOptions>();
+    const [selectedKelas, setSelectedKelas] = useState<Kelas | null>();
+    const [selectedSpp, setSelectedSpp] = useState<SPPOptions | null>();
 
     const { register, handleSubmit } = useForm<Siswa>();
     const [loading, setLoading] = useState<boolean>(true);

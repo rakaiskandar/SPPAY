@@ -10,7 +10,15 @@ export type userProps = {
     value: number;
 }
 
-export const userState = atom<userProps | {}>({
+export const userState = atom<userProps & {}>({
     key: "userState",
-    default: {},
+    default: {
+        id_user: 1,
+        username: "",
+        password: "",
+        nama_pengguna: "", 
+        level: "admin",
+        label: "",
+        value: 1,
+    },
 })

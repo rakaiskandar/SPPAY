@@ -60,7 +60,7 @@ function NewPembayaran() {
     //Month now
     const monthDate = dayjs(dateNow).format("MMMM");
 
-    const changeSiswaHandler = (data: Siswa) => {
+    const changeSiswaHandler = (data: Siswa | null) => {
         if(data == null){
             console.log("ini hapus");
             setValue("nisn", "");
@@ -83,7 +83,7 @@ function NewPembayaran() {
         }
     }
 
-    const changeSppHandler = (data: SPP) => {
+    const changeSppHandler = (data: SPP | null) => {
         if (data == null) {
             console.log("ini hapus");
             setValue("id_spp", 0);
