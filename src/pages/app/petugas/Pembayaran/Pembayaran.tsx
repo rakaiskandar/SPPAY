@@ -88,7 +88,7 @@ function Pembayaran() {
         ),
       },
       {
-        Header: "Bayar",
+        Header: "Status Bayar",
         accessor: "status_bayar",
         Cell: ({ cell: { value } }: { cell: { value: string } }) => (
             <span className="paidStatus">

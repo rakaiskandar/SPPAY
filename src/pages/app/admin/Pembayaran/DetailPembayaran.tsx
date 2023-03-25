@@ -103,7 +103,7 @@ function DetailPembayaran() {
                         <div>
                             <button className="btn1Title loading">
                                 <Icon icon="material-symbols:edit-document-outline-sharp"/>
-                                Edit Data
+                                Simpan Perubahan
                             </button>
                         </div>
                     </div>
@@ -175,7 +175,7 @@ function DetailPembayaran() {
                             <p>{dayjs(pembayaran?.tgl_bayar).format("D MMMM YYYY")}</p>
                         </div>
                         <div className="detailHeadSub">
-                            <p className="primaryC">{rupiahConverter(pembayaran?.bayar)}</p>
+                            <h2 className="primaryC">{rupiahConverter(pembayaran?.bayar)}</h2>
                             <p className={`stat ${
                                 pembayaran?.status_bayar === "Lunas"
                                 ? "sType"
@@ -269,8 +269,8 @@ function DetailPembayaran() {
                             </div>
                             <div className="detailSubB">
                                 <p>Id SPP</p>
-                            <h5>{siswaD?.id_spp}</h5>
-                        </div>
+                                <h5>{siswaD?.id_spp}</h5>
+                            </div>
                         </div>
                     </div>
                     <div className="detailSub">

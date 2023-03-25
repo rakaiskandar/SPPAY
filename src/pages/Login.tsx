@@ -75,6 +75,7 @@ function Login() {
                   value={username}
                   className="inputStyle"
                   onChange={(ev) => setUsername(ev.target.value)}
+                  required
                 />
               </div>
 
@@ -86,6 +87,7 @@ function Login() {
                   value={password}
                   className="inputStyle"
                   onChange={(ev) => setPassword(ev.target.value)}
+                  required
                 />
               </div>
 

@@ -180,7 +180,7 @@ function Beranda() {
                             </div>
                             <div className="berandaSub2ListItemDetailSiswa">
                                 <h4>Id Spp</h4>
-                                <p>#{siswa?.id_spp}</p>
+                                <p>{siswa?.id_spp}</p>
                             </div>
                         </div>
                     </div>
