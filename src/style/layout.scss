@@ -1,5 +1,5 @@
-$primaryB: rgb(229 231 235);
-$primary: #5A57EC;
+$primaryB: #cecccc;
+$primary: #413EEB;
 
 .layoutContainer{
     display: grid;
@@ -65,12 +65,12 @@ $primary: #5A57EC;
             transition: 0.2s;
 
             &:hover{
-                background: $primaryB;
+                background: #9ea3f830;
             }
         }
 
         .sidebarItemsActive{
-            background: $primaryB;
+            background: #E5E7EB;
             color: $primary;
             font-weight: 700;
             transition: 0.2s;

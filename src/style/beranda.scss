@@ -1,5 +1,5 @@
 $primaryB: rgb(229 231 235);
-$primary: #5A57EC;
+$primary: #413EEB;
 
 .berandaHead{
     display: flex;
@@ -72,6 +72,18 @@ $primary: #5A57EC;
                 color: #f05151;
                 background: rgba(#e94141, 40%);
             }
+            .statTidak{
+                display: flex;
+                justify-content: center;
+                font-size: 28px;
+                align-items: center;
+                padding: 4px 6px; 
+                margin: 5px 5px;
+                border-radius: 50px;
+                font-weight: 700;
+                color: gray;
+                background: rgba(gray, 40%);
+            }
         }
     }
 }
@@ -127,17 +139,22 @@ $primary: #5A57EC;
             }
             .berandaSub2ListItemDetailSiswa{
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
+                flex-direction: column;
                 gap: 8px;
-                h4{
-                    font-size: 16px;
-                    font-weight: 400;
-                    opacity: 80%;
-                }
-                p{
-                    font-size: 16px;
-                    font-weight: 600;
+
+                div{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    h4{
+                        font-size: 16px;
+                        font-weight: 400;
+                        opacity: 80%;
+                    }
+                    p{
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
                 }
             }
         }
@@ -147,6 +164,17 @@ $primary: #5A57EC;
             justify-content: center;
             align-items: center;
             padding-top: 60px;
+            padding-bottom: 60px;
+            opacity: 70%;
+        }
+
+        h4.tidakAdaDataSiswa{
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            font-size: 16px;
+            align-items: center;
+            padding-top: 80px;
             padding-bottom: 60px;
             opacity: 70%;
         }
