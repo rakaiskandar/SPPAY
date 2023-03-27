@@ -31,6 +31,8 @@ export interface Siswa{
     alamat: string,
     no_telp: string,
     id_spp: number,
+    semester: string, 
+    status_bayar: string
 }
 
 export type SiswaTypeList = Siswa[];
@@ -70,7 +72,8 @@ export interface Pembayaran{
     id_spp: number,
     jumlah_bayar: number,
     status_bayar: string,
-    bayar: number
+    bayar: number,
+    semester: string
 }
 
 export type PembayaranTypeList = Pembayaran[];

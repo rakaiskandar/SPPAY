@@ -135,7 +135,7 @@ function Beranda() {
               ) : (
                 <div className="beranda2Stat">
                   <h4 className="tidakAdaData">
-                    {`Tidak ada pembayaran terbaru di ${selectedBulan?.label}`}
+                    {`Tidak ada pembayaran terbaru di bulan ${selectedBulan?.label}`}
                   </h4>
                 </div>
               )}

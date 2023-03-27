@@ -34,18 +34,18 @@ function Beranda() {
             navigate("beranda")
         }
 
-        var totalpembayaran = `SELECT detP.bayar FROM pembayaran pmb, detail_pembayaran detP, pengguna p WHERE pmb.id_pembayaran = detP.id_pembayaran AND pmb.id_user = p.id_user AND p.id_user = ${user.id_user}`;
+        var totalpembayaran = `SELECT detP.bayar FROM pembayaran pmb, detail_pembayaran detP, pengguna p, spp sp WHERE pmb.id_pembayaran = detP.id_pembayaran AND pmb.id_user = p.id_user AND pmb.id_spp = sp.id_spp AND sp.semester = 2 AND p.id_user = ${user.id_user}`;
         var statusbayar = `SELECT pembayaran.status_bayar FROM pembayaran, pengguna WHERE pembayaran.id_user = pengguna.id_user AND pengguna.id_user = ${user.id_user}`;
         var tagihan = "SELECT spp.nominal FROM spp";
-        const siswaSt = `SELECT s.nisn, s.nis, s.nama, s.id_spp, k.nama_kelas , s.alamat, s.no_telp, s.id_spp FROM siswa s, kelas k, pengguna p, pembayaran pmb WHERE s.id_kelas = k.id_kelas AND pmb.nisn = s.nisn AND pmb.id_user = p.id_user AND p.id_user = ${user.id_user}`;
-        const pembayaranSt = `SELECT pmb.id_pembayaran, pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.id_spp, pmb.nama_petugas, p.nama_pengguna, s.nama AS nama_siswa, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar FROM pembayaran pmb, siswa s, pengguna p, detail_pembayaran detP WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND detP.id_pembayaran = pmb.id_pembayaran AND p.id_user = ${user.id_user}`;
+        const siswaSt = `SELECT s.nisn, s.nis, s.nama, s.id_spp, k.nama_kelas , s.alamat, s.no_telp, sp.status_bayar FROM siswa s, kelas k, pengguna p, pembayaran pmb, spp sp WHERE s.id_kelas = k.id_kelas AND pmb.nisn = s.nisn AND pmb.id_user = p.id_user AND pmb.id_spp = sp.id_spp AND sp.semester = 2 AND p.id_user = ${user.id_user}`;
+        const pembayaranSt = `SELECT pmb.id_pembayaran, pmb.id_pembayaran AS id, pmb.tgl_bayar, sp.semester ,pmb.nama_petugas, p.nama_pengguna, s.nama AS nama_siswa, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar FROM pembayaran pmb, siswa s, pengguna p, detail_pembayaran detP, spp sp WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND detP.id_pembayaran = pmb.id_pembayaran AND pmb.id_spp = sp.id_spp AND sp.semester = 2 AND p.id_user = ${user.id_user}`;
         connectionSql.query(`${totalpembayaran}; ${statusbayar}; ${tagihan}; ${siswaSt}; ${pembayaranSt}`, 
         (err, results) => {
             if(err) console.error(err)
             else{
-                setTotalPembayaran(results[0][0]);
-                setStatusBayar(results[1][0].status_bayar);
-                setTagihan(results[2][0].nominal);
+                setTotalPembayaran(results[0][0] === undefined ? 0 : results[0][0].bayar);
+                setStatusBayar(results[1][0] === undefined ? "" : results[1][0].status_bayar);
+                setTagihan(results[2][0] === undefined ? 0 : results[2][0].nominal);
                 setSiswa(results[3][0]);
                 setListSiswa(results[3]);
                 setPembayaran(results[4][0]);
@@ -62,7 +62,7 @@ function Beranda() {
 
     //Get Tagihan
     const tempTagihan = 6 * tagihan;
-    const total = tempTagihan - totalPembayaran.bayar;
+    const total = tempTagihan - totalPembayaran;
 
     return ( 
         <>
@@ -97,11 +97,7 @@ function Beranda() {
                         <h5>Total Tagihan:</h5>  
                         <span>
                             <>
-                                {total !== undefined ?
-                                    <>{rupiahConverter(total)}</>
-                                : 
-                                    <>Tidak ada tagihan</> 
-                            }
+                                <>{total === undefined && total >= tempTagihan ? "Tidak ada tagihan" : rupiahConverter(total)}</>   
                             </>
                         </span>
                     </div>
@@ -109,10 +105,10 @@ function Beranda() {
                         <h5>Status Transaksi:</h5>
                         <div>
                             <>
-                                {statusBayar === undefined ? 
+                                {statusBayar === "" ? 
                                     <h4 className="statTidak">Belum ada status</h4>
-                                    :
-                                statusBayar === "Lunas" ?  
+                                :
+                                    statusBayar === "Lunas" ?  
                                     <h4 className="stat1">{statusBayar}</h4>
                                     : 
                                     <h4 className="stat2">{statusBayar}</h4>
@@ -154,9 +150,21 @@ function Beranda() {
                                             <p>{s.no_telp}</p>
                                         </div>
                                         <div>
-                                            <h4>Id Spp</h4>
-                                            <p>{s.id_spp}</p>
-                                        </div>
+                                        <h4>Status Bayar</h4>
+                                        <p className="paidStatus">
+                                        {s.status_bayar === "Lunas" ? (
+                                            <>
+                                                <span>🥳</span>
+                                                <p className="lunas">Lunas</p>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>😢</span>
+                                                <p className="belumLunas">Belum Lunas</p>
+                                            </>
+                                        )}
+                                        </p>
+                                    </div>
                                     </div>
                                 ))
                             ) : (
@@ -194,20 +202,8 @@ function Beranda() {
                                         <p>{p.nama_siswa}</p>
                                     </div>
                                     <div>
-                                        <h4>Status Bayar</h4>
-                                        <p className="paidStatus">
-                                        {p.status_bayar === "Lunas" ? (
-                                            <>
-                                                <span>🥳</span>
-                                                <p className="lunas">Lunas</p>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <span>😢</span>
-                                                <p className="belumLunas">Belum Lunas</p>
-                                            </>
-                                        )}
-                                        </p>
+                                        <h4>Semester</h4>
+                                        <p>{p.semester}</p>
                                     </div>
                                     <div>
                                         <h4>Jumlah Bayar</h4>
