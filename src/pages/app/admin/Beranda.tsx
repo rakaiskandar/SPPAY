@@ -75,7 +75,17 @@ function Beranda() {
           <Select
             options={bulanOptions}
             value={selectedBulan}
+            className="selectInput"
             placeholder="Pilih Bulan"
+            theme={(theme) => ({
+              ...theme,
+              borderRadius: 0,
+              colors: {
+                ...theme.colors,
+                primary25: '#E5E7EB',
+                primary: '#535bf2',
+              },
+            })}
             onChange={
               (value) => {
                 const totalpembayaran = `SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE pembayaran.id_pembayaran = detail_pembayaran.id_pembayaran AND MONTH(tgl_bayar) = ${value?.value}`;
@@ -152,7 +162,7 @@ function Beranda() {
                 ))
               ) : (
                 <div className="beranda2Stat">
-                  <h4 className="tidakAdaData">Tidak ada siswa yang belum bayar di bulan ini</h4>
+                  <h4 className="tidakAdaData">Tidak ada siswa yang belum bayar</h4>
                 </div>
               )}
             </div>

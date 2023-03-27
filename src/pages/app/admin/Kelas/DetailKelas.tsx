@@ -134,6 +134,15 @@ function DetailKelas() {
                             value={selectedKompetensi}
                             className="selectInput"
                             onChange={setSelectedKompetensi}
+                            theme={(theme) => ({
+                                ...theme,
+                                borderRadius: 0,
+                                colors: {
+                                  ...theme.colors,
+                                  primary25: '#E5E7EB',
+                                  primary: '#535bf2',
+                                },
+                              })}
                             required
                         />
                     </div>

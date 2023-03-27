@@ -23,6 +23,10 @@ $primary: #413EEB;
     .btnDownload:hover{
         background: darken($color: $primary, $amount: 8);
     }
+
+    .selectInput{
+        width: 120px;
+    }
 }
 
 .berandaSection1{

@@ -161,6 +161,15 @@ function NewPembayaran() {
                                 placeholder="Pilih siswa"
                                 onChange={changeSiswaHandler}
                                 className="selectInput"
+                                theme={(theme) => ({
+                                    ...theme,
+                                    borderRadius: 0,
+                                    colors: {
+                                      ...theme.colors,
+                                      primary25: '#E5E7EB',
+                                      primary: '#535bf2',
+                                    },
+                                  })}
                                 />
                             </div>
                             <div className="pFormContainer">
@@ -239,6 +248,15 @@ function NewPembayaran() {
                                 placeholder="Pilih id spp"
                                 onChange={changeSppHandler}
                                 className="selectInput"
+                                theme={(theme) => ({
+                                    ...theme,
+                                    borderRadius: 0,
+                                    colors: {
+                                      ...theme.colors,
+                                      primary25: '#E5E7EB',
+                                      primary: '#535bf2',
+                                    },
+                                  })}
                                 />
                             </div>
                             <div className="pFormContainer">
@@ -273,6 +291,15 @@ function NewPembayaran() {
                                 placeholder="Pilih id spp"
                                 onChange={setSelectedPengguna}
                                 className="selectInput"
+                                theme={(theme) => ({
+                                    ...theme,
+                                    borderRadius: 0,
+                                    colors: {
+                                      ...theme.colors,
+                                      primary25: '#E5E7EB',
+                                      primary: '#535bf2',
+                                    },
+                                  })}
                                 />
                             </div>
                             <div className="rincianContainer">

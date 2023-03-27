@@ -124,7 +124,7 @@ function Beranda() {
 
                 <div className="berandaSection2">
                     <div className="berandaSub2 berandaSub2List">
-                        <h4>🧑‍🎓Detail Siswa:</h4>
+                        <h4>🎓Detail Siswa:</h4>
                         <div className="berandaSub2ListItem">
                         {listSiswa.length > 0 ? (
                                 listSiswa.map((s, i) => (

@@ -174,6 +174,15 @@ function DetailSiswa() {
                         value={selectedKelas}
                         className="selectInput"
                         onChange={setSelectedKelas}
+                        theme={(theme) => ({
+                            ...theme,
+                            borderRadius: 0,
+                            colors: {
+                              ...theme.colors,
+                              primary25: '#E5E7EB',
+                              primary: '#535bf2',
+                            },
+                          })}
                         required
                         />
                     </div>
@@ -194,6 +203,15 @@ function DetailSiswa() {
                         value={selectedSpp}
                         className="selectInput"
                         onChange={setSelectedSpp}
+                        theme={(theme) => ({
+                            ...theme,
+                            borderRadius: 0,
+                            colors: {
+                              ...theme.colors,
+                              primary25: '#E5E7EB',
+                              primary: '#535bf2',
+                            },
+                          })}
                         isDisabled={true}
                         />
                     </div>
