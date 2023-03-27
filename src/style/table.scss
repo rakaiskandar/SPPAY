@@ -50,9 +50,14 @@ $primaryB2: #323232;
             border-bottom: 1px solid $primaryB;
             font-weight: 500;
             cursor: pointer;
+            transition: 0.2s;
             td {
               padding: 16px;
             }
+          }
+          tr:hover{
+            background: darken($color: #2e37eb30, $amount: 3);
+            font-weight: 600;
           }
         }
       }

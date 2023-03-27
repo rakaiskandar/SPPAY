@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { Menu } from "@headlessui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PdfBukti from "@/components/BuktiPembayaran";
+import generateRandomId from "@/helpers/generateRandomId";
 
 function DetailPembayaran() {
     const { id } = useParams();
@@ -90,7 +91,7 @@ function DetailPembayaran() {
     //Get today date
     let dateNow = new Date().toLocaleDateString("en-US").toString();
     //Date now
-    const formatDate = dayjs(dateNow).format("DMYYYY");
+    const formatDate = dayjs(dateNow).format("D MMMM YYYY");
 
     if(loading) {
         return (
@@ -135,7 +136,8 @@ function DetailPembayaran() {
                 <div className="formTitle">
                     <h2>Detail Pembayaran</h2>
                     <div>
-                        <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswaD!}/>} fileName={`Laporan Bukti Pembayaran${formatDate}`}>
+                        <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswaD!}/>} 
+                        fileName={`Bukti Pembayaran-${generateRandomId(5)}-${formatDate}`}>
                             {({loading}) => (loading ? 
                             <div className="loading"></div> : 
                             <a className="btn2Title">

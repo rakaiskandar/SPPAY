@@ -8,6 +8,8 @@ import "@/style/beranda.scss";
 import { connectionSql } from "@/sqlConnect";
 import rupiahConverter from "@/helpers/rupiahConverter";
 import dayjs from "dayjs";
+import { Bulan, bulanOptions } from "@/dataStructure";
+import Select from "react-select";
 
 export interface TransaksiDashboard{
     nama: string,
@@ -18,9 +20,15 @@ function Beranda() {
   const user = useRecoilValue(userState);
   const location = useLocation();
   const navigate = useNavigate();
+
+  //Get month
+  let dateNow = new Date().getMonth();
   const [totalPembayaran, setTotalPembayaran] = useState<number>(0);
   const [totalTransaksi, setTotalTransaksi] = useState<number>(0);
   const [bayarTerbaru, setBayarTerbaru] = useState<TransaksiDashboard[]>([]);
+  const [selectedBulan, setSelectedBulan] = useState<Bulan | null>(
+    bulanOptions[dateNow]
+  );
 
   useEffect(() => {
     const currentPath = location.pathname.split("/");
@@ -58,6 +66,31 @@ function Beranda() {
       <main className="container">
         <div className="berandaHead">
           <h2>Beranda</h2>
+          <Select
+            options={bulanOptions}
+            value={selectedBulan}
+            placeholder="Pilih Bulan"
+            onChange={
+              (value) => {
+                const totalpembayaran = `SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE pembayaran.id_pembayaran = detail_pembayaran.id_pembayaran AND MONTH(tgl_bayar) = ${value?.value}`;
+                const totaltransaksi = `SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = ${value?.value}`;
+                var pembayaranTerbaru =
+                `SELECT siswa.nama, pembayaran.tgl_bayar FROM siswa, pembayaran WHERE MONTH(pembayaran.tgl_bayar) = ${value?.value} AND pembayaran.nisn = siswa.nisn ORDER BY pembayaran.tgl_bayar DESC LIMIT 4`;
+                
+                connectionSql.query(
+                  `${totalpembayaran}; ${totaltransaksi}; ${pembayaranTerbaru}`,
+                  (err, results) => {
+                    if (err) console.error('err',err);
+                    else {
+                      setTotalPembayaran(results[0][0].total === null ? 0 : results[0][0].total);
+                      setTotalTransaksi(results[1][0].jumlah === null ? 0 : results[1][0].jumlah);
+                      setBayarTerbaru(results[2] === null ? <></> : results[2]);
+                      setSelectedBulan(value)
+                    }
+                  }
+                )
+              }
+            } />
         </div>
 
         <div className="berandaSection1">
@@ -92,7 +125,7 @@ function Beranda() {
               ) : (
                 <div className="beranda2Stat">
                   <h4 className="tidakAdaData">
-                    Tidak ada pembayaran terbaru di bulan ini
+                    {`Tidak ada pembayaran terbaru di ${selectedBulan?.label}`}
                   </h4>
                 </div>
               )}

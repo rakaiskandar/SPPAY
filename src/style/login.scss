@@ -12,7 +12,7 @@ $primary: #413EEB;
 
     img{
       width: 600px;
-      animation: bounce 1.5s;
+      animation: bounce 1s;
       animation-direction: alternate;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
@@ -20,8 +20,7 @@ $primary: #413EEB;
 
     @keyframes bounce {
       0% { transform: translate(0,  10px); }
-      50%  { transform: translate(0, 30px); }
-      100%   { transform: translate(0, -10px); }  
+      100%   { transform: translate(0, -20px); }  
     }
 
     .shadowfilter {

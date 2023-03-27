@@ -14,6 +14,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "@/atoms/userAtom";
 import { CSVLink } from "react-csv";
 import getHeaderCsv from "@/helpers/getHeaderCsv";
+import generateRandomId from "@/helpers/generateRandomId";
 
 function Pembayaran() {
   const user = useRecoilValue(userState);
@@ -113,7 +114,12 @@ function Pembayaran() {
     ],
     []
   );
-
+  
+  //Get today date
+  let dateNow = new Date().toLocaleDateString("en-US").toString();
+  //Date now
+  const formatDate = dayjs(dateNow).format("D MMMM YYYY");
+  
   return (
     <>
       <Helmet>
@@ -132,7 +138,7 @@ function Pembayaran() {
                 Tambah Pembayaran
               </button>
             </Link>
-            <CSVLink className="btnLaporan" data={dataMemo} filename="Laporan Pembayaran SPP" headers={getHeaderCsv(columns)}>
+            <CSVLink className="btnLaporan" data={dataMemo} filename={`Laporan Pembayaran SPP-${generateRandomId(5)}-${formatDate}`} headers={getHeaderCsv(columns)}>
               <Icon icon="material-symbols:print-outline-rounded"/>
               Unduh Laporan Pembayaran
             </CSVLink>

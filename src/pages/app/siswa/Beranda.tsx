@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { Icon } from "@iconify/react";
 import PdfBukti from "@/components/BuktiPembayaran";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import generateRandomId from "@/helpers/generateRandomId";
 
 function Beranda() {
     const user = useRecoilValue(userState);
@@ -38,10 +39,11 @@ function Beranda() {
         var tagihan = "SELECT spp.nominal FROM spp";
         const siswaSt = `SELECT s.nisn, s.nis, s.nama, s.id_spp, k.nama_kelas , s.alamat, s.no_telp, s.id_spp FROM siswa s, kelas k, pengguna p, pembayaran pmb WHERE s.id_kelas = k.id_kelas AND pmb.nisn = s.nisn AND pmb.id_user = p.id_user AND p.id_user = ${user.id_user}`;
         const pembayaranSt = `SELECT pmb.id_pembayaran, pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.id_spp, pmb.nama_petugas, p.nama_pengguna, s.nama AS nama_siswa, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar FROM pembayaran pmb, siswa s, pengguna p, detail_pembayaran detP WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND detP.id_pembayaran = pmb.id_pembayaran AND p.id_user = ${user.id_user}`;
-        connectionSql.query(`${totalpembayaran}; ${statusbayar}; ${tagihan}; ${siswaSt}; ${pembayaranSt}`, (err, results) => {
+        connectionSql.query(`${totalpembayaran}; ${statusbayar}; ${tagihan}; ${siswaSt}; ${pembayaranSt}`, 
+        (err, results) => {
             if(err) console.error(err)
             else{
-                setTotalPembayaran(results[0][0].bayar);
+                setTotalPembayaran(results[0][0]);
                 setStatusBayar(results[1][0].status_bayar);
                 setTagihan(results[2][0].nominal);
                 setSiswa(results[3][0]);
@@ -56,11 +58,11 @@ function Beranda() {
     //Get today date
     let dateNow = new Date().toLocaleDateString("en-US").toString();
     //Date now
-    const formatDate = dayjs(dateNow).format("DMYYYY");
+    const formatDate = dayjs(dateNow).format("D MMMM YYYY");
 
     //Get Tagihan
     const tempTagihan = 6 * tagihan;
-    const total = tempTagihan - totalPembayaran;
+    const total = tempTagihan - totalPembayaran.bayar;
 
     return ( 
         <>
@@ -74,7 +76,7 @@ function Beranda() {
                 <div className="berandaHead">
                     <h2>Beranda</h2>
                     {pembayaran !== undefined && siswa !== undefined ?
-                    <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswa!}/>} fileName={`Laporan Bukti Pembayaran${formatDate}`}>
+                    <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswa!}/>} fileName={`Bukti Pembayaran-${generateRandomId(5)}-${formatDate}`}>
                     {({loading}) => (loading ? 
                         <button className="btnDownload loading">
                             <Icon icon="ic:round-save-alt"/>
@@ -95,10 +97,10 @@ function Beranda() {
                         <h5>Total Tagihan:</h5>  
                         <span>
                             <>
-                                {total === 0 || total === undefined ?
-                                    <>Tidak ada tagihan</> 
+                                {total !== undefined ?
+                                    <>{rupiahConverter(total)}</>
                                 : 
-                                    <>{rupiahConverter(total)}</> 
+                                    <>Tidak ada tagihan</> 
                             }
                             </>
                         </span>
@@ -107,7 +109,7 @@ function Beranda() {
                         <h5>Status Transaksi:</h5>
                         <div>
                             <>
-                                {statusBayar === "" || statusBayar === undefined ? 
+                                {statusBayar === undefined ? 
                                     <h4 className="statTidak">Belum ada status</h4>
                                     :
                                 statusBayar === "Lunas" ?  
