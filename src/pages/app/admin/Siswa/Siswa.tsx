@@ -78,7 +78,7 @@ function Siswa() {
                         ) : (
                             <>
                                 {/* <Icon icon="radix-icons:cross-circled" color="red" width="20"/> */}
-                                <span>😣</span>
+                                <span>😫</span>
                                 <p className="belumLunas">{value}</p>
                             </>
                         )}

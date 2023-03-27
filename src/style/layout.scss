@@ -4,6 +4,7 @@ $primary: #413EEB;
 .layoutContainer{
     display: grid;
     grid-template-columns: minmax(232px, 256px) 1fr;
+    background: #E5E7EB;
 }
 
 .container{
@@ -56,7 +57,7 @@ $primary: #413EEB;
             border-radius: 4px;
             display: flex;
             font-size: 18px;
-            font-weight: 400;
+            font-weight: 600;
             align-items: center;
             gap: 12px;
             color: black;
@@ -118,7 +119,6 @@ $primary: #413EEB;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
 
     div{
         display: flex;

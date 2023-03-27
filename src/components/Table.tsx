@@ -55,9 +55,9 @@ export default function Table({
                   {column.render("Header")}{" "}
                   {column.isSorted
                     ? column.isSortedDesc
-                      ? <Icon icon="ant-design:caret-down-filled"/>
+                      ? <Icon icon="mdi:sort-variant" width="15" height="15"/>
                       : 
-                        <Icon icon="ant-design:caret-up-filled" />
+                        <Icon icon="mdi:sort-reverse-variant" width="15" height="15"/>
                     : ""}
                 </th>
               ))}
@@ -94,7 +94,7 @@ export default function Table({
           {<Icon icon="material-symbols:arrow-back-ios-new-rounded"/>}
         </button>
         <p>
-          <span className="text-blue-700">{pageIndex + 1}</span> dari{" "}
+          <span className="pageNum">{pageIndex + 1}</span> dari{" "}
           {pageOptions.length}
         </p>
         <button

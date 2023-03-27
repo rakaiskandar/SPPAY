@@ -212,15 +212,6 @@ function NewPembayaran() {
                                     disabled={selectedSiswa !== null}
                                     />
                                 </div>
-                                {/* <div className="formSub">
-                                    <h5>Id SPP</h5>
-                                    <input 
-                                    type="text"
-                                    required 
-                                    {...register("id_spp")}
-                                    disabled={selectedSiswa !== null}
-                                    />
-                                </div> */}
                             </div>
                         </div>
 

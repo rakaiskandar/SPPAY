@@ -69,11 +69,18 @@ $primaryB2: #323232;
       background: white;
       color: black;
     }
+    .pageNum{
+      color: $primary;
+      font-weight: 700;
+    }
     .disableArrow {
-      opacity: 80%;
+      opacity: 50%;
     }
     button:hover{
       color: $primary;
+    }
+    button:focus{
+      outline: none;
     }
 }
 
@@ -100,8 +107,8 @@ $primaryB2: #323232;
     border-radius: 4px;
     font-size: 14px;
     font-weight: 700;
-    color: #f05151;
-    background: rgba(#e94141, 40%);
+    color: #f11717;
+    background: rgba(#e61212, 40%);
   }
 }
 

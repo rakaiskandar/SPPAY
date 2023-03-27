@@ -18,7 +18,7 @@ function NavbarProfile({ img, user } : { img : any, user: any}) {
         <>
             <Menu className="profileContainer" as="div">
                 <div>
-                <span className="penggunaRole">
+                    <span className="penggunaRole">
                         {user.level === "admin" ? 
                         <>
                             <h4 className="aTypeT">@{user.username}</h4>
@@ -39,19 +39,19 @@ function NavbarProfile({ img, user } : { img : any, user: any}) {
                     <span className="penggunaRole">
                         {user.level === "admin" ? 
                         <>
-                            <p>🧑🏻‍💻</p>
+                            <p>💻</p>
                             <h5 className="aType">{user.level}</h5>
                         </> 
                         : user.level === "petugas"
                         ? 
                         <>
-                            <p>🧑🏻‍💼</p>
+                            <p>💼</p>
                             <h5 className="pType">{user.level}</h5>
                         </>
                         : user.level === "siswa"
                         ? 
                         <>
-                            <p>🧑🏻‍🎓</p>
+                            <p>🎓</p>
                             <h5 className="sType">{user.level}</h5>
                         </>
                         : ""

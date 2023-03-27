@@ -57,19 +57,19 @@ function Pengguna() {
                     <span className="penggunaRole">
                         {value === "admin" ? 
                         <>
-                            <p>🧑🏻‍💻</p>
+                            <p>💻</p>
                             <h5 className="aType">{value}</h5>
                         </> 
                         : value === "petugas"
                         ? 
                         <>
-                            <p>🧑🏻‍💼</p>
+                            <p>💼</p>
                             <h5 className="pType">{value}</h5>
                         </>
                         : value === "siswa"
                         ? 
                         <>
-                            <p>🧑🏻‍🎓</p>
+                            <p>🎓</p>
                             <h5 className="sType">{value}</h5>
                         </>
                         : ""

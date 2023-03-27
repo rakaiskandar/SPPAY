@@ -6,7 +6,7 @@
 
   color-scheme: light dark;
   color: black;
-  background-color: #E5E7EB;
+  background: #E5E7EB;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -118,7 +118,7 @@ h4.sTypeT{
 .pType{
   @include typeBase;
   color: #f11717;
-  background: rgba(#e70c0c, 40%);
+  background: rgba(#e61212, 40%);
 }
 
 .sType{
@@ -135,7 +135,7 @@ h4.sTypeT{
 
 .tkjType{
   @include typeBase;
-  color: #aa0f0f;
+  color: #f11717;
   background: rgba(#e61212, 40%);
 }
 

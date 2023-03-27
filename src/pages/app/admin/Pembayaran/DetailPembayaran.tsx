@@ -145,7 +145,7 @@ function DetailPembayaran() {
                         </PDFDownloadLink>
                         <button className="btn1Title">
                             <Icon icon="material-symbols:edit-document-outline-sharp"/>
-                            Edit Data
+                            Simpan Perubahan
                         </button>
                     </div>
                 </div>

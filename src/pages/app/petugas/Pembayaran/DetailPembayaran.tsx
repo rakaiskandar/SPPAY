@@ -96,7 +96,7 @@ function DetailPembayaran() {
                         <div>
                             <button className="btn1Title loading">
                                 <Icon icon="material-symbols:edit-document-outline-sharp"/>
-                                Edit Data
+                                Simpan Perubahan
                             </button>
                         </div>
                     </div>

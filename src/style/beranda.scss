@@ -12,6 +12,7 @@ $primary: #413EEB;
         justify-content: center;
         gap: 5px;
         background: $primary;
+        color: white;
         transition: 0.2s;
     }
 
@@ -174,8 +175,7 @@ $primary: #413EEB;
             text-align: center;
             font-size: 16px;
             align-items: center;
-            padding-top: 80px;
-            padding-bottom: 60px;
+            padding: 80px 10px 60px 10px;
             opacity: 70%;
         }
 

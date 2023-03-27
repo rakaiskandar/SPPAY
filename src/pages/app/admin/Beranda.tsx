@@ -105,7 +105,7 @@ function Beranda() {
           </div>
 
           <div className="berandaSub2 berandaSub2List">
-            <h4>😣Siswa Yang Belum Bayar:</h4>
+            <h4>😫Siswa Yang Belum Bayar:</h4>
             <div className="berandaSub2ListItem">
             {siswaBelumBayar.length > 0 ? (
               siswaBelumBayar.map((p, i) => (
