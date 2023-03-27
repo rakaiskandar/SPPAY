@@ -112,3 +112,17 @@ export const bulanOptions : Bulan[] = [
   { label: "Desember", value:12 },
 ];
 
+export interface Semester{
+    label: "Semester 1" | "Semester 2" | "Semester 3" | "Semester 4"| "Semester 5" | "Semester 6"
+    value: 1 | 2 | 3 | 4 | 5 | 6
+}
+
+export const semesterOptions: Semester[] = [
+    {label: "Semester 1", value: 1},
+    {label: "Semester 2", value: 2},
+    {label: "Semester 3", value: 3},
+    {label: "Semester 4", value: 4},
+    {label: "Semester 5", value: 5},
+    {label: "Semester 6", value: 6},    
+]; 
+

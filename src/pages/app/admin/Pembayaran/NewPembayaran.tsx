@@ -30,9 +30,9 @@ function NewPembayaran() {
     const [lastId, setLastId] = useState<number>(0);
 
     const getAllData = () => {
-        const sisSql = "SELECT *, nama AS label, nisn AS value, nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' ";
+        const sisSql = "SELECT *, nama AS label, nisn AS value, nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp";
         const userSql = `SELECT *, nama_pengguna AS label, id_user AS value FROM pengguna WHERE level IN ('admin','petugas') AND id_user = ${user.id_user}`;
-        const sppSql = "SELECT *, id_spp AS label, id_spp AS value FROM spp WHERE spp.status_bayar = 'Belum'";
+        const sppSql = "SELECT *, id_spp AS label, id_spp AS value FROM spp";
         const selectedPenggunaSt = "SELECT *, nama_pengguna AS label, id_user AS value FROM pengguna WHERE level IN ('siswa')";
         const lastId = "SELECT id_pembayaran FROM pembayaran ORDER BY id_pembayaran DESC LIMIT 1";
         const allSql = `${sisSql}; ${userSql}; ${sppSql}; ${selectedPenggunaSt}; ${lastId}`;
@@ -100,22 +100,24 @@ function NewPembayaran() {
         //Get status 
         const jumlah_bayar = data.jumlah_bayar
         const intNominal = parseInt(selectedSpp?.nominal as string);
-        if (jumlah_bayar < 6) {
+        if (jumlah_bayar < 6 || selectedSiswa?.id_spp === selectedSpp?.id_spp) {
             const addTxnSql = `INSERT INTO pembayaran (id_pembayaran, id_user, nama_petugas, nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, status_bayar)
             VALUES ('${lastId + 1}', '${selectedPengguna?.value}', '${pengguna?.nama_pengguna}',  '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${jumlah_bayar}', 'Belum Lunas')`;
             const addTxnDet = `INSERT INTO detail_pembayaran (id_detail, id_pembayaran, bayar) VALUES('${lastId + 1}', '${lastId + 1}', '${jumlah_bayar * intNominal}')`;
-            connectionSql.query(`${addTxnSql}; ${addTxnDet}`, (err) => {
+            const updateStatus = `UPDATE spp, pembayaran SET spp.status_bayar = 'Sudah' WHERE spp.id_spp = pembayaran.id_spp AND spp.id_spp = ${selectedSiswa?.id_spp}`
+            connectionSql.query(`${addTxnSql}; ${addTxnDet}; ${updateStatus}`, (err) => {
                 if(err) console.error(err)
                 else{
                     toast.success("Tambah pembayaran berhasil!", { autoClose: 1000})
                     navigate(-1);
                 }
             })
-        }else{
+        }else if(jumlah_bayar >= 6 || selectedSiswa?.id_spp !== selectedSpp?.id_spp){
             const addTxnSql = `INSERT INTO pembayaran (id_pembayaran, id_user, nama_petugas, nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, status_bayar)
             VALUES ('${lastId + 1}', '${selectedPengguna?.value}', '${pengguna?.nama_pengguna}', '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${jumlah_bayar}', 'Lunas')`;
             const addTxnDet = `INSERT INTO detail_pembayaran (id_detail, id_pembayaran, bayar) VALUES('${lastId + 1}', '${lastId + 1}', '${jumlah_bayar * intNominal}')`;
-            connectionSql.query(`${addTxnSql}; ${addTxnDet}`, (err) => {
+            const updateStatus = `UPDATE spp, pembayaran SET spp.status_bayar = 'Sudah' WHERE spp.id_spp = pembayaran.id_spp AND spp.id_spp = ${selectedSiswa?.id_spp}`
+            connectionSql.query(`${addTxnSql}; ${addTxnDet}; ${updateStatus}`, (err) => {
                 if(err) console.error(err)
                 else{
                     toast.success("Tambah pembayaran berhasil!", { autoClose: 1000})

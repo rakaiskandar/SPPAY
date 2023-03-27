@@ -77,7 +77,7 @@ function DetailPembayaran() {
     const deleteData = () => {
         const deleteSt = `DELETE FROM pembayaran WHERE id_pembayaran = ${id}`;
         //Set status bayar in spp
-        const sppUpd = `UPDATE spp SET status_bayar = 'Belum' WHERE id_spp = ${pembayaran?.id_spp}`;
+        const sppUpd = `UPDATE spp SET status_bayar = 'Belum' WHERE id_spp = ${siswaD?.id_spp}`;
         const allSql = `${deleteSt}; ${sppUpd}`;
         connectionSql.query(allSql, (err) => {
             if(err) console.error(err)

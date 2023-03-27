@@ -44,8 +44,8 @@ function SPP() {
                 ) 
             },
             {
-               Header: "Tahun",
-               accessor: "tahun"  
+               Header: "Semester",
+               accessor: "semester"  
             },
             {
                 Header: "Nominal",
