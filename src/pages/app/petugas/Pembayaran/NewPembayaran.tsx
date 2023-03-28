@@ -31,7 +31,7 @@ function NewPembayaran() {
     const [lastId, setLastId] = useState<number>(0);
 
     const getAllData = () => {
-        const sisSql = "SELECT *, nama AS label, nisn AS value, nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' ";
+        const sisSql = "SELECT *, nama AS label, nisn AS value, nama_kelas FROM siswa, kelas WHERE siswa.id_kelas = kelas.id_kelas";
         const userSql = `SELECT *, nama_pengguna AS label, id_user AS value FROM pengguna WHERE level IN ('admin','petugas') AND id_user = ${user.id_user}`;
         const sppSql = "SELECT *, id_spp AS label, id_spp AS value FROM spp WHERE spp.status_bayar = 'Belum'";
         const selectedPenggunaSt = "SELECT *, nama_pengguna AS label, id_user AS value FROM pengguna WHERE level IN ('siswa')";
@@ -70,7 +70,6 @@ function NewPembayaran() {
             setValue("nama_kelas", "");
             setValue("alamat", "");
             setValue("no_telp", "");
-            setValue("id_spp", 0);
             setSelectedSiswa(null);
         }else{
             setValue("nisn", data.nisn);
@@ -78,7 +77,6 @@ function NewPembayaran() {
             setValue("nama", data.nama);
             setValue("nama_kelas", data.nama_kelas);
             setValue("alamat", data.alamat);
-            setValue("id_spp", data.id_spp);
             setValue("no_telp", data.no_telp);
             setSelectedSiswa(data)
         }
@@ -89,10 +87,12 @@ function NewPembayaran() {
             console.log("ini hapus");
             setValue("id_spp", 0);
             setValue("nominal", "");
+            setValue("semester", "");
             setSelectedSpp(data)
         }else{
             setValue("id_spp", data.id_spp);
             setValue("nominal", data.nominal);
+            setValue("semester", data.semester)
             setSelectedSpp(data);
         }
     }
@@ -101,13 +101,12 @@ function NewPembayaran() {
         //Get status 
         const jumlah_bayar = data.jumlah_bayar
         const intNominal = parseInt(selectedSpp?.nominal as string);     
-        console.log(lastId);   
         if (jumlah_bayar < 6) {
             const addTxnSql = `INSERT INTO pembayaran (id_pembayaran, id_user, nama_petugas, nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, status_bayar)
             VALUES ('${lastId + 1}', '${selectedPengguna?.value}', '${pengguna?.nama_pengguna}', '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${jumlah_bayar}', 'Belum Lunas')`;
             const addTxnDet = `INSERT INTO detail_pembayaran (id_detail, id_pembayaran, bayar) VALUES('${lastId + 1}', '${lastId + 1}', '${jumlah_bayar * intNominal}')`;
-            console.log(addTxnSql);
-            connectionSql.query(`${addTxnSql}; ${addTxnDet}`, (err) => {
+            const updateStatus = `UPDATE spp, pembayaran SET spp.status_bayar = 'Sudah' WHERE spp.id_spp = pembayaran.id_spp AND spp.id_spp = ${selectedSpp?.id_spp}`;
+            connectionSql.query(`${addTxnSql}; ${addTxnDet}; ${updateStatus}`, (err) => {
                 if(err) console.error(err)
                 else{
                     toast.success("Tambah pembayaran berhasil!", { autoClose: 1000})
@@ -118,8 +117,8 @@ function NewPembayaran() {
             const addTxnSql = `INSERT INTO pembayaran (id_pembayaran, id_user, nama_petugas ,nisn, tgl_bayar, bulan_dibayar, tahun_dibayar, id_spp, jumlah_bayar, status_bayar)
             VALUES ('${lastId + 1}', '${selectedPengguna?.value}', '${pengguna?.nama_pengguna}', '${selectedSiswa?.nisn}', current_timestamp(), '${monthDate}', YEAR(current_timestamp()), '${selectedSpp?.id_spp}', '${jumlah_bayar}', 'Lunas')`;
             const addTxnDet = `INSERT INTO detail_pembayaran (id_detail, id_pembayaran, bayar) VALUES('${lastId + 1}', '${lastId + 1}', '${jumlah_bayar * intNominal}')`;
-            console.log(addTxnDet);
-            connectionSql.query(`${addTxnSql}; ${addTxnDet}`, (err) => {
+            const updateStatus = `UPDATE spp, pembayaran SET spp.status_bayar = 'Sudah' WHERE spp.id_spp = pembayaran.id_spp AND spp.id_spp = ${selectedSpp?.id_spp}`;
+            connectionSql.query(`${addTxnSql}; ${addTxnDet}; ${updateStatus}`, (err) => {
                 if(err) console.error(err)
                 else{
                     toast.success("Tambah pembayaran berhasil!", { autoClose: 1000})
@@ -225,15 +224,6 @@ function NewPembayaran() {
                                     disabled={selectedSiswa !== null}
                                     />
                                 </div>
-                                <div className="formSub">
-                                    <h5>Id SPP</h5>
-                                    <input 
-                                    type="text"
-                                    required 
-                                    {...register("id_spp")}
-                                    disabled={selectedSiswa !== null}
-                                    />
-                                </div>
                             </div>
                         </div>
 
@@ -273,7 +263,15 @@ function NewPembayaran() {
                                     <input 
                                     type="text"
                                     {...register("nominal")}
-                                    disabled={selectedSiswa !== null}
+                                    disabled={selectedSpp !== null}
+                                    required />
+                                </div>
+                                <div className="formSub">
+                                    <h5>Semester</h5>
+                                    <input 
+                                    type="text"
+                                    {...register("semester")}
+                                    disabled={selectedSpp !== null}
                                     required />
                                 </div>
                             </div>

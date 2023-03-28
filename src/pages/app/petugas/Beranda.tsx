@@ -37,9 +37,9 @@ function Beranda() {
     }
 
     var totalPembayaran =
-      "SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE detail_pembayaran.id_pembayaran = pembayaran.id_pembayaran AND MONTH(tgl_bayar) = MONTH(NOW())";
+      "SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE detail_pembayaran.id_pembayaran = pembayaran.id_pembayaran";
     var totalTransaksi =
-      "SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(NOW())";
+      "SELECT COUNT(*) AS jumlah FROM pembayaran";
     var pembayaranTerbaru =
       "SELECT siswa.nama, pembayaran.tgl_bayar FROM siswa, pembayaran WHERE MONTH(pembayaran.tgl_bayar) = MONTH(now()) AND pembayaran.nisn = siswa.nisn ORDER BY pembayaran.tgl_bayar DESC LIMIT 4";
     connectionSql.query(
@@ -73,7 +73,7 @@ function Beranda() {
             placeholder="Pilih Bulan"
             theme={(theme) => ({
               ...theme,
-              borderRadius: 0,
+              borderRadius: 5,
               colors: {
                 ...theme.colors,
                 primary25: '#E5E7EB',

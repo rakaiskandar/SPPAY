@@ -80,7 +80,7 @@ export type PembayaranTypeList = Pembayaran[];
 
 export interface SPP{
     id_spp: number,
-    tahun: string,
+    semester: string,
     nominal: string,
     status_bayar: string, 
 }

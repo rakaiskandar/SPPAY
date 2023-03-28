@@ -57,7 +57,7 @@ $primaryB2: #323232;
           }
           tr:hover{
             background: darken($color: #2e37eb30, $amount: 3);
-            font-weight: 600;
+            color: darken($color: $primary, $amount: 3);
           }
         }
       }
@@ -99,7 +99,7 @@ $primaryB2: #323232;
   }
 
   .lunas{
-    padding: 4px 6px;
+    padding: 2px 6px;
     border-radius: 4px;
     font-size: 14px;
     font-weight: 700;
@@ -108,7 +108,7 @@ $primaryB2: #323232;
   }
 
   .belumLunas{
-    padding: 4px 6px;
+    padding: 2px 6px;
     border-radius: 4px;
     font-size: 14px;
     font-weight: 700;

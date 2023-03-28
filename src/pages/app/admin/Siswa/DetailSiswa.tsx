@@ -111,7 +111,7 @@ function DetailSiswa() {
                 Apakah kamu yakin akan menghapus data ini?`}/>
 
                 <div className="formTitle">
-                    <h2>Ubah Siswa</h2>
+                    <h2>Detail Siswa</h2>
                     <div>
                         <Link to="/app/a/siswa" className="btn2Title">
                             <Icon icon="material-symbols:arrow-back-rounded"/>
@@ -194,26 +194,6 @@ function DetailSiswa() {
                         defaultValue={siswaD?.alamat}
                         required
                         {...register("alamat")}/>
-                    </div>
-                    <div className="formSub">
-                        <label htmlFor="">Id SPP</label>
-                        <Select
-                        menuPlacement="top"
-                        options={spp}
-                        value={selectedSpp}
-                        className="selectInput"
-                        onChange={setSelectedSpp}
-                        theme={(theme) => ({
-                            ...theme,
-                            borderRadius: 0,
-                            colors: {
-                              ...theme.colors,
-                              primary25: '#E5E7EB',
-                              primary: '#535bf2',
-                            },
-                          })}
-                        isDisabled={true}
-                        />
                     </div>
                 </div>
             </form>

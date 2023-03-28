@@ -23,7 +23,6 @@ function DetailPembayaran() {
     const navigate = useNavigate();
     const [siswaD, setSiswaD] = useState<Siswa>();
     const [sppD, setSppD] = useState<SPP>();
-    const [penggunaD, setPenggunaD] = useState<Pengguna>();
     const [pembayaran, setPembayaran] = useState<Pembayaran>();
 
     const { register, handleSubmit } = useForm<Pembayaran>();
@@ -32,17 +31,16 @@ function DetailPembayaran() {
 
     useEffect(() => {
         const sqlSt = `SELECT * FROM pembayaran WHERE id_pembayaran = ${id}`;
-        var pembayaranSt = `SELECT pmb.id_pembayaran, pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.id_spp, pmb.nama_petugas, p.nama_pengguna, s.nama AS nama_siswa, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar FROM pembayaran pmb, siswa s, pengguna p, detail_pembayaran detP WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND detP.id_pembayaran = pmb.id_pembayaran AND pmb.id_pembayaran = ${id}`;
-        const siswaSt = `SELECT p.id_pembayaran, s.nisn, s.nisn AS id, s.nis, s.nama, s.id_spp, k.nama_kelas , s.alamat, s.no_telp FROM siswa s, kelas k, pembayaran p WHERE s.id_kelas = k.id_kelas AND p.nisn = s.nisn AND p.id_pembayaran = ${id}`;
-        const penggunaSt = `SELECT png.nama_pengguna FROM pengguna png, pembayaran pmb WHERE png.id_user = pmb.id_user AND pmb.id_pembayaran = ${id}`;
+        var pembayaranSt = `SELECT pmb.id_pembayaran, pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.id_spp, pmb.nama_petugas, p.nama_pengguna, s.nama AS nama_siswa, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar, sp.semester FROM pembayaran pmb, siswa s, pengguna p, detail_pembayaran detP, spp sp 
+        WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND detP.id_pembayaran = pmb.id_pembayaran AND pmb.id_spp = sp.id_spp AND pmb.id_pembayaran = ${id}`;
+        const siswaSt = `SELECT p.id_pembayaran, s.nisn, s.nisn AS id, s.nis, s.nama, k.nama_kelas , s.alamat, s.no_telp FROM siswa s, kelas k, pembayaran p WHERE s.id_kelas = k.id_kelas AND p.nisn = s.nisn AND p.id_pembayaran = ${id}`;
         const sppSt = `SELECT *, spp.nominal FROM spp WHERE id_spp = ${id}`;
-        connectionSql.query(`${sqlSt}; ${pembayaranSt}; ${siswaSt}; ${penggunaSt}; ${sppSt}`, (err, results) => {
+        connectionSql.query(`${sqlSt}; ${pembayaranSt}; ${siswaSt}; ${sppSt}`, (err, results) => {
             if(err) console.error(err)
             else{
                 setPembayaran(results[1][0]);
                 setSiswaD(results[2][0]);
-                setPenggunaD(results[3][0]);
-                setSppD(results[4][0]);
+                setSppD(results[3][0]);
                 setLoading(false);
             }
         })
@@ -77,7 +75,7 @@ function DetailPembayaran() {
     const deleteData = () => {
         const deleteSt = `DELETE FROM pembayaran WHERE id_pembayaran = ${id}`;
         //Set status bayar in spp
-        const sppUpd = `UPDATE spp SET status_bayar = 'Belum' WHERE id_spp = ${siswaD?.id_spp}`;
+        const sppUpd = `UPDATE spp SET status_bayar = 'Belum' WHERE id_spp = ${pembayaran?.id_spp}`;
         const allSql = `${deleteSt}; ${sppUpd}`;
         connectionSql.query(allSql, (err) => {
             if(err) console.error(err)
@@ -270,8 +268,8 @@ function DetailPembayaran() {
                                 <h5>{siswaD?.no_telp}</h5>
                             </div>
                             <div className="detailSubB">
-                                <p>Id SPP</p>
-                                <h5>{siswaD?.id_spp}</h5>
+                                <p>Semester</p>
+                                <h5>{pembayaran?.semester}</h5>
                             </div>
                         </div>
                     </div>

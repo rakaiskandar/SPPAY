@@ -6,6 +6,12 @@ $primary: #413EEB;
     align-items: center;
     justify-content: space-between;
 
+    .berandaHeadSub{
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
     .btnDownload{
         display: flex;
         align-items: center;
@@ -52,6 +58,10 @@ $primary: #413EEB;
         span{
             font-size: 42px;
             font-weight: 700;
+        }
+        .berandaSub1Head{
+            display: flex;
+            justify-content: space-between;
         }
         div {
         padding: 0px 100px 0px 100px;
@@ -130,6 +140,7 @@ $primary: #413EEB;
             }
             .berandaSub2ListItemDetail{
                 display: flex;
+                justify-content: space-between;
                 align-items: center;
                 gap: 8px;
                 h5{

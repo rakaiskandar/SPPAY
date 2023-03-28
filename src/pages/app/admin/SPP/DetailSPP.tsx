@@ -1,7 +1,7 @@
 import { userState } from "@/atoms/userAtom";
 import Modal from "@/components/Modal";
 import Navbar from "@/components/Navbar";
-import { SPP } from "@/dataStructure";
+import { Semester, semesterOptions, SPP } from "@/dataStructure";
 import { inputRupiahFormatted } from "@/helpers/inputRupiahFormatted";
 import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Select from "react-select";
 import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 
@@ -17,6 +18,9 @@ function DetailSPP() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [sppD, setSppD] = useState<SPP>();
+    const [selectedSemester, setSelectedSemester] = useState<Semester | null>(
+        semesterOptions[0]
+    );
 
     const { register, handleSubmit} = useForm();
     const [loading, setLoading] = useState<boolean>(true);
@@ -28,6 +32,10 @@ function DetailSPP() {
             if(err) console.error(err)
             else{
                 const dataReturn: SPP = results[0];
+                const selectedSemester = semesterOptions.filter(
+                    (obj: Semester) => obj.value.toString() === dataReturn.semester
+                )[0];
+                setSelectedSemester(selectedSemester)
                 setSppD(dataReturn);
                 setLoading(false);
             }
@@ -36,7 +44,7 @@ function DetailSPP() {
 
     const submitHandler = handleSubmit((data) => {
         const convertedNominal = parseInt(data.nominal.length < 4 ? data.nominal : data.nominal.split(".").join(""));
-        const updateSt = `UPDATE spp SET nominal = '${convertedNominal}' WHERE id_spp = ${id}`;
+        const updateSt = `UPDATE spp SET nominal = '${convertedNominal}', semester = '${selectedSemester?.value}' WHERE id_spp = ${id}`;
         connectionSql.query(updateSt, (err) => {
             if(err) console.error(err)
             else{
@@ -138,6 +146,25 @@ function DetailSPP() {
                         disabled
                         defaultValue={sppD?.status_bayar}
                         />
+                    </div>
+                    <div className="formSub">
+                        <label htmlFor="semester">Pilih semester</label>
+                        <Select
+                        options={semesterOptions}
+                        value={selectedSemester}
+                        placeholder="Pilih semester"
+                        theme={(theme) => ({
+                            ...theme,
+                            borderRadius: 0,
+                            colors: {
+                            ...theme.colors,
+                            primary25: '#E5E7EB',
+                            primary: '#535bf2',
+                            },
+                        })}
+                        onChange={
+                            setSelectedSemester
+                        }/>
                     </div>
                 </div>
             </form>

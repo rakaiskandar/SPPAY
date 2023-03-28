@@ -136,6 +136,11 @@ $primary: #413EEB;
     align-items: center;
     justify-content: space-between;
 
+    .siswaHeadSub{
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+    }
     button{
         background: white;
         display: flex;
@@ -188,13 +193,13 @@ $primary: #413EEB;
 }
 
 .filterInput{
-    background: #e9e3e3;
     font-size: small;
     margin-top: 16px;
-    border: white 1px solid;
+    border: #e9e3e3 1px solid;
     font-weight: 500;
     outline: none;
     display: flex;
+    gap: 8px;
 
     input{
         background: white;

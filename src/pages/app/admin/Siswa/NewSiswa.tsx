@@ -18,26 +18,21 @@ function NewSiswa() {
     const navigate = useNavigate();
 
     const [kelas, setKelas] = useState<Kelas[]>([]);
-    const [spp, setSpp] = useState<SPPOptions[]>([]);
     const [selectedKelas, setSelectedKelas] = useState<Kelas | null>();
-    const [selectedSpp, setSelectedSpp] = useState<SPPOptions | null>();
 
     useEffect(() => {
         const kelasSt = "SELECT nama_kelas AS label, id_kelas, id_kelas AS value FROM kelas";
-        const sppSt = "SELECT id_spp AS label, id_spp AS value FROM spp WHERE status_bayar = 'Belum'";
-        connectionSql.query(`${kelasSt}; ${sppSt}`, (err, results, fields) => {
+        connectionSql.query(`${kelasSt}`, (err, results, fields) => {
             if(err) console.error(err)
             else{
                 setKelas(results[0]);
                 setSelectedKelas(results[0][1]);
-                setSpp(results[1])
-                setSelectedSpp(results[1][0]);
             }
         })
     }, [])
 
     const submitHandler = handleSubmit((data) => {
-        const addSt = `INSERT INTO siswa (nisn, nis, nama, id_kelas, alamat, no_telp, id_spp) VALUES ('${data.nisn}', '${data.nis}', '${data.nama}', '${selectedKelas?.id_kelas}', '${data.alamat}', '${data.no_telp}', '${selectedSpp?.value}')`;
+        const addSt = `INSERT INTO siswa (nisn, nis, nama, id_kelas, alamat, no_telp) VALUES ('${data.nisn}', '${data.nis}', '${data.nama}', '${selectedKelas?.id_kelas}', '${data.alamat}', '${data.no_telp}')`;
         // console.log(addSt);
         connectionSql.query(addSt, (err) => {
             if(err) console.error(err)
@@ -131,27 +126,6 @@ function NewSiswa() {
                         className="alamatForm"
                         required
                         {...register("alamat")}/>
-                    </div>
-                    <div className="formSub">
-                        <label htmlFor="">Id SPP</label>
-                        <Select
-                        maxMenuHeight={140}
-                        menuPlacement="top"
-                        options={spp}
-                        value={selectedSpp}
-                        className="selectInput"
-                        onChange={setSelectedSpp}
-                        theme={(theme) => ({
-                            ...theme,
-                            borderRadius: 0,
-                            colors: {
-                              ...theme.colors,
-                              primary25: '#E5E7EB',
-                              primary: '#535bf2',
-                            },
-                          })}
-                        required
-                        />
                     </div>
                 </div>
             </form>

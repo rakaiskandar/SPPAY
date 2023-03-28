@@ -13,7 +13,8 @@ import Select from "react-select";
 
 export interface SiswaDashboard {
   nama: string,
-  nama_kelas: string
+  nama_kelas: string,
+  status_bayar: string
 }
 
 export interface TransaksiDashboard {
@@ -30,7 +31,7 @@ function Beranda() {
   let dateNow = new Date().getMonth();
   const [totalPembayaran, setTotalPembayaran] = useState<number | null>(0);
   const [totalTransaksi, setTotalTransaksi] = useState<number | null>(0);
-  const [siswaBelumBayar, setSiswaBelumBayar] = useState<SiswaDashboard[] | null>([]);
+  const [statusBayar, setStatusBayar] = useState<SiswaDashboard[] | null>([]);
   const [bayarTerbaru, setBayarTerbaru] = useState<TransaksiDashboard[] | null>([]);
   const [selectedBulan, setSelectedBulan] = useState<Bulan | null>(
     bulanOptions[dateNow]
@@ -42,19 +43,19 @@ function Beranda() {
       navigate("beranda");
     }
 
-    const totalpembayaran = `SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE pembayaran.id_pembayaran = detail_pembayaran.id_pembayaran AND MONTH(tgl_bayar) = MONTH(NOW())`;
-    const totaltransaksi = "SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = MONTH(NOW())";
-    var siswaBelumBayar = "SELECT siswa.nama, kelas.nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' LIMIT 4";
+    const totalpembayaran = `SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE pembayaran.id_pembayaran = detail_pembayaran.id_pembayaran`;
+    const totaltransaksi = `SELECT COUNT(*) AS jumlah FROM pembayaran`;
+    var statusBayar = `SELECT siswa.nama, kelas.nama_kelas, pembayaran.status_bayar FROM siswa, kelas, spp, pembayaran WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = pembayaran.id_spp AND pembayaran.nisn = siswa.nisn AND MONTH(tgl_bayar) = MONTH(now()) AND spp.status_bayar = 'Sudah'`;
     var pembayaranTerbaru = "SELECT siswa.nama, pembayaran.tgl_bayar FROM siswa, pembayaran WHERE MONTH(pembayaran.tgl_bayar) = MONTH(now()) AND pembayaran.nisn = siswa.nisn ORDER BY pembayaran.tgl_bayar DESC LIMIT 4";
 
     connectionSql.query(
-      `${totalpembayaran}; ${totaltransaksi}; ${siswaBelumBayar}; ${pembayaranTerbaru}`,
+      `${totalpembayaran}; ${totaltransaksi}; ${statusBayar}; ${pembayaranTerbaru}`,
       (err, results) => {
         if (err) console.error(err);
         else {
           setTotalPembayaran(results[0][0].total);
           setTotalTransaksi(results[1][0].jumlah);
-          setSiswaBelumBayar(results[2]);
+          setStatusBayar(results[2]);
           setBayarTerbaru(results[3]);
         }
       }
@@ -79,7 +80,7 @@ function Beranda() {
             placeholder="Pilih Bulan"
             theme={(theme) => ({
               ...theme,
-              borderRadius: 0,
+              borderRadius: 5,
               colors: {
                 ...theme.colors,
                 primary25: '#E5E7EB',
@@ -90,17 +91,17 @@ function Beranda() {
               (value) => {
                 const totalpembayaran = `SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE pembayaran.id_pembayaran = detail_pembayaran.id_pembayaran AND MONTH(tgl_bayar) = ${value?.value}`;
                 const totaltransaksi = `SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = ${value?.value}`;
-                var siswaBelumBayar = "SELECT siswa.nama, kelas.nama_kelas FROM siswa, kelas, spp WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = siswa.id_spp AND spp.status_bayar = 'Belum' LIMIT 4";
+                var statusBayar = `SELECT siswa.nama, kelas.nama_kelas, pembayaran.status_bayar FROM siswa, kelas, spp, pembayaran WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = pembayaran.id_spp AND pembayaran.nisn = siswa.nisn AND MONTH(tgl_bayar) = ${value?.value} AND spp.status_bayar = 'Sudah'`;
                 var pembayaranTerbaru = `SELECT siswa.nama, pembayaran.tgl_bayar FROM siswa, pembayaran WHERE MONTH(pembayaran.tgl_bayar) = ${value?.value} AND pembayaran.nisn = siswa.nisn ORDER BY pembayaran.tgl_bayar DESC LIMIT 4`;
 
                 connectionSql.query(
-                  `${totalpembayaran}; ${totaltransaksi}; ${siswaBelumBayar}; ${pembayaranTerbaru}`,
+                  `${totalpembayaran}; ${totaltransaksi}; ${statusBayar}; ${pembayaranTerbaru}`,
                   (err, results) => {
                     if (err) console.error('err',err);
                     else {
                       setTotalPembayaran(results[0][0].total === null ? 0 : results[0][0].total);
                       setTotalTransaksi(results[1][0].jumlah === null ? 0 : results[1][0].jumlah);
-                      setSiswaBelumBayar(results[2]);
+                      setStatusBayar(results[2]);
                       setBayarTerbaru(results[3] === null ? <></> : results[3]);
                       setSelectedBulan(value)
                     }
@@ -149,20 +150,24 @@ function Beranda() {
           </div>
 
           <div className="berandaSub2 berandaSub2List">
-            <h4>😫Siswa Yang Belum Bayar:</h4>
+            <h4>🤩Status Pembayaran Terbaru:</h4>
             <div className="berandaSub2ListItem">
-              {siswaBelumBayar!.length > 0 ? (
-                siswaBelumBayar!.map((p, i) => (
+              {statusBayar!.length > 0 ? (
+                statusBayar!.map((p, i) => (
                   <div className="berandaSub2ListItemDetail">
                     <p>{i + 1}</p>
                     <p>|</p>
                     <h5>{p.nama}</h5>
-                    <h4>{p.nama_kelas}</h4>
+                    <p className="paidStatus">{p.status_bayar === "Lunas" ?
+                      <p className="lunas">{p.status_bayar}</p>
+                      : 
+                      <p className="belumLunas">{p.status_bayar}</p>
+                    }</p>
                   </div>
                 ))
               ) : (
                 <div className="beranda2Stat">
-                  <h4 className="tidakAdaData">Tidak ada siswa yang belum bayar</h4>
+                  <h4 className="tidakAdaData">Tidak ada status bayar yang ditampilkan</h4>
                 </div>
               )}
             </div>
