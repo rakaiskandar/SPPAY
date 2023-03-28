@@ -14,7 +14,6 @@ import PdfBukti from "@/components/BuktiPembayaran";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import generateRandomId from "@/helpers/generateRandomId";
 import Select from "react-select";
-import { Menu } from "@headlessui/react";
 
 function Beranda() {
     const user = useRecoilValue(userState);
@@ -118,7 +117,7 @@ function Beranda() {
                     </div>
                     
                     <div>
-                        {pembayaran !== undefined && siswa !== undefined ?
+                        {pembayaran !== undefined && siswa !== undefined && pembayaran.semester !== null ?
                         <PDFDownloadLink document={<PdfBukti pembayaran={pembayaran!} siswa={siswa!}/>} fileName={`Bukti Pembayaran-${generateRandomId(5)}-${formatDate}`}>
                         {({loading}) => (loading ? 
                             <button className="btnDownload loading">
