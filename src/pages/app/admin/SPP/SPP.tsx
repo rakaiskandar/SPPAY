@@ -89,7 +89,7 @@ function SPP() {
                     <Table 
                     columns={columns} 
                     data={dataMemo} 
-                    filterColumn="id_spp"
+                    filterColumn="semester"
                     filterInput={filterInput}/>
                 ) : (
                     <EmptyTable columns={columns}/>

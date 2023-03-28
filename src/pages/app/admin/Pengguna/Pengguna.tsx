@@ -112,7 +112,7 @@ function Pengguna() {
                     <Table
                     columns={columns}
                     data={dataMemo}
-                    filterColumn="level"
+                    filterColumn="nama_pengguna"
                     filterInput={filterInput}
                     />
                 ) : (
