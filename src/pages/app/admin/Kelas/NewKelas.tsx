@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 
 function NewKelas() {
     const user = useRecoilValue(userState);
-    const { register, handleSubmit } = useForm<Kelas>();
+    const { register, formState: { errors }, handleSubmit } = useForm<Kelas>();
     const navigate = useNavigate();
 
     const [lastId, setLastId] = useState<number>(0);
@@ -71,8 +71,8 @@ function NewKelas() {
                         <input 
                         type="text"
                         placeholder="Masukkan nama kelas" 
-                        required
-                        {...register("nama_kelas")}/>
+                        {...register("nama_kelas", { required: true})}/>
+                        {errors.nama_kelas && <p className="error">Nama kelas harus dimasukkan</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="kompetensi_keahlian">Kompetensi Keahlian</label>

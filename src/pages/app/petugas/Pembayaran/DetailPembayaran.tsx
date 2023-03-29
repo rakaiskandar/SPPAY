@@ -22,7 +22,7 @@ function DetailPembayaran() {
     const [sppD, setSppD] = useState<SPP>();
     const [pembayaran, setPembayaran] = useState<Pembayaran>();
 
-    const { register, handleSubmit } = useForm<Pembayaran>();
+    const { register, formState: { errors },handleSubmit } = useForm<Pembayaran>();
     const [loading, setLoading] = useState<boolean>(true);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -221,8 +221,8 @@ function DetailPembayaran() {
                             type="text"
                             defaultValue={pembayaran?.jumlah_bayar}
                             {...register("jumlah_bayar")}
-                            required
                              />
+                            {errors.jumlah_bayar && <p className="error">Jumlah bayar maksimal 6x</p>}
                         </div>
                     </div>
 

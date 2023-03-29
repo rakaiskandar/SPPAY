@@ -18,8 +18,7 @@ interface PembayaranNewProps extends Siswa, Pembayaran, Pengguna, SPP {}
 function NewPembayaran() {
     const user = useRecoilValue(userState);
     const navigate = useNavigate();
-    const location = useLocation();
-    const { register, handleSubmit, setValue } = useForm<PembayaranNewProps>();
+    const { register, formState: { errors } ,handleSubmit, setValue } = useForm<PembayaranNewProps>();
 
     const [siswa, setSiswa] = useState<SiswaTypeList>();
     const [selectedSiswa, setSelectedSiswa] = useState<Siswa | null>(null);
@@ -153,7 +152,7 @@ function NewPembayaran() {
                                 <h4 className="primaryC">Informasi Siswa</h4>
                                 {/* <button>Pilih Siswa</button> */}
                                 <Select
-                                maxMenuHeight={100}
+                                maxMenuHeight={140}
                                 options={siswa}
                                 value={selectedSiswa}
                                 isClearable={true}
@@ -309,9 +308,10 @@ function NewPembayaran() {
                                     <h5>Jumlah Bayar</h5>
                                     <input 
                                     type="number"
-                                    {...register("jumlah_bayar")} 
-                                    required
+                                    {...register("jumlah_bayar", { required: true, max: 6})}
+                                    placeholder="Masukkan jumlah bayar" 
                                     />
+                                    {errors.jumlah_bayar && <p className="error">Jumlah bayar maksimal 6x</p>}
                                 </div>
                                 <button>Tambah Pembayaran</button>
                             </div>

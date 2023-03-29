@@ -201,13 +201,19 @@ $primary: #413EEB;
     display: flex;
     gap: 8px;
 
+    .selectInput{
+        width: 145px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
     input{
         background: white;
         border: $primaryB 1px solid;
         font-size: 14px;
         border-radius: 5px;
         color: black;
-        padding: 10px;
+        padding: 8px;
         flex-grow: 1;
         font-family: 'Nunito';
         transition-duration: 0.5s;

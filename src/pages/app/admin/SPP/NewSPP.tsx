@@ -1,6 +1,6 @@
 import { userState } from "@/atoms/userAtom";
 import Navbar from "@/components/Navbar";
-import { Semester, semesterOptions } from "@/dataStructure";
+import { Semester, semesterOptions, SPP } from "@/dataStructure";
 import { inputRupiahFormatted } from "@/helpers/inputRupiahFormatted";
 import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
@@ -16,7 +16,7 @@ function NewSPP() {
     const user = useRecoilValue(userState);
     const navigate = useNavigate();
     
-    const { register, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm<SPP>();
     const [lastId, setLastId] = useState<number>(0);
     const [selectedSemester, setSelectedSemester] = useState<Semester | null>(
         semesterOptions[0]
@@ -73,9 +73,9 @@ function NewSPP() {
                         <input 
                         type="text"
                         placeholder="Masukkan nominal spp siswa" 
-                        required
-                        {...register("nominal")}
+                        {...register("nominal", { required: true })}
                         onKeyUp={(ev) => inputRupiahFormatted(ev.target)}/>
+                        {errors.nominal && <p className="error">Nominal spp harus dimasukkan</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="semester">Pilih semester</label>
@@ -92,6 +92,7 @@ function NewSPP() {
                             primary: '#535bf2',
                             },
                         })}
+                        required
                         onChange={
                             setSelectedSemester
                         }/>

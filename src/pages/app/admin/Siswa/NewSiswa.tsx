@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import "@/style/adminDetail.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Kelas, Siswa, SPP, SPPOptions } from "@/dataStructure";
+import { Kelas, KelasTypeList, Siswa } from "@/dataStructure";
 import { useEffect, useState } from "react";
 import { connectionSql } from "@/sqlConnect";
 import Select from "react-select";
@@ -14,19 +14,20 @@ import { toast } from "react-toastify";
 
 function NewSiswa() {
     const user = useRecoilValue(userState);
-    const { register, handleSubmit } = useForm<Siswa>();
+    const { register, formState: { errors }, handleSubmit } = useForm<Siswa>();
     const navigate = useNavigate();
 
-    const [kelas, setKelas] = useState<Kelas[]>([]);
+    const [kelas, setKelas] = useState<KelasTypeList>();
     const [selectedKelas, setSelectedKelas] = useState<Kelas | null>();
 
     useEffect(() => {
-        const kelasSt = "SELECT nama_kelas AS label, id_kelas, id_kelas AS value FROM kelas";
+        const kelasSt = "SELECT *, id_kelas AS value, nama_kelas AS label FROM kelas";
         connectionSql.query(`${kelasSt}`, (err, results, fields) => {
             if(err) console.error(err)
             else{
-                setKelas(results[0]);
-                setSelectedKelas(results[0][1]);
+                setKelas(results);
+                // console.log(results);
+                setSelectedKelas(results[0]);
             }
         })
     }, [])
@@ -71,32 +72,32 @@ function NewSiswa() {
                         <input 
                         type="text"
                         placeholder="Masukkan nisn siswa" 
-                        required
-                        {...register("nisn")}/>
+                        {...register("nisn", { required: true, minLength: 10})}/>
+                        {errors.nisn && <p className="error">NISN harus dimasukkan dan minimal 10 karakter</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="nis">NIS</label>
                         <input 
                         type="text"
                         placeholder="Masukkan nis siswa" 
-                        required
-                        {...register("nis")}/>
+                        {...register("nis", { required: true, minLength: 10})}/>
+                        {errors.nis && <p className="error">NIS harus dimasukkan dan minimal 10 karakter</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="nama">Nama Siswa</label>
                         <input 
                         type="text"
                         placeholder="Masukkan nama siswa" 
-                        required
-                        {...register("nama")}/>
+                        {...register("nama", { required: true})}/>
+                        {errors.nama && <p className="error">Nama siswa harus dimasukkan</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="nisn">No Telepon</label>
                         <input 
                         type="text"
                         placeholder="Masukkan no telp siswa" 
-                        required
-                        {...register("no_telp")}/>
+                        {...register("no_telp", { required: true, minLength: 12})}/>
+                        {errors.no_telp && <p className="error">No telepon harus dimasukkan dan minimal 12 karakter</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="">Kelas</label>
@@ -124,8 +125,8 @@ function NewSiswa() {
                         type="text"
                         placeholder="Masukkan alamat siswa" 
                         className="alamatForm"
-                        required
-                        {...register("alamat")}/>
+                        {...register("alamat", { required: true})}/>
+                        {errors.alamat && <p className="error">Alamat siswa harus dimasukkan</p>}
                     </div>
                 </div>
             </form>

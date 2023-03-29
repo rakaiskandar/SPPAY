@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 
 function NewPengguna() {
     const user = useRecoilValue(userState);
-    const { register, handleSubmit } = useForm<Pengguna>();
+    const { register, formState: { errors }, handleSubmit } = useForm<Pengguna>();
     const navigate = useNavigate();
 
     const [lastId, setLastId] = useState<number>(0);
@@ -73,25 +73,26 @@ function NewPengguna() {
                         <input 
                         type="text" 
                         placeholder="Masukkan username pengguna"
-                        required
-                        {...register("username")}
+                        {...register("username", { required: true })}
                         />
+                        {errors.username && <p className="error">Username harus dimasukkan</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="password">Password</label>
                         <input 
                         type="password" 
                         placeholder="Masukkan password untuk pengguna"
-                        required
-                        {...register("password")}/>
+                        {...register("password", { required: true, minLength: 6})}
+                        />
+                        {errors.password && <p className="error">Kata sandi minimal 6 karakter</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="nama_pengguna">Nama Pengguna</label>
                         <input 
                         type="text" 
                         placeholder="Masukkan nama pengguna"
-                        required
-                        {...register("nama_pengguna")}/>
+                        {...register("nama_pengguna", { required: true})}/>
+                        {errors.nama_pengguna && <p className="error">Nama pengguna harus dimasukkan</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="level">Pilih Level</label>

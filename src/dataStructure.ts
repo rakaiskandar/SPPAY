@@ -45,6 +45,7 @@ export interface Pengguna{
     level: "admin" | "petugas" | "siswa";
     label: string;
     value: number;
+    confirm_pass: string
 }
 
 export interface Level{

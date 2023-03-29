@@ -9,12 +9,16 @@ import { connectionSql } from "@/sqlConnect";
 import { useSetRecoilState } from "recoil";
 import { userState } from "@/atoms/userAtom";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { Pengguna } from "@/dataStructure";
 
 function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const setUser = useSetRecoilState(userState);
   const nav = useNavigate();
+
+  const { register, formState: { errors }} = useForm<Pengguna>()
 
   const submitHandler = (ev : any) => {
     ev.preventDefault();
@@ -74,8 +78,8 @@ function Login() {
                   placeholder="Masukkan username"
                   value={username}
                   className="inputStyle"
-                  onChange={(ev) => setUsername(ev.target.value)}
                   required
+                  onChange={(ev) => setUsername(ev.target.value)}
                 />
               </div>
 
@@ -86,8 +90,8 @@ function Login() {
                   placeholder="Masukkan kata sandi"
                   value={password}
                   className="inputStyle"
-                  onChange={(ev) => setPassword(ev.target.value)}
                   required
+                  onChange={(ev) => setPassword(ev.target.value)}
                 />
               </div>
 

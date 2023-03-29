@@ -45,7 +45,7 @@ function Beranda() {
 
     const totalpembayaran = `SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE pembayaran.id_pembayaran = detail_pembayaran.id_pembayaran`;
     const totaltransaksi = `SELECT COUNT(*) AS jumlah FROM pembayaran`;
-    var statusBayar = `SELECT siswa.nama, kelas.nama_kelas, pembayaran.status_bayar FROM siswa, kelas, spp, pembayaran WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = pembayaran.id_spp AND pembayaran.nisn = siswa.nisn AND MONTH(tgl_bayar) = MONTH(now()) AND spp.status_bayar = 'Sudah'`;
+    var statusBayar = `SELECT siswa.nama, kelas.nama_kelas, pembayaran.status_bayar FROM siswa, kelas, spp, pembayaran WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = pembayaran.id_spp AND pembayaran.nisn = siswa.nisn AND MONTH(tgl_bayar) = MONTH(now()) AND spp.status_bayar = 'Sudah' ORDER BY tgl_bayar DESC LIMIT 4`;
     var pembayaranTerbaru = "SELECT siswa.nama, pembayaran.tgl_bayar FROM siswa, pembayaran WHERE MONTH(pembayaran.tgl_bayar) = MONTH(now()) AND pembayaran.nisn = siswa.nisn ORDER BY pembayaran.tgl_bayar DESC LIMIT 4";
 
     connectionSql.query(
@@ -91,7 +91,7 @@ function Beranda() {
               (value) => {
                 const totalpembayaran = `SELECT SUM(bayar) AS total FROM detail_pembayaran, pembayaran WHERE pembayaran.id_pembayaran = detail_pembayaran.id_pembayaran AND MONTH(tgl_bayar) = ${value?.value}`;
                 const totaltransaksi = `SELECT COUNT(*) AS jumlah FROM pembayaran WHERE MONTH(tgl_bayar) = ${value?.value}`;
-                var statusBayar = `SELECT siswa.nama, kelas.nama_kelas, pembayaran.status_bayar FROM siswa, kelas, spp, pembayaran WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = pembayaran.id_spp AND pembayaran.nisn = siswa.nisn AND MONTH(tgl_bayar) = ${value?.value} AND spp.status_bayar = 'Sudah'`;
+                var statusBayar = `SELECT siswa.nama, kelas.nama_kelas, pembayaran.status_bayar FROM siswa, kelas, spp, pembayaran WHERE siswa.id_kelas = kelas.id_kelas AND spp.id_spp = pembayaran.id_spp AND pembayaran.nisn = siswa.nisn AND MONTH(tgl_bayar) = ${value?.value} AND spp.status_bayar = 'Sudah' ORDER BY tgl_bayar DESC LIMIT 4`;
                 var pembayaranTerbaru = `SELECT siswa.nama, pembayaran.tgl_bayar FROM siswa, pembayaran WHERE MONTH(pembayaran.tgl_bayar) = ${value?.value} AND pembayaran.nisn = siswa.nisn ORDER BY pembayaran.tgl_bayar DESC LIMIT 4`;
 
                 connectionSql.query(
@@ -150,7 +150,7 @@ function Beranda() {
           </div>
 
           <div className="berandaSub2 berandaSub2List">
-            <h4>🤩Status Pembayaran Terbaru:</h4>
+            <h4>🤩Status Pembayaran Siswa:</h4>
             <div className="berandaSub2ListItem">
               {statusBayar!.length > 0 ? (
                 statusBayar!.map((p, i) => (

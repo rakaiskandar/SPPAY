@@ -80,7 +80,7 @@ function SPP() {
                 <div className="filterInput">
                     <input 
                     type="text"
-                    placeholder="Cari id spp" 
+                    placeholder="Cari semester" 
                     value={filterInput}
                     onChange={handleFilterChange}/>
                 </div>

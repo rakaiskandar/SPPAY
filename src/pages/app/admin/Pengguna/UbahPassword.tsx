@@ -8,12 +8,13 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import sha1 from "sha1";
 import { toast } from "react-toastify";
+import { Pengguna } from "@/dataStructure";
 
 function UbahPassword() {
     const user = useRecoilValue(userState);
     let { id } = useParams();
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm<Pengguna>();
     
     const submitHandler = handleSubmit((data) => {
         let pass = data.password
@@ -61,16 +62,18 @@ function UbahPassword() {
                         <input 
                         type="password"
                         placeholder="Masukkan password baru"
-                        {...register("password")}
-                        required />
+                        {...register("password", { required: true, minLength: 6})}
+                        />
+                        {errors.username && <p className="error">Kata sandi minimal 6 karakter</p>}
                     </div>
                     <div className="formSub">
                         <label htmlFor="password">Konfirmasi Password</label>
                         <input 
                         type="password"
                         placeholder="Konfirmasi password"
-                        {...register("confirm_pass")}
-                        required />
+                        {...register("confirm_pass", { required: true})}
+                        />
+                        {errors.confirm_pass && <p className="error">Kata sandi tidak terkonfirmasi</p>}
                     </div>
                 </div>
             </form>

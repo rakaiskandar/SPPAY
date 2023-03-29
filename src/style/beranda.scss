@@ -9,29 +9,57 @@ $primary: #413EEB;
     .berandaHeadSub{
         display: flex;
         align-items: flex-start;
-        gap: 8px;
-    }
+        gap: 10px;
+        
+        .more{
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
 
-    .btnDownload{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        background: $primary;
-        color: white;
-        transition: 0.2s;
-    }
+            .btnMore{
+                padding: 5px 5px 3px 5px;
+                cursor: pointer;
+                border-radius: 5px;
+                outline: 1px solid #cecccc;
+            }
 
-    .btnDownload:focus{
-        outline: none;
-    }
+            .btnMore:hover{
+                color: $primary;
+            }
 
-    .btnDownload:hover{
-        background: darken($color: $primary, $amount: 8);
-    }
+            .moreItem{
+                position: absolute;
+                right: 5px;
+                top: 40px;
+                display: flex;
+                flex-direction: column;
+                padding: 5px;
+                width: 230px;
 
+                button{
+                    background: white;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    padding: 12px;
+                    transition: 0.2s;
+                    outline: 1px solid rgb(0 0 0 / 0.10);
+
+                    p{
+                        font-size: medium;
+                    }
+                }
+
+                button:hover{
+                    background: $primary;
+                    color: white;
+                }
+            }
+        }
+    }
     .selectInput{
-        width: 120px;
+        width: 150px;
     }
 }
 
@@ -200,7 +228,7 @@ $primary: #413EEB;
             width: 100%;
             color: $primary;
             font-weight: 600;
-            margin-top: 15px;
+            margin-top: 20px;
             border-radius: 4px;
             justify-content: center;
             border: $primary solid 1px;

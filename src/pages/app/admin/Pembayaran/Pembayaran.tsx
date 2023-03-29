@@ -1,7 +1,7 @@
 import EmptyTable from "@/components/EmptyTable";
 import Navbar from "@/components/Navbar";
 import Table from "@/components/Table";
-import { PembayaranTypeList } from "@/dataStructure";
+import { Bulan, bulanOptions, PembayaranTypeList } from "@/dataStructure";
 import rupiahConverter from "@/helpers/rupiahConverter";
 import { connectionSql } from "@/sqlConnect";
 import { Icon } from "@iconify/react";
@@ -15,11 +15,20 @@ import { userState } from "@/atoms/userAtom";
 import { CSVLink } from "react-csv";
 import getHeaderCsv from "@/helpers/getHeaderCsv";
 import generateRandomId from "@/helpers/generateRandomId";
+import Select from "react-select";
 
 function Pembayaran() {
   const user = useRecoilValue(userState);
+
+  //Get Month
+  let monthNow = new Date().getMonth();
   const [pembayaran, setPembayaran] = useState<PembayaranTypeList>([]);
+  const [selectedBulan, setSelectedBulan] = useState<Bulan | null>(
+    bulanOptions[monthNow]
+  );
+
   const [filterInput, setFilterInput] = useState<string>("");
+  const [isFilter, setIsFilter] = useState<boolean>(false);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value || "";
@@ -39,10 +48,87 @@ function Pembayaran() {
   }, []);
 
   const dataMemo = useMemo(() => pembayaran, [pembayaran]);
-  const columns = useMemo(
+  const columns = 
+  isFilter !== true ? 
+  useMemo(
     () => [
       {
-        Header: "Id",
+        Header: "Id Pembayaran",
+        accessor: "id",
+        Cell: ({ cell: { value } }: { cell: { value: number } }) => (
+            <>#{value}</>
+        ),
+      },
+      {
+        Header: "Tanggal Bayar",
+        accessor: "tgl_bayar",
+        Cell: ({ cell: { value } } : { cell: { value: Date}}) => (
+            <span>{dayjs(value).format("D MMMM YYYY")}</span>
+        ) 
+      },
+      {
+        Header: "Petugas",
+        accessor: "nama_petugas",
+        Cell: ({ cell: { value } }: { cell: { value: string } }) => (
+            <span>{value}</span>
+        ),
+      },
+      {
+        Header: "Nama Siswa",
+        accessor: "nama_siswa",
+        Cell: ({ cell: { value } }: { cell: { value: string } }) => (
+            <span>{value}</span>
+        ),
+      },
+      {
+        Header: "Kelas",
+        accessor: "nama_kelas",
+        Cell: ({ cell: { value } }: { cell: { value: string } }) => (
+            <span>{value}</span>
+        ),
+      },
+      {
+        Header: "Jumlah Bayar",
+        accessor: "jumlah_bayar",
+        Cell: ({ cell: { value } }: { cell: { value: number } }) => (
+            <>{value}</>
+        ),
+      },
+      {
+        Header: "Bayar",
+        accessor: "bayar",
+        Cell: ({ cell: { value } }: { cell: { value: number } }) => (
+            <>{rupiahConverter(value)}</>
+        ),
+      },
+      {
+        Header: "Status Bayar",
+        accessor: "status_bayar",
+        Cell: ({ cell: { value } }: { cell: { value: string } }) => (
+            <span className="paidStatus">
+              {value === "Lunas" ? (
+                <>
+                  {/* <Icon icon="material-symbols:check-circle-outline-rounded" color="green" width="20"/> */}
+                  <span>🥳</span>
+                  <p className="lunas">{value}</p>
+                </>
+              ) : (
+                <>
+                  {/* <Icon icon="radix-icons:cross-circled" color="red" width="20"/> */}
+                  <span>😢</span>
+                  <p className="belumLunas">{value}</p>
+                </>
+              )}
+            </span>
+        ),
+      },
+    ],
+    []
+  ) : 
+  useMemo(
+    () => [
+      {
+        Header: "Id Pembayaran",
         accessor: "id",
         Cell: ({ cell: { value } }: { cell: { value: number } }) => (
             <>#{value}</>
@@ -151,6 +237,35 @@ function Pembayaran() {
             placeholder="Cari tanggal pembayaran"
             value={filterInput}
             onChange={handleFilterChange}
+          />
+          <Select
+          options={bulanOptions}
+          value={selectedBulan}
+          placeholder="Pilih bulan"
+          className="selectInput"
+          theme={(theme) => ({
+            ...theme,
+            borderRadius: 5,
+            colors: {
+              ...theme.colors,
+              primary25: '#E5E7EB',
+              primary: '#535bf2',
+            },
+          })}
+          onChange={
+            (value) => {
+              var stateSql =
+                `SELECT pmb.id_pembayaran AS id, pmb.tgl_bayar, pmb.nama_petugas, s.nama AS nama_siswa, k.nama_kelas AS nama_kelas, pmb.status_bayar, pmb.jumlah_bayar, detP.bayar FROM pembayaran pmb, siswa s, pengguna p, kelas k, detail_pembayaran detP WHERE pmb.id_user = p.id_user AND pmb.nisn = s.nisn AND s.id_kelas = k.id_kelas AND detP.id_pembayaran = pmb.id_pembayaran AND MONTH(pmb.tgl_bayar) = ${value?.value}`;
+              connectionSql.query(stateSql, (err, results) => {
+                  if (err) console.error(err);
+                  else{
+                      setPembayaran(results);
+                      setIsFilter(true)
+                      setSelectedBulan(value);
+                  }
+              })
+            }
+          }
           />
         </div>
 
